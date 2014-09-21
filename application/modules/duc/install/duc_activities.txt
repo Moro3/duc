@@ -1,0 +1,15 @@
+-- Структура таблицы `duc_activities`
+--
+
+CREATE TABLE `duc_activities` (
+  	`id` int(3) NOT NULL auto_increment,  	
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+	`show_i` tinyint(1) NOT NULL default '0',
+  	`sort_i` tinyint(3) NOT NULL default '1',
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`name` char(150) NOT NULL,
+	`description` char(255),  	
+  	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

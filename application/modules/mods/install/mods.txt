@@ -1,0 +1,30 @@
+-- Структура таблицы `mods`
+-- 
+
+CREATE TABLE `mods` (
+  	`id` int(6) NOT NULL auto_increment,
+	`type_id` smallint(3) default '1',	
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`uri` char(100) NOT NULL,
+	`uri_start` char(100) NOT NULL,	
+	`icon` char(50) NOT NULL,	
+	`name` char(50) NOT NULL,
+	`alias` char(50) NOT NULL,
+	`short_description` char(200) NOT NULL,
+	`description` text(1000) NOT NULL,
+	`start_method` char(20) NOT NULL,
+	`start_controller` char(20) NOT NULL,
+	`date` int(10) NOT NULL,	
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `uri` (`uri`),
+	KEY `name` (`name`),
+	KEY `alias` (`alias`),
+	KEY `icon` (`icon`),
+	KEY `sorter` (`sorter`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

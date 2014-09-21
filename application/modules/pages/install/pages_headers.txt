@@ -1,0 +1,24 @@
+-- Структура таблицы `pages_headers`
+-- 
+
+CREATE TABLE `pages_headers` (
+  	`id` int(6) NOT NULL auto_increment,	
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`uri` char(100) NOT NULL,
+	`uri_old` char(100) NOT NULL,	
+	`icon` char(50) NOT NULL,
+	`img_fon` char(50) NOT NULL,
+	`text1` char(200) NOT NULL,
+	`text2` char(200) NOT NULL,
+	`date` int(10) NOT NULL,	
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `uri` (`uri`),
+	KEY `icon` (`icon`),
+	KEY `sorter` (`sorter`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

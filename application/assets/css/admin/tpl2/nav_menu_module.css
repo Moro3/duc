@@ -1,0 +1,43 @@
+.menu_module{	padding:10px;
+	border:1px solid #ffffff;
+}
+
+.menu_module .row_main{
+    background-color: #B3B3A9;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.menu_module .row_sub{
+    background-color: #C6C6BB;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.menu_module .row_sub2{
+    background-color: #D1D1C9;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.menu_module .row_sub3{
+    background-color: #F1F1E9;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.menu_module .button{
+	padding: 5px 15px;
+	float:left;
+}
+
+.menu_module .link{    1background-color: #FFFFEA;
+    1border:1px solid #FFFFEA;
+    padding:2px;
+}
+
+.menu_module .link_sel{
+    background-color: #D8D8B1;
+    border:1px solid #8C8C79;
+    padding:2px;
+}

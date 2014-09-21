@@ -1,0 +1,47 @@
+.a_block .header .name_panel{	color:#993333;
+	padding: 10px;
+	font-size:16px;
+}
+
+.a_block .header .www{
+   	color:#996633;
+   	padding: 10px;
+}
+
+.a_block .header .www a{
+   	color:#996633;
+}
+
+.a_block .header .www a:hover{
+   	color:#996633;
+}
+
+.a_block .header .top_exit input {
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:18px;
+    width:100px;
+    float:right;
+    padding: 2px 2px;
+    color: #FAFA91;
+	text-align:center;
+	vertical-align:middle;
+	background-color:#D45204;
+	border:0px;
+}
+.a_block .header .top_status{
+    position:absolute;
+    top:25px;
+    right:10px;
+    padding: 5px;
+    color: #4C0000;
+	text-align:right;
+}
+.a_block .header .top_status_name {
+    color: #7C76B1;
+}
+
+.a_block .header .top_status_text {
+    color: #008000;
+}

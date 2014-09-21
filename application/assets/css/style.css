@@ -1,0 +1,79 @@
+html, body{
+  height: 100%;
+  margin:0;
+  padding: 0;
+}
+div#clear {padding:0;margin:0;clear:both;}
+div#clear2 {padding:0;margin:0;overflow: hidden;zoom: 1;}
+div.clear {padding:0;margin:0;clear:both;}
+div.clear2 {padding:0;margin:0;overflow: hidden;zoom: 1;}
+.full {
+   width:100%;
+   padding:0;
+   margin:0;
+}
+
+.block_up1 {
+	background: url('/{assets}/img/fon_header.jpg') no-repeat 50% 100%;
+	margin:0 auto;
+}
+
+.block_up2 {
+    1background-color: #f1f3bc;
+    background-color: rgba(241,243,164, 0.7); /* прозрачный фон */
+    margin:0 auto;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.block_up3 {
+    margin:0 auto;
+    1background: url('/{assets}/img/fon/smile00005.gif') repeat;
+    background-color: #f1f3f5;
+}
+
+.block_up4 {
+    background: url('/{assets}/img/fon_footer.gif') repeat-x 0 0;
+    margin:0 auto;
+}
+
+div.header {
+	position: relative;
+	max-width:1800px;
+	min-width:1000px;
+	height: 200px;
+   	padding:0;
+   	margin:0 auto;
+
+}
+
+.navigation  {
+    position: relative;
+    max-width:1800px;
+	min-width:1000px;
+	height: 140px;
+   	padding:0;
+   	margin:0 auto;
+   	overflow: hidden;
+
+}
+
+.content {
+   	position: relative;
+   	max-width:1800px;
+	min-width:1000px;
+	min-height: 600px;
+   	padding:0;
+   	margin:0 auto;
+   	overflow: hidden;
+    zoom: 1;
+
+}
+
+.footer {
+    max-width:1800px;
+	min-width:1000px;
+	height: 140px;
+   	padding:0;
+   	margin:0 auto;
+}

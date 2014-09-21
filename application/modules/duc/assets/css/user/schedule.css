@@ -1,0 +1,58 @@
+table.schedule{	border-collapse: collapse;
+	font-size:small;
+}
+/*Стиль для групп столбцов*/
+table.schedule col.fio {
+	background: #d7d7de;
+	color: #15759e;
+	font-weight:bold;
+	1font-size:24px;
+}
+table.schedule col.subject {
+	background: #e5e5ed;
+	color: #15759e;
+}
+table.schedule col.group {
+	background: #deddb7;
+}
+table.schedule col.day {
+	1background: #ddf;
+}
+
+/*Стиль для заголовков столбцов*/
+table.schedule tr td.fio {
+	width:200px;
+}
+table.schedule tr td.subject {
+	width:200px;
+}
+table.schedule th.group {
+
+}
+table.schedule th.day {
+
+}
+
+table.schedule tr{
+
+}
+table.schedule th{
+
+    1background: #c5cad5;
+}
+table.schedule td{
+    1padding:10px;
+    1border: 2px solid #E6EEEE;
+
+}
+
+table.schedule tr th{
+
+}
+
+table.schedule tr td{
+
+}
+
+table.schedule tr td+td{
+}

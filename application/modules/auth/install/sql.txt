@@ -1,0 +1,85 @@
+-- phpMyAdmin SQL Dump
+-- version 2.6.1
+-- http://www.phpmyadmin.net
+-- 
+-- Host: localhost
+-- Generation Time: Aug 09, 2012 at 03:02 AM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.4
+-- 
+-- Database: `my_ci`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `groups`
+-- 
+
+CREATE TABLE `groups` (
+  `id` mediumint(8) unsigned NOT NULL auto_increment,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+-- 
+-- Dumping data for table `groups`
+-- 
+
+INSERT INTO `groups` VALUES (1, 'admin', 'Administrator');
+INSERT INTO `groups` VALUES (2, 'members', 'General User');
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `meta`
+-- 
+
+CREATE TABLE `meta` (
+  `id` mediumint(8) unsigned NOT NULL auto_increment,
+  `user_id` mediumint(8) unsigned default NULL,
+  `first_name` varchar(50) default NULL,
+  `last_name` varchar(50) default NULL,
+  `company` varchar(100) default NULL,
+  `phone` varchar(20) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+-- 
+-- Dumping data for table `meta`
+-- 
+
+INSERT INTO `meta` VALUES (1, 1, 'Admin', 'istrator', 'ADMIN', '0');
+INSERT INTO `meta` VALUES (2, 2, 'admin', 'admin', 'home', '777-885-5555');
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `users`
+-- 
+
+CREATE TABLE `users` (
+  `id` mediumint(8) unsigned NOT NULL auto_increment,
+  `group_id` mediumint(8) unsigned NOT NULL,
+  `ip_address` char(16) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `salt` varchar(40) default NULL,
+  `email` varchar(40) NOT NULL,
+  `activation_code` varchar(40) default NULL,
+  `forgotten_password_code` varchar(40) default NULL,
+  `remember_code` varchar(40) default NULL,
+  `created_on` int(11) unsigned NOT NULL,
+  `last_login` int(11) unsigned default NULL,
+  `active` int(1) unsigned default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+-- 
+-- Dumping data for table `users`
+-- 
+
+INSERT INTO `users` VALUES (1, 1, '127.0.0.1', 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, 1268889823, 1268889823, 1);
+INSERT INTO `users` VALUES (2, 1, '127.0.0.1', 'admin admin', '45ad1448713653b865e183ab182d4b3802227275', NULL, '531@mail.ru', NULL, NULL, NULL, 1300654447, 1344373533, 1);
+        

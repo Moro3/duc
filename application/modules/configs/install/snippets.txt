@@ -1,0 +1,23 @@
+-- Структура таблицы `snippets`
+-- 
+
+CREATE TABLE `snippets` (
+  	`id` int(6) NOT NULL auto_increment,
+	`group_id` int(3) NOT NULL,		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`name` char(70) NOT NULL,
+	`alias` char(70) NOT NULL,
+	`description` char(250) NOT NULL,
+	`content` text,	
+	`date` int(10) NOT NULL,		
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `group_id` (`group_id`),
+	KEY `alias` (`alias`),
+	KEY `date` (`date`)			
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

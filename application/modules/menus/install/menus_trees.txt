@@ -1,0 +1,21 @@
+-- Структура таблицы `menus_trees`
+-- 
+
+CREATE TABLE `menus_trees` (
+  	`id` int(6) NOT NULL auto_increment,	
+	`parent_id` int(6) NOT NULL default '0',
+	`place_id` int(3) NOT NULL default '0',
+	`type_id` int(3) NOT NULL default '0',
+	`name` char(100) NOT NULL,	
+	`sorter` int(6) NOT NULL,
+	`date` int(10) NOT NULL,	
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`),
+	KEY `parent_id` (`parent_id`),
+	KEY `place_id` (`place_id`),
+	KEY `name` (`name`)
+			
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

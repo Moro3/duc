@@ -1,0 +1,20 @@
+-- Структура таблицы `storages`
+-- 
+
+CREATE TABLE `storages` (
+  	`id` int(6) NOT NULL auto_increment,	
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`type_id` int(3) NOT NULL,
+	`file_fixed` char(100) NOT NULL,	
+	`name` char(50) NOT NULL,		
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `type_id` (`type_id`),
+	KEY `file_fixed` (`file_fixed`),
+	KEY `sorter` (`sorter`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -1,0 +1,19 @@
+.modules{
+    padding:10px;
+}
+.modules .mod_header{
+	padding:20px;
+	width:100%;
+	text-align:center;
+}
+
+.modules .mod_name{
+	border:0;
+	padding:8px;
+}
+
+.modules .mod_name_select{
+	border:1px solid #808080;
+	background-color: #CECECE;
+	padding:8px;
+}

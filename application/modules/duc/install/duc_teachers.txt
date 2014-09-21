@@ -1,0 +1,25 @@
+-- Структура таблицы `duc_teachers`
+-- 
+
+CREATE TABLE `duc_teachers` (
+  	`id` int(3) NOT NULL auto_increment,
+	`id_qualification` int(3) NOT NULL,
+	`id_rank` int(3) NOT NULL,	
+	`show_i` smallint(1) NOT NULL default '0',
+	`sort_i` smallint(1) NOT NULL default '0',
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`surname` char(50) NOT NULL,
+	`name` char(50) NOT NULL,
+	`name2` char(50) NOT NULL,
+	`foto` char(50) NOT NULL,
+	`experience` int(2) NOT NULL,	
+	`description` text,  	
+  	PRIMARY KEY  (`id`),
+	KEY `show_i` (`show_i`),
+	KEY `sort_i` (`sort_i`),
+	KEY `id_qualification` (`id_qualification`),
+	KEY `id_rank` (`id_rank`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

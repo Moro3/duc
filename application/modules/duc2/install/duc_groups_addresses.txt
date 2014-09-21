@@ -1,0 +1,9 @@
+-- Структура таблицы `duc_groups_addresses`
+-- 
+
+CREATE TABLE `duc_groups_addresses` (
+  	`id` int(3) NOT NULL auto_increment,
+	`id_group` int(3) NOT NULL,
+	`id_address` int(4) NOT NULL,	
+  	PRIMARY KEY  (`id`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

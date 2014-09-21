@@ -1,0 +1,23 @@
+-- Структура таблицы `storages_versions`
+-- 
+
+CREATE TABLE `storages_versions` (
+  	`id` int(6) NOT NULL auto_increment,
+	`storage_id` int(6) NOT NULL,
+	`actuality` smallint(1) NOT NULL default '0',		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`version` smallint(4) NOT NULL default '0',
+	`size` smallint(9) NOT NULL default '0', 
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`file` char(100) NOT NULL,
+	`description` char(250) NOT NULL,			  	
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `sorter` (`sorter`),
+	KEY `storage_id` (`storage_id`),
+	KEY `actuality` (`actuality`)				
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

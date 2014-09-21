@@ -1,0 +1,21 @@
+--
+-- Table structure for table `mods_tpl`
+--
+
+CREATE TABLE `mods_tpl` (
+  `id` int(6) NOT NULL auto_increment,
+  `type_id` smallint(3) default '1',
+  `active` smallint(1) NOT NULL default '0', 
+  `name` char(30) NOT NULL,
+  `alias` char(50) NOT NULL,
+  `description` char(255) default NULL,
+  `module_id` smallint(3) NOT NULL,
+  `controller` char(30) NOT NULL,
+  `method` char(30) NOT NULL,
+  `arg` char(30) NOT NULL,  
+  `date_create` int(10) NOT NULL default '0',
+  `date_update` int(10) NOT NULL default '0',
+  `ip_create` char(15) NOT NULL default '0.0.0.0',
+  `ip_update` char(15) NOT NULL default '0.0.0.0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;

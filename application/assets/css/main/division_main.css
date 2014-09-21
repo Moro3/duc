@@ -1,0 +1,40 @@
+.division_block{
+	float:left;
+	width:220px;
+	padding: 10px;
+   	overflow: hidden;
+    zoom: 1;
+}
+.division_block .header_block{    height: 60px;
+    text-align:center;
+    font-size:14px;
+    color: #2dad51;
+    padding: 0 10px;
+}
+
+.division_block .text_block{
+    height: 170px;
+    text-align:left;
+    font-size:12px;
+    color: #5b5b5b;
+    padding: 10px;
+}
+
+.division_block .text_block a {	color: #ff7326;
+	text-decoration: none;
+}
+.division_block .text_block a:hover {
+	color: #d45916;
+	text-decoration: underline;
+}
+
+.division_block .text_block ul{    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+.division_block .text_block ul li{
+    list-style-type: none;
+    margin:0px;
+    padding: 3px 0;
+}

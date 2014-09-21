@@ -1,0 +1,96 @@
+.menu_main .button_main{
+   	padding: 10px;
+   	overflow: hidden;
+    zoom: 1;
+}
+
+.menu_main .button_menu {
+	width: 210px;	
+	background-color: #eaf0ea;	
+	padding:15px 10px;
+}
+
+.menu_main .button_menu .header_text {
+	color: #ed1c24;
+	font-size: 20px;
+	padding: 10px 5px;
+}
+
+.menu_main .button_menu .navigation_text {	
+	font-size: 14px;
+	padding: 4px 5px;
+}
+
+.menu_main .button_menu a {
+    color: #3366ff;
+    text-decoration: none;
+}
+.menu_main .button_menu a:visited {
+    color: #3366ff;
+    text-decoration: none;
+}
+.menu_main .button_menu a:hover {
+    color: #0033ff;
+    text-decoration: underline;
+}
+.menu_main .button_menu a.select {
+    color: #ff7326;
+    text-decoration: none;
+}
+.menu_main .button_menu .subnavigation {	
+        margin-top:7px;
+        padding-top: 3px;
+        font-size: 12px;
+        line-height: 1.4;
+        color: #0033ff;
+        border-left-width: 1px;
+        border-left-color: #3366ff;
+        border-left-style: dashed;
+        border-top-width: 1px;
+        border-top-color: #3366ff;
+        border-top-style: dashed;
+}
+.1menu_main .button_menu .1subnavigation_text {	
+	font-size: 12px;
+	padding: 4px 5px 4px 20px;        
+}
+.menu_main .button_menu .subnavigation ul{     
+     margin: 0px;
+     padding: 0;
+     position:relative;
+}
+.menu_main .button_menu .subnavigation li{	
+     list-style: circle;          
+     margin-left: 24px;
+     padding: 4px 0;
+}
+.menu_main .button_menu ol.sub3navigation {        
+        margin:0;
+        padding:0;
+        margin-left: 40px;
+        font-size: 11px;
+        line-height: 1.3;
+        color: #7194ff;
+        1border-top-width: 1px;
+        1border-top-color: #3366ff;
+        1border-top-style: solid;
+        1border-bottom-width: 1px;
+        1border-bottom-color: #3366ff;
+        1border-bottom-style: solid;
+}
+
+.menu_main .button_menu li.sub3navigation{	
+     1list-style: square;          
+     margin: 0px;
+     color: #7194ff;
+     * margin-left: -20px;
+     padding: 2px 0;
+}
+li.sub3navigation a:link{     
+     color: #7194ff;     
+}
+li.sub3navigation a:visited{     
+     color: #7194ff;     
+}
+
+

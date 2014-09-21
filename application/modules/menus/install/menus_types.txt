@@ -1,0 +1,25 @@
+-- Структура таблицы `menus_types`
+-- 
+
+CREATE TABLE `menus_types` (
+  	`id` int(6) NOT NULL auto_increment,	
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`name` char(200) NOT NULL,
+	`alias` char(50) NOT NULL,	
+	`description` char(250) NOT NULL,
+		
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `name` (`name`),	
+	KEY `sorter` (`sorter`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `menus_types` ( `id` , `active` , `sorter` , `name` , `alias` , `description` , `date_create` , `date_update` , `ip_create` , `ip_update` )
+VALUES (
+'1', '1', '10', 'page', 'p', 'страница', '', '', '', ''
+);

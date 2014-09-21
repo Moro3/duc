@@ -1,0 +1,10 @@
+-- Структура таблицы `duc_dop_teachers`
+-- 
+
+CREATE TABLE `duc_dop_teachers` (
+  	`id` int(3) NOT NULL auto_increment,
+	`id_group` int(3) NOT NULL,
+	`id_teacher` int(4) NOT NULL,
+	`sorter` smallint(3) NOT NULL,	
+  	PRIMARY KEY  (`id`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

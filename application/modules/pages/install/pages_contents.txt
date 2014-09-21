@@ -1,0 +1,19 @@
+-- Структура таблицы `pages_contents`
+-- 
+
+CREATE TABLE `pages_contents` (
+  	`id` int(6) NOT NULL auto_increment,
+	`id_page_header` int(6) NOT NULL,		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`name` char(50) NOT NULL,		
+	`description` mediumtext,  	
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `sorter` (`sorter`),
+	KEY `id_page_header` (`id_page_header`)			
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

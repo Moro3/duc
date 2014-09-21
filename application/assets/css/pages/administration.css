@@ -1,0 +1,67 @@
+/*==================элементы для страницы администрация==============*/
+.list_administration{
+  padding:10px;
+  width:100%;
+}
+
+.administration_main{
+  border:1px solid #7FB54E;
+  background-color:#E1EED5;
+}
+.administration{
+  border:1px solid #E2E43C;
+  background-color:#F2F8D0;
+}
+.list_administration .foto_block{
+  float:left;
+  width:140px;
+  padding:15px;
+}
+.list_administration .info_block{
+  float:left;
+  padding:15px;
+  width:700px;
+}
+.foto_block .foto{
+  background-color:#E1EED5;
+}
+.foto_block .foto img{
+  width:140px;
+  1height:200px;
+  border:4px solid #F2F7ED;
+}
+
+.info_block .job{
+  1font-size:16px;
+  font-weight:bold;
+  padding:0 10px;
+}
+.info_block .fio{
+  1font-size:16px;
+  font-weight:bold;
+  color:#767676;
+  padding:5px 10px;
+}
+.info_block .name{
+  float:left;
+  width: 180px;
+  1font-size:14px;
+  font-weight:bold;
+  color:#538626;
+
+}
+.info_block .value{
+  1font-size:14px;
+  font-weight:normal;
+  color:#767676;
+}
+.info_block .date_accept{
+  padding:5px 10px;
+}
+.info_block .time_accept{
+  padding:5px 10px;
+}
+.info_block .contact{
+  padding:5px 10px;
+}
+

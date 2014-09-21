@@ -1,0 +1,26 @@
+.my_update_ok, .my_update_error, .my_insert_ok, .my_insert_error, .my_delete_ok, .my_delete_error{	padding:5px;
+	background-color: #E9F5F5;
+}
+
+.my_update_ok{	color: #008000;
+}
+.my_update_error{    color: #ff0000;
+}
+.my_insert_ok{
+	color: #008000;
+}
+.my_insert_error{
+    color: #ff0000;
+}
+.my_delete_ok{
+    color: #008000;
+}
+.my_delete_error{
+    color: #ff0000;
+}
+.my_edit{	padding:10px;
+	float:left;
+}
+.my_add{	padding:10px;
+	float:left;
+}

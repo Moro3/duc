@@ -1,0 +1,11 @@
+AddDefaultCharset UTF-8
+#charsetdisable on
+#AddDefaultCharset Off
+
+RewriteEngine on
+RewriteCond $1 !^(index\.php|phpver\.php|test|assets|uploads|images|robots\.txt|tpl|wysiwyg|favicon|yandex_6219606a4d594dba.html)
+RewriteRule ^(.*)$ index.php?$1 [QSA]
+#RewriteRule ^(.+)$ index.php?/$1 [L]
+
+
+

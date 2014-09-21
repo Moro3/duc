@@ -1,0 +1,20 @@
+-- Структура таблицы `menus_groups`
+-- 
+
+CREATE TABLE `menus_groups` (
+  	`id` int(6) NOT NULL auto_increment,		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`name` char(200) NOT NULL,
+	`alias` char(50) NOT NULL,	
+	`description` char(250) NOT NULL,
+		
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`),	
+	KEY `active` (`active`),
+	KEY `name` (`name`),	
+	KEY `sorter` (`sorter`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

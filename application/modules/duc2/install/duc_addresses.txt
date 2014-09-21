@@ -1,0 +1,21 @@
+-- Структура таблицы `duc_addresses`
+-- 
+
+CREATE TABLE `duc_addresses` (
+  	`id` int(3) NOT NULL auto_increment,
+  	`active` tinyint(1) NOT NULL default '0',
+  	`sorter` tinyint(3) NOT NULL default '1',
+	`name` char(150) NOT NULL,
+	`description` text,
+	`city` char(20) NOT NULL,
+	`postal_code` int(6) NOT NULL,
+	`street` char(150) NOT NULL,
+	`house` char(5) NOT NULL,
+	`housing` char(5) NOT NULL,
+	`office` char(5) NOT NULL,
+  	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+  	PRIMARY KEY  (`id`)	
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

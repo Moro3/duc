@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+  <title>Возможности плеера Uppod</title>
+  <base src="http://uppod.ru/">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="ru">
+  <meta name="keywords" content="uppod плеер сайт проигрыватель flv H.264 video player hd audio mp3 flash">
+  <meta name="description" content="Плеер для сайта (видео и аудио проигрыватель в одном файле), визуальный редактор стилей, настройка за 5 минут бесплатно.">
+  <meta name="author" content="U-Studio - http://www.ustudio.eu">
+  <meta name="robots" content="all">
+
+  <link href="http://uppod.ru/css/style3.css" rel="stylesheet" type="text/css">
+  <link href="http://uppod.ru/favicon.ico" rel="shortcut icon">
+  <script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-1745003-7']);
+	    _gaq.push(['_trackPageview']);
+	</script>
+  <script src='http://uppod.ru/ajax/mootools.js' type='text/javascript'></script>
+  <script src='http://uppod.ru/ajax/swfobject.js' type='text/javascript'></script>
+  <script src='http://uppod.ru/ajax/uppod1.js' type='text/javascript'></script>
+  
+  <link rel="stylesheet" href="http://uppod.ru/ajax/play_flash/play_flash.css" type="text/css" media="screen" />
+
+</head>
+<body bgcolor="#ffffff">
+<div id=telo>
+<div id=header><div id='menu_open'><a href='http://uppod.ru/player/'>Медиаплеер</a></div><div id='menu1'><a href=http://uppod.ru/apps/>Приложения</a></div><div id='menu1'><a href=http://uppod.ru/talk/>Форум</a></div><div id='menu1'><a href='http://uppod.ru/auth/'>Войти</a></div><div id=m2><div id='menu2'><a href=http://uppod.ru/player/my/>Плеер</a></div><div id='menu2'><a href=http://uppod.ru/player/skins/>Скины</a></div><div id='menu2'><a href=http://uppod.ru/player/faq/>Справка</a></div><div id='menu2_open'><a href=http://uppod.ru/player/intro/>Возможности</a></div></div><div id=feedbut onClick="feedback();">Я нашел ошибку</div><div id="feedblock"><textarea id="feedtxt"></textarea><br><input type=button id="feedsend" value="Отправить" onclick="feedsubmit();"> <input type=button value="Отмена" id="feedcancel" onclick="feedback()"> <a href=http://uppod.ru/error/history/>История</a><div class=small2>соообщение будет публичным</div><input type=hidden value="" id="feedbrw"><input type=hidden value="" id="feedsw"><input type=hidden value="" id="feedsh"></div></div>
+
+<div class=all>
+	<div class=logo><a href="http://uppod.ru/"><img src="http://uppod.ru/i/uppod.gif" alt="" width=102px height=48px></a></div>
+	<div class=logo_txt></div>
+	<div class=sec2><H2>Возможности</H2>
+<P>
+<TABLE cellSpacing=1 cellPadding=0>
+<TBODY>
+<TR>
+<TD width="50%">
+<UL>
+<LI>Один плеер для <STRONG>видео, аудио, фото и flash</STRONG>; 
+
+<LI>Более <STRONG>100</STRONG> базовых настроек и опций; 
+<LI>Результат за 5 минут в <A href="http://uppod.ru/player/intro/styles/">визуальном редакторе стилей</A>; 
+<LI>Плеер написан на ActionScript 3, 9 версия Adobe Flash player и выше (более 95% пользователей Интернета по <A title="Статистика поддержки версий" href="http://www.adobe.com/products/player_census/flashplayer/version_penetration.html" target=_blank>данным</A> Adobe). Обновить свой Flash player можно <A href="http://www.adobe.com/go/getflashplayer" target=_blank>здесь</A>; 
+<LI>API для <A href="http://uppod.ru/player/ajax/">JavaScript</A>; 
+<LI>Модули: <A href="http://uppod.ru/player/faq2/context/">RSS</A>, <A href="http://uppod.ru/player/faq2/google-analytics/">Google Analytics</A> и <A href="http://uppod.ru/talk_docs/">другие</A>; 
+
+<LI>Интеграция с <A href="http://uppod.ru/talk_plugins/">CMS</A>; 
+<LI>Поддержка плейлистов; 
+<LI><STRONG><A href="http://uppod.ru/player/faq/free/"><STRONG>Бесплатно</STRONG></A></STRONG>, <A href="http://uppod.ru/pro/">PRO</A>, <A href="http://uppod.ru/license/">лицензия</A>. 
+<LI>Нам доверяют уже более 50 000 пользователей!</LI></UL></TD>
+<TD style="PADDING-LEFT: 15px" width="50%">
+<H5>Примеры</H5><BR><BR><A href="http://uppod.info/" target=_self><IMG class=itt title=Демо-сайт height=55 src="http://uppod.ru/i/pic/uppod_info.jpg" width=271></A><BR><BR><a href="http://uppod.ru/play/video=1" onclick="uppod_player(' ','video','2','1','640','360','0');event.returnValue=false;return false;"><IMG height=82 src="http://uppod.ru/i/pic/red_sea_poster.jpg" width=147></a> <a href="http://uppod.ru/play/audio=1" onclick="uppod_player(' ','audio','1','1','300','90','0');event.returnValue=false;return false;"><IMG height=35 src="http://uppod.ru/i/pic/audio_sample_poster.jpg" width=116></a> </TD></TR></TBODY></TABLE></P>
+
+<H5>Как это работает</H5><BR><IMG height=214 src="http://uppod.ru/i/pic/player_scheme.gif" width=499> 
+<P>
+<H5>Подробнее</H5>
+<P>Плеер воспроизводит все, что поддерживается технологией Flash: <BR>
+<TABLE cellSpacing=10 cellPadding=2>
+<TBODY>
+<TR>
+<TD><FONT style="BACKGROUND-COLOR: #ffffcc">Стандарт видео</FONT> </TD>
+<TD>Flash video (<STRONG>H.263</STRONG>)</TD>
+
+<TD>MPEG-4 (<STRONG>H.264</STRONG> — <STRONG>HD</STRONG>) </TD></TR>
+<TR>
+<TD vAlign=top><FONT style="BACKGROUND-COLOR: #ffffcc">Форматы видео</FONT></TD>
+<TD vAlign=top>FLV</TD>
+<TD>F4V, MP4, MOV, M4A, MP4V, 3GP и 3G2<BR>аудио — AAC (HE, LC)</TD></TR>
+<TR>
+<TD><FONT style="BACKGROUND-COLOR: #ffffcc">Кодеки видео</FONT></TD>
+
+<TD>On2 VP6, Sorenson Spark</TD>
+<TD>H.264</TD></TR>
+<TR>
+<TD><FONT style="BACKGROUND-COLOR: #ffffcc">Кодеки аудио</FONT></TD>
+<TD>MP3 (11, 22, 44 кГц) </TD>
+<TD></TD></TR>
+<TR>
+<TD><FONT style="BACKGROUND-COLOR: #ffffcc">Версия flash-плеера</FONT> </TD>
+<TD>любая</TD>
+<TD>с 9.0.115.0</TD></TR></TBODY></TABLE>
+
+<P>Основные возможности:</P>
+<UL>
+<LI>поддержка плейлистов различных конфигураций; 
+<LI>возможность скрывать прямые ссылки на файлы с помощью кодирования; 
+<LI>мультиязычный интерфейс; 
+<LI>возможность выбирать состав панели управления<BR>(более 20 кнопок и индикаторов можно установить в любой последовательности); 
+<LI>пользовательские подсказки; 
+<LI>полноэкранный режим для видео; 
+<LI>поддержка <A href="http://uppod.ru/talk_196">стримминга</A> и <A href="http://uppod.ru/talk_177">псевдопоточной</A> загрузки; 
+
+<LI>подключение <A href="http://uppod.ru/talk_485">веб-камеры</A>; 
+<LI><A href="http://uppod.ru/player/faq/hotkeys/">горячие клавиши</A>; 
+<LI>в интерфейсе нет нашей рекламы; 
+<LI>и еще много-много всего.</LI></UL>
+<P>Возможности плейлистов:</P>
+<UL>
+<LI>расположение с любой стороны; 
+<LI>можно использовать картинку с подсказкой или просто текст; 
+<LI>можно задать размер элементов и цвета; 
+<LI>можно разбить плейлист на страницы.</LI></UL>
+<P>Мы постарались сделать максимально гибким управление внешним видом и функционалом плеера, настройки позволяют:</P>
+
+<UL>
+<LI>задать любой размер и конфигурацию; 
+<LI>задать любой цвет (или несколько цветов) почти всем элементам интерфейса; 
+<LI>сделать внешний вид уникальным с помощью визуального редактора на нашем сайте; 
+<LI>гибко настроить внешний вид и функциональные возможности плейлистов; 
+<LI>установить картинку в качестве заставки, либо загружать определенный кадр для видео; 
+<LI>управлять плеером через <A href="http://uppod.ru/player/ajax/">JavaScript</A>; 
+<LI>создавать <A href="http://uppodplayer.appspot.com/">скриншоты</A>.</LI></UL>
+<H2><A href="http://uppod.ru/player/my/">
+<P>Мой плеер</P></A></H2></div>
+</div>
+
+<div id="clear"></div>
+</div>
+<div id=footer>
+	<div class=copy>Студия<a href=http://stuudio.ru><img src="http://uppod.ru/i/u.gif" alt="" width=12 height=13></a> &copy; 2008-2010&nbsp; <a href=http://uppod.ru/about>О проекте</a> &nbsp;<a href=http://uppod.ru/about/contact>Контакты</a> &nbsp;<a href=http://uppod.ru/rules>Соглашение</a> &nbsp;<a href=http://uppod.ru/player/faq/banners>Наши баннеры</a> </div>
+
+</div>
+<SCRIPT type=text/javascript>Init("uppod.ru","ru");</script>
+<script type="text/javascript">
+    (function() {
+      var ga = document.createElement('script');
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      ga.setAttribute('async', 'true');
+      document.documentElement.firstChild.appendChild(ga);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+-- phpMyAdmin SQL Dump
+-- version 2.6.1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Aug 09, 2012 at 06:23 PM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.4
+--
+-- Database: `my_ci`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback_message`
+--
+
+CREATE TABLE `feedback_message` (
+  `id` smallint(5) NOT NULL auto_increment,
+  `id_theme` smallint(3) NOT NULL,
+  `name` char(30) NOT NULL,
+  `email` char(30) NOT NULL,
+  `message` varchar(1000) NOT NULL,
+  `date` int(10) default '0',
+  `ip` char(15) default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=22 ;
+
+--
+-- Dumping data for table `feedback_message`
+--
+
+INSERT INTO `feedback_message` VALUES (1, 1, 'Митя', '123@mail.ru', 'Всем привет!', 34637377, '');
+INSERT INTO `feedback_message` VALUES (2, 0, 'rtytyrt', '', '', 1302711538, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (3, 0, '', '111@mail.ru', '', 1302711538, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (4, 2, 'rtytyrt', '111@mail.ru', 'uyi', 1302711742, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (5, 2, 'fgh', '123@mail.ru', 'fgh', 1302711768, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (6, 1, 'dfg', 'dfg@dfg.ru', 'dgth\nuyk\n\n8uio t7":P{P', 1302714370, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (7, 1, 'Валера', '1@yandex.ru', 'Подробности о Venteger', 1302714511, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (8, 2, 'Дмитрий', 'stas@mail.ru', 'Здравствуй!', 1302714571, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (9, 1, 'нкн', '3424ar@nfg.ru', 'dgerg\nergsth0-32 20 24r \na wsefse;; \n 43wrw""''l;s dfl''\n>,,SD?> sefwe<?ljpios ekjf\n sl', 1302772234, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (10, 2, 'wertt', 'rtyery@sdgfgh.ru', 'dgh rhrt h', 1302782281, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (11, 2, 'wewewe', '111@mail.ru', 'sgferhr\nt yj', 1302782558, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (12, 2, 'wewewe', '111@mail.ru', 'sgferhr\nt yj', 1302782776, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (13, 2, 'wewewe', '111@mail.ru', 'sgferhr\nt yj', 1302782818, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (14, 2, 'wewewe', '111@mail.ru', 'sgferhr\nt yj', 1302782839, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (15, 2, 'wewewe', '111@mail.ru', 'sgferhr\nt yj', 1302782929, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (16, 2, 'wewewe', '111@mail.ru', 'sgferhr\nt yj', 1302782951, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (17, 2, 'wewewe', '111@mail.ru', 'sgferhr\nt yj', 1302782969, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (18, 1, 'Коля', 'kolyan@gmail.com', 'Сколько стоит\nAvenger 8x8', 1302783024, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (19, 1, 'Sanya', 'ssanya@mail.ru', 'Сколько стоит доставка в Новосибирск?', 1302783195, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (20, 1, 'ert', 'erte@h.ru', 'reyrdhy', 1303212649, '127.0.0.1');
+INSERT INTO `feedback_message` VALUES (21, 1, 'rgd', 'dr@edg.rrt', 'ht', 1303212798, '127.0.0.1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback_theme`
+--
+
+CREATE TABLE `feedback_theme` (
+  `id` smallint(3) NOT NULL auto_increment,
+  `name` char(50) NOT NULL,
+  `email` char(50) default NULL,
+  `user_name` char(30) NOT NULL,
+  `show_i` tinyint(1) NOT NULL default '0',
+  `sort_i` smallint(3) NOT NULL default '1',
+  `date_create` int(10) default '0',
+  `date_update` int(10) default '0',
+  `ip_create` char(15) NOT NULL,
+  `ip_update` char(15) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `feedback_theme`
+--
+
+INSERT INTO `feedback_theme` VALUES (1, 'вопрос по продаже вездеходов', 'andery1@yandex.ru', 'Андрей', 1, 1, 0, 1302772050, '', '127.0.0.1');
+INSERT INTO `feedback_theme` VALUES (2, 'вопрос по запчастям и аксессуарам', 'argoan@inbox.ru', 'Михаил', 1, 1, 1302476438, 1302772044, '127.0.0.1', '127.0.0.1');
+INSERT INTO `feedback_theme` VALUES (3, 'по вопросам работы сайта', '531@mail.ru', 'Василий', 1, 1, 1302476662, 1302478793, '127.0.0.1', '127.0.0.1');
+INSERT INTO `feedback_theme` VALUES (4, 'hjkhj,', '123@mail.ru, ddd@dfg.ru', 'iuluil', 0, 1, 1302476698, 0, '127.0.0.1', '');

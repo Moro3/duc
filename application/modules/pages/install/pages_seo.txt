@@ -1,0 +1,21 @@
+-- Структура таблицы `pages_seo`
+-- 
+
+CREATE TABLE `pages_seo` (
+  	`id` int(6) NOT NULL auto_increment,
+	`id_page_content` int(6) NOT NULL,		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0',
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`title` char(250) NOT NULL,
+	`description` char(250) NOT NULL,
+	`keywords` char(250) NOT NULL,
+	`h1` char(250) NOT NULL,	  	
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `sorter` (`sorter`),
+	KEY `id_page_content` (`id_page_content`)			
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

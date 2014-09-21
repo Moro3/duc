@@ -1,0 +1,40 @@
+.menu_document .button_main{
+   	padding: 10px;
+   	overflow: hidden;
+    zoom: 1;
+}
+
+.menu_document .button_menu {
+	width: 210px;
+	1height: 120px;
+	background-color: #eaf0ea;
+	color: #3366ff;
+	padding:15px 10px;
+
+}
+
+.menu_document .button_menu .header_text {
+	color: #ed1c24;
+	font-size: 20px;
+	padding: 10px 5px;
+}
+
+.menu_document .button_menu .navigation_text {
+	color: #3366ff;
+	font-size: 14px;
+	padding: 4px 5px;
+}
+
+.menu_document .button_menu .navigation_text a:link {
+	color: #3366ff;
+    text-decoration: none;
+}
+
+.menu_document .button_menu .navigation_text a:hover {
+	color: #3366ff;
+    text-decoration: underline;
+}
+.menu_document .button_menu .navigation_text a:visited {
+	color: #3366ff;
+    text-decoration: none;
+}

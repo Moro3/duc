@@ -1,0 +1,131 @@
+/*================== элементы для блока сотрудничество ==============*/
+.cooperation_block{
+  1width:380px;
+  border:1px solid #E1D096;
+  position:relative;
+  1float:left;
+  1top:0;
+  1left:0;
+  padding:10px;
+  overflow: hidden;
+  zoom: 1;
+  background:url(/scin/fon_line_yellow.gif) repeat-x;
+  background-color:#FAE7A6;
+}
+
+.cooperation_block .institution_duc{
+  border:1px solid #E1D096;
+  background:url(/scin/fon_line_blue.gif) repeat-x;
+  background-color:#FAE7A6;
+  padding:10px;
+  text-align:center;
+  color:#196090;
+  font-size:32px;
+}
+.cooperation_block .block_main{
+  1width:100%;
+  1background:url('/scin/arrow_blue_left_down.gif') no-repeat 50% 0;
+  padding:20px;
+
+}
+.cooperation_block .block_left_down{
+  width:144px;
+  1height:50px;
+  float:left;
+  background:url('/scin/arrow_blue_left_down.gif') no-repeat 50% 0;
+  padding-top:50px;
+  padding-left:25px;
+
+  margin-top:5px;
+}
+.cooperation_block .block_down{
+  width:144px;
+  float:left;
+  1height:50px;
+  background:url('/scin/arrow_blue_down.gif') no-repeat 50% 0;
+  padding-top:50px;
+  margin-top:5px;
+}
+.cooperation_block .block_right_down{
+  width:144px;
+  1height:50px;
+  float:left;
+  background:url('/scin/arrow_blue_right_down.gif') no-repeat 50% 0;
+  padding-top:50px;
+  1padding-right:20px;
+  margin-top:5px;
+}
+.cooperation_block .list{
+  vertical-align:text-top;
+  padding-top:5px;
+  1overflow: hidden;
+  zoom: 1;
+}
+.cooperation_block .list ul{
+   list-style-type:circle;
+   margin:0;
+   padding:4px;
+   1padding-top:10px;
+   font-size:11px;
+   color:#434343;
+}
+.cooperation_block .list ul li{
+   list-style-type:circle;
+   1list-style-image:none;
+   list-style-image: url(/tpl/default/scin/li3.gif);
+   margin:0;
+   padding:0;
+   padding:0px;
+   margin-left:12px;
+   margin-top:5px;
+}
+
+.cooperation_block .institution{
+  float:left;
+  width:120px;
+  height:50px;
+  1border:1px solid #E1D096;
+  background:url(/tpl/default/scin/fon_line_blue.gif) repeat-x;
+  background-color:#FAE7A6;
+  padding:5px;
+  text-align:center;
+  color:#196090;
+  font-size:12px;
+  font-weight:bold;
+  overflow:hidden;
+
+}
+.cooperation_block .institution_managment{
+  float:left;
+  1width:120px;
+  border:1px solid #E1D096;
+  background:url(/tpl/default/scin/fon_line_blue.gif) repeat-x;
+  background-color:#FAE7A6;
+  padding:10px;
+  text-align:center;
+  color:#196090;
+  font-size:16px;
+}
+.cooperation_block .institution_culture{
+  float:left;
+  1width:120px;
+  border:1px solid #E1D096;
+  background:url(/tpl/default/scin/fon_line_blue.gif) repeat-x;
+  background-color:#FAE7A6;
+  padding:10px;
+  text-align:center;
+  color:#196090;
+  font-size:16px;
+}
+.cooperation_block .institution_education{
+  float:left;
+  1width:120px;
+  border:1px solid #E1D096;
+  background:url(/tpl/default/scin/fon_line_blue.gif) repeat-x;
+  background-color:#FAE7A6;
+  padding:10px;
+  text-align:center;
+  color:#196090;
+  font-size:16px;
+}
+

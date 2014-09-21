@@ -1,0 +1,75 @@
+input {
+  border: 1px solid #666;
+  width: 200px;
+padding:0;
+margin: 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+}
+#code, #submit{
+  width: 75px;
+}
+
+
+input.checkbox { border: none }
+input:focus { border: 1px dotted #333; }
+input.error { border: 1px dotted #FF0033; }
+label {
+	display: inline-block;
+	line-height: 1.8;
+	vertical-align: top;
+	cursor: hand;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    padding-left: 25px;
+}
+fieldset label {
+    width: 130px;
+    padding-left: 25px;
+}
+fieldset {
+	margin: 1px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    padding: 10px;
+    background-color: #fafafa;
+    width: 800px;
+}
+select{
+  width: 200px;
+  border: 1px solid #666;
+  border-collapse:separate ;
+  }
+textarea{
+  border: 1px solid #666;
+  width:587px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+}
+
+
+legend{
+
+background-color: #FFFFFF;
+}
+ div.error { display: none; }
+label.error{
+width: 250px;
+    font-family: "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 9pt;
+    color: #FF0033;
+
+  }
+fieldset label.error{
+width: 370px;
+}
+form input.submit { margin-left: 253px; }
+td{
+  vertical-align: top;
+}
+img{
+padding:0;
+margin: 0;
+}
+

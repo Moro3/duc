@@ -1,0 +1,67 @@
+﻿
+div#sub_menu {
+  font-size: 20px;
+  color:#A3C811;
+  padding:10px;
+  margin: 10px;
+  height: 34px;
+  background-color:#EAEAEA;
+}
+
+div#sub_menu a#menu{
+  font-size: 20px;
+  color:#738D0C;
+  margin:10px;
+  padding:10px;
+}
+div#sub_menu a#select_menu{
+  font-size: 20px;
+  color:#738D0C;
+  padding:8px;
+  margin:7px;
+  background-color:#DADADA;
+  border: 1px solid #686868;
+}
+
+div#sub_menu a#menu:hover{
+  font-size: 20px;
+  color:#A3C811;
+  padding:3px;
+  margin:10px;
+  padding:10px;
+}
+
+div#menu_main {
+  font-size: 22px;
+  color:#A3C811;
+  padding:10px;
+  margin:10px;
+}
+
+div#menu_main a#menu{
+  font-size: 22px;
+  color:#702C02;
+  padding:10px;
+  margin:10px;
+}
+div#menu_main a#menu:hover{
+  font-size: 22px;
+  color:#C84E04;
+  padding:10px;
+  margin:10px;
+}
+
+div#menu_main a#select_menu{
+  font-size: 22px;
+  color:#702C02;
+  padding:10px;
+  margin:10px;
+  background-color:#DFDFDF;
+  border: 1px solid #686868;
+}
+
+div#menu {
+  width: 100%;
+  background-color:#F4F4F4;
+  border: 1px solid #D4D4D4;
+}

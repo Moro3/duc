@@ -1,0 +1,12 @@
+.modules_main{
+}
+.modules_main .mod_header{
+	padding:20px;
+	width:100%;
+	text-align:center;
+}
+
+.modules_main .mod_name{
+	padding:50px;
+	float:left;
+}

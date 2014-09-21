@@ -1,0 +1,17 @@
+--
+-- Table structure for table `mods_type`
+--
+
+CREATE TABLE `mods_type` (
+  	`id` int(6) NOT NULL auto_increment,  
+  	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0', 
+  	`name` char(30) NOT NULL,
+	`alias` char(60) NOT NULL,  
+  	`description` char(255) default NULL,  
+  	`date_create` int(10) NOT NULL default '0',
+  	`date_update` int(10) NOT NULL default '0',
+  	`ip_create` char(15) NOT NULL default '0.0.0.0',
+  	`ip_update` char(15) NOT NULL default '0.0.0.0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;

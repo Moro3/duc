@@ -1,0 +1,19 @@
+.contact{
+
+}
+.contact .scheme{
+    width:620px;
+    float:left;
+}
+.contact .scheme img{
+    width:600px;
+}
+.contact .address{
+    float:left;
+    width:300px;
+    text-align:right;
+}
+.contact .go{
+    clear:both;
+}
+

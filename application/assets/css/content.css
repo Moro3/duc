@@ -1,0 +1,44 @@
+.content .block_left{	width: 300px;
+	height: 100%;
+	float:left;
+	font-size:16px;
+	line-height: 1.6;
+	1background-color: #110099;
+	font-family: Verdana, Arial, Georgia ;
+}
+
+.content .block_center{	width: 1150px;
+	height: 100%;
+	float:left;
+	1background-color: #fff666;
+	font-family: Verdana, Arial, Georgia ;
+	padding:10px;
+	font-size:16px;
+	line-height: 1.7;
+	color: 5b5b5b;
+}
+
+.content .block_center_inside{
+	width: 1150px;
+	height: 100%;
+	float:left;
+	1background-color: #fff666;
+	font-family: Verdana, Arial, Georgia ;
+	padding:10px;
+	font-size:20px;
+	line-height: 1.7;
+	color: 5b5b5b;
+}
+
+.content .block_right{
+	width: 300px;
+	height: 100%;
+	float:right;
+	font-size:16px;
+	line-height: 1.6;
+	1background-color: #ff6600;
+	font-family: Verdana, Arial, Georgia ;
+}
+.video-team{	float:left;
+	padding:10px;
+}

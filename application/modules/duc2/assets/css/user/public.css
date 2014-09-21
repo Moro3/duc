@@ -1,0 +1,67 @@
+.duc_table{
+    margin:0 auto;
+
+}
+.duc_table table{
+	background-color: #CDCDCD;
+	font-size: normal;
+	width: 100%;
+	text-align: left;
+	1border-collapse: collapse;
+	1border-spacing: 0;
+}
+
+.duc_table table tr{
+
+
+}
+.duc_table head tr{
+
+}
+.duc_table table tr.row td{
+   	border-width:1px 0;
+   	border-style: solid;
+	border-color: #CDCDCD #fff;
+}
+.duc_table table th{
+    background-color: #e6EEEE;
+	border: 1px solid #fff;
+	font-size: normal;
+	padding: 12px;
+}
+.duc_table table td{
+    color: #3D3D3D;
+	padding: 12px;
+	background-color: #FFF;
+	vertical-align: top;
+
+}
+.duc_table table tr th{
+   color: #7E7E7E;
+   font-size: normal;
+}
+
+.duc_table table thead tr.header{
+    background-image: url(/{assets}/img/tablesorter/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+.duc_table table tr.odd td{
+   background-color:#f5f5f6;
+}
+.duc_table table tr.row_alt{
+   color:#567dce;
+}
+.duc_table table td.select{
+   color:#567dce;
+}
+
+
+
+.duc_table .note {	font-size:smaller;
+}
+.duc_table .warning {
+	font-size:smaller;
+	color: #67c4f9;
+}

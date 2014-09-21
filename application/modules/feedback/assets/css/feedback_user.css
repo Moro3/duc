@@ -1,0 +1,129 @@
+/*
+========== feedback message user===========
+*/
+div#feedback_form{
+  float:left;
+  width:320px;
+  color:#1D71A9;
+  font-size:12px;
+  1border:1px solid #C6C6C6;
+  padding:0px;
+  text-align:left;
+  1background-color:#FAFAFA;
+}
+
+div#feedback_form #name{
+  float:left;
+  width: 80px;
+  padding:5px;
+  text-align:right;
+}
+div#feedback_form #name_value{
+  float:left;
+  width: 220px;
+  padding:2px;
+  text-align:left;
+  color:#6F2C2E;
+}
+div#feedback_form #name_value input{
+  width: 220px;
+  font-size:12px;
+  padding:2px;
+  text-align:left;
+  color:#6F2C2E;
+}
+div#feedback_form #theme{
+  float:left;
+  width: 80px;
+  padding:5px;
+  text-align:right;
+}
+div#feedback_form #theme_value{
+  float:left;
+  width: 220px;
+  padding:2px;
+  color:#6F2C2E;
+}
+div#feedback_form #theme_value select {
+  width: 220px;
+  padding:0px;
+  color:#6F2C2E;
+  font-size:12px;
+  text-align:left;
+}
+div#feedback_form #email{
+  float:left;
+  width: 80px;
+  padding:5px;
+  text-align:right;
+}
+div#feedback_form #email_value{
+  float:left;
+  width: 220px;
+  padding:2px;
+  color:#6F2C2E;
+}
+div#feedback_form #email_value input{
+  width: 220px;
+  font-size:12px;
+  padding:2px;
+  color:#6F2C2E;
+  text-align:left;
+}
+div#feedback_form #message{
+  float:left;
+  width: 80px;
+  padding:5px;
+  text-align:right;
+}
+div#feedback_form #message_value{
+  float:left;
+  width: 220px;
+  padding:2px;
+  color:#6F2C2E;
+}
+div#feedback_form #message_value textarea{
+  width:220px;
+  font-size:12px;
+  height:100px;
+  padding:0px;
+  color:#6F2C2E;
+  text-align:left;
+}
+div#feedback_form form{
+  padding:0px;
+  margin:0px;
+}
+div#feedback_form #add_message{
+  padding:10px;
+}
+div#feedback_form #add_message input{
+  width: 180px;
+  color:#6F2C2E;
+  margin-left:80px;
+  padding:10px 20px;
+  font-size:16px;
+  text-align:center;
+}
+div#feedback_form div#clear{
+  clear:both;
+  padding:3px;
+  margin:0px;
+}
+
+div#feedback_form #add_message_ok{
+  width: 200px;
+  color:#008000;
+  padding:20px;
+  font-size:12px;
+  text-align:center;
+}
+div#feedback_form #add_message_again{
+  width: 200px;
+  color:#008000;
+  padding:20px;
+  font-size:12px;
+  text-align:center;
+}
+
+

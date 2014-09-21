@@ -1,0 +1,18 @@
+-- Структура таблицы `duc_photos`
+-- 
+
+CREATE TABLE `duc_photos` (
+  	`id` int(7) NOT NULL auto_increment,
+	`id_group` int(3) NOT NULL,	  	
+  	`active` tinyint(1) NOT NULL default '1',
+	`sorter` smallint(4) NOT NULL default '10',
+	`main` tinyint(1) NOT NULL default '0',
+	`name` char(150) NOT NULL,
+	`img` char(50) NOT NULL,
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,	
+  	PRIMARY KEY  (`id`),
+	KEY `id_group` (`id_group`)	
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

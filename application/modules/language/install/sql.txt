@@ -1,0 +1,44 @@
+-- phpMyAdmin SQL Dump
+-- version 2.6.1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Aug 09, 2012 at 06:22 PM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.4
+--
+-- Database: `my_ci`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `languages`
+--
+
+CREATE TABLE `languages` (
+  `id` smallint(2) NOT NULL auto_increment,
+  `show_i` tinyint(1) NOT NULL default '0',
+  `sort_i` smallint(3) NOT NULL default '1',
+  `name` char(20) default NULL,
+  `abbr` char(2) NOT NULL,
+  `flag` char(30) default NULL,
+  `arms` char(30) default NULL,
+  `description` char(100) NOT NULL,
+  `date_create` int(10) NOT NULL,
+  `date_update` int(10) NOT NULL,
+  `ip_create` char(15) NOT NULL,
+  `ip_update` char(15) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `abbr` (`abbr`),
+  KEY `show_i` (`show_i`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `languages`
+--
+
+INSERT INTO `languages` VALUES (1, 1, 1, 'русский', 'ru', '1_language_flag.gif', '', 'ets', 1301690576, 1302046034, '127.0.0.1', '127.0.0.1');
+INSERT INTO `languages` VALUES (2, 1, 1, 'english', 'en', '2_language_flag.gif', '', '', 1301694581, 1302046159, '127.0.0.1', '127.0.0.1');
+INSERT INTO `languages` VALUES (3, 1, 1, 'немецкий', 'de', '3_language_flag.gif', '', '', 1301694702, 1302046240, '127.0.0.1', '127.0.0.1');
+INSERT INTO `languages` VALUES (4, 1, 1, 'france', 'fr', '4_language_flag.gif', '', '', 1301694775, 1302046248, '127.0.0.1', '127.0.0.1');

@@ -1,0 +1,17 @@
+-- Структура таблицы `duc_numgroups`
+--
+
+CREATE TABLE `duc_numgroups` (
+  	`id` int(3) NOT NULL auto_increment,
+	`group` tinyint(2) NOT NULL default '1',
+	`year` tinyint(2) NOT NULL default '1',  	
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+	`active` tinyint(1) NOT NULL default '0',
+  	`sorter` tinyint(3) NOT NULL default '1',
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`name` char(150) NOT NULL,
+	`description` text,  	
+  	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

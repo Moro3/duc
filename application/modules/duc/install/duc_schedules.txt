@@ -1,0 +1,37 @@
+-- Структура таблицы `duc_schedules`
+-- 
+
+CREATE TABLE `duc_schedules` (
+  	`id` int(3) NOT NULL auto_increment,
+	`id_group` int(3) NOT NULL,
+	`id_numgroup` int(3) NOT NULL,		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(1) NOT NULL default '0',
+	`group_number` char(10) NOT NULL,
+	`cabinet` char(10) NOT NULL,	
+	`mon_from` char(5) NOT NULL,
+	`mon_to` char(5) NOT NULL,
+	`tue_from` char(5) NOT NULL,
+	`tue_to` char(5) NOT NULL,
+	`wed_from` char(5) NOT NULL,
+	`wed_to` char(5) NOT NULL,
+	`thur_from` char(5) NOT NULL,
+	`thur_to` char(5) NOT NULL,
+	`fri_from` char(5) NOT NULL,
+	`fri_to` char(5) NOT NULL,
+	`sat_from` char(5) NOT NULL,
+	`sat_to` char(5) NOT NULL,
+	`sun_from` char(5) NOT NULL,
+	`sun_to` char(5) NOT NULL,
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`duration_job` smallint(3) NOT NULL,
+	`duration_break` smallint(3) NOT NULL,
+	`week_job` tinyint(2) NOT NULL,		
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `sorter` (`sorter`),
+	KEY `id_group` (`id_group`)			
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

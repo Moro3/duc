@@ -1,0 +1,24 @@
+-- Структура таблицы `duc_durations`
+-- 
+
+CREATE TABLE `duc_durations` (
+  	`id` int(3) NOT NULL auto_increment,
+	`id_group` int(3) NOT NULL,		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(1) NOT NULL default '0',
+	`year_education_from` tinyint(2) NOT NULL,
+	`year_education_to` tinyint(2) NOT NULL,
+	`age_from` tinyint(2) NOT NULL,
+	`age_to` tinyint(2) NOT NULL,
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,
+	`duration_job` smallint(3) NOT NULL,
+	`duration_break` smallint(3) NOT NULL,
+	`week_job` tinyint(2) NOT NULL,		
+  	PRIMARY KEY  (`id`),
+	KEY `active` (`active`),
+	KEY `sorter` (`sorter`),
+	KEY `id_group` (`id_group`)			
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

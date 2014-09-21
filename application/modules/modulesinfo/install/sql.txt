@@ -1,0 +1,65 @@
+-- phpMyAdmin SQL Dump
+-- version 2.6.1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Aug 09, 2012 at 06:28 PM
+-- Server version: 5.0.45
+-- PHP Version: 5.2.4
+--
+-- Database: `my_ci`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `modules_pages`
+--
+
+CREATE TABLE `modules_pages` (
+  `id` int(6) NOT NULL auto_increment,
+  `id_page` smallint(5) default NULL,
+  `id_module_tpl` smallint(5) default NULL,
+  `sort_id` smallint(5) NOT NULL,
+  `date_create` int(10) NOT NULL default '0',
+  `date_update` int(10) NOT NULL default '0',
+  `ip_create` char(15) NOT NULL default '0.0.0.0',
+  `ip_update` char(15) NOT NULL default '0.0.0.0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `modules_pages`
+--
+
+INSERT INTO `modules_pages` VALUES (1, 23, 1, 1, 0, 0, '0.0.0.0', '0.0.0.0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `modules_tpl`
+--
+
+CREATE TABLE `modules_tpl` (
+  `id` int(6) NOT NULL auto_increment,
+  `id_type` smallint(3) default '1',
+  `name` char(30) NOT NULL,
+  `description` char(255) default NULL,
+  `module` char(30) NOT NULL,
+  `controller` char(30) NOT NULL,
+  `method` char(30) NOT NULL,
+  `arg` char(30) NOT NULL,
+  `name_tpl` char(50) NOT NULL,
+  `date_create` int(10) NOT NULL default '0',
+  `date_update` int(10) NOT NULL default '0',
+  `ip_create` char(15) NOT NULL default '0.0.0.0',
+  `ip_update` char(15) NOT NULL default '0.0.0.0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `modules_tpl`
+--
+
+INSERT INTO `modules_tpl` VALUES (1, 1, 'каталог техники', 'продажа техники, вездеходов, гидроциклов, катеров', 'katalog', 'katalog_user', 'index', '', 'katalog_list', 0, 0, '0.0.0.0', '0.0.0.0');
+INSERT INTO `modules_tpl` VALUES (2, 2, 'обратная связь', 'обратная связь с выбором тем', 'feedback', 'feedback_user', 'user_feedback', '', 'feedback', 0, 0, '0.0.0.0', '0.0.0.0');

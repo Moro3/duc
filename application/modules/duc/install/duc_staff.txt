@@ -1,0 +1,23 @@
+-- Структура таблицы `duc_staff`
+-- 
+
+CREATE TABLE `duc_staff` (
+  	`id` int(4) NOT NULL auto_increment,
+	`id_post` int(3) NOT NULL,		
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(1) NOT NULL default '0',
+	`surname` char(50) NOT NULL,
+	`name` char(50) NOT NULL,
+	`name2` char(50) NOT NULL,
+	`date_create` int(10) NOT NULL,
+  	`date_update` int(10) NOT NULL,
+  	`ip_create` char(15) NOT NULL,
+  	`ip_update` char(15) NOT NULL,	
+	`foto` char(50) NOT NULL,		
+	`description` text,  	
+  	PRIMARY KEY  (`id`),
+	KEY `show_i` (`show_i`),
+	KEY `sort_i` (`sort_i`),
+	KEY `id_qualification` (`id_qualification`),
+	KEY `id_rank` (`id_rank`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -1,0 +1,10 @@
+-- Структура таблицы `menus_groups_places`
+-- 
+
+CREATE TABLE `menus_groups_places` (
+  	`id` int(3) NOT NULL auto_increment,
+	`group_id` int(3) NOT NULL,
+	`place_id` int(3) NOT NULL,
+	`sorter` smallint(3) NOT NULL default '0',	
+  	PRIMARY KEY  (`id`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

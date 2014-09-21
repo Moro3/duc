@@ -1,0 +1,43 @@
+/*==================элементы для страницы фотогаллерея==============*/
+.gallery {
+
+}
+.gallery .group_id{
+   overflow: hidden;
+   zoom: 1;
+   padding-top:20px;
+}
+.gallery .id{
+   border:1px solid #80EB14;
+   background-color:#D6F9B3;
+   overflow: hidden;
+   zoom: 1;
+   padding:10px;
+}
+.gallery .id .date{
+  font-size:18px;
+  color:#647454;
+  padding: 10px 0;
+}
+.gallery .group_id .name{
+  font-size: 16px;
+  font-weight:bold;
+  padding: 5px 0;
+}
+.gallery .id .description{
+  font-size: 14px;
+  font-weight:normal;
+  padding: 5px 0;
+}
+.gallery .id .imgs{
+
+}
+.gallery .id .imgs .img{
+  float:left;
+  padding:5px;
+}
+.gallery .id .imgs .img img{
+  1width:200px;
+  height:150px;
+  border:5px solid #ffffff;
+}

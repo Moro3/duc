@@ -1,0 +1,142 @@
+
+.table_block_main{
+    border-collapse:0;
+    border-spacing:0;
+}
+.table_block_main tr.tr_block_main{
+	width:100%;
+}
+.table_block_main tr td.td_content{
+	border-width: 0 1px 1px 1px;
+    border-color: #47ba42;
+    border-style:solid;
+    background-color:#f6f6f6;
+
+}
+.table_block_main tr td.td_left{
+	width:20px;
+	height:20px;
+	background: url('/{assets}/img/fon_block_tl.gif') no-repeat 0 0;
+
+}
+.table_block_main tr td.td_center{
+	width:84%;
+	height:20px;
+	background: url('/{assets}/img/fon_block_line.gif') repeat-x 0 0;
+
+}
+.table_block_main tr td.td_right{
+	width:20px;
+    height:20px;
+    background: url('/{assets}/img/fon_block_tr.gif') no-repeat 100% 0;
+}
+
+
+.block_public{
+    width: 200px;
+    1background-color:#81af00;
+}
+
+.block_public .block_public_header{
+	height:20px;
+}
+
+.block_public .fon_left_header{
+    float:left;
+    width:18px;
+    height:20px;
+    background: url('/{assets}/img/fon_block_tl.gif') no-repeat 0 0;
+}
+
+.block_public .fon_center_header{
+    float:left;
+    width:164px;
+    height:20px;
+    background: url('/{assets}/img/fon_block_line.gif') repeat-x 0 0;
+}
+
+.block_public .fon_right_header{
+    float:right;
+    width:18px;
+    height:20px;
+    background: url('/{assets}/img/fon_block_tr.gif') no-repeat 100% 0;
+}
+
+.block_public .block_public_content{
+    border-width: 0 1px 1px 1px;
+    border-color: #47ba42;
+    border-style:solid;
+    background-color:#f6f6f6;
+}
+
+
+.clear{
+	clear:both;
+}
+.clear2{
+	overflow: hidden;
+    zoom: 1;
+}
+
+a {
+	color: #ff7326;
+	text-decoration: none;
+}
+a:visited {
+	color: #ff7326;
+	text-decoration: underline;
+}
+a:hover {
+	color: #d45916;
+	text-decoration: underline;
+}
+
+
+.breadcrumbs{
+    color:#8ea093;
+    padding-bottom:10px;
+}
+.breadcrumbs a{
+    color:#2dad51;
+}
+.breadcrumbs .next{
+    color:#8fb399;
+}
+
+h1{
+	color: #515151;
+	padding:0;
+	margin:0;
+	font-size:36px;
+}
+h2{
+   	color: #606060;
+	padding:0;
+	margin:0;
+	font-size:32px;
+}
+h3{
+	color: #6F6F6F;
+	padding:0;
+	margin:0;
+	font-size:26px;
+}
+h4{
+	color: #7E7E7E;
+	padding:0;
+	margin:0;
+	font-size:20px;
+}
+h5{
+	color: #8D8D8D;
+	padding:0;
+	margin:0;
+	font-size:16px;
+}
+
+ul.big{	font-size: 34px;
+}
+ul.big li{
+	color:#ff7326;
+}
+
