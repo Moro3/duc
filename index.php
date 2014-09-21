@@ -27,7 +27,7 @@ restore_error_handler ();
 
 //обработка в случае критической ошибки
 //PHP >5.3
-/*
+
 register_shutdown_function(function () {
    $error = error_get_last();
    if ($error && ($error['type'] == E_ERROR || $error['type'] == E_PARSE || $error['type'] == E_COMPILE_ERROR)) {
@@ -40,8 +40,9 @@ register_shutdown_function(function () {
         // ... завершаемая корректно ....
     }
 });
-*/
+
 //PHP <5.3
+/*
 function set_critical_error_handler() {
    $error = error_get_last();
    if ($error && ($error['type'] == E_ERROR || $error['type'] == E_PARSE || $error['type'] == E_COMPILE_ERROR)) {
@@ -63,6 +64,7 @@ function set_critical_error_handler() {
     }
 }
 register_shutdown_function('set_critical_error_handler');
+*/
 
 
 /*
