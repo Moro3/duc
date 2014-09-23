@@ -65,6 +65,19 @@ class Duc_schedules extends Duc {
                          )
         );
 
+        // изменение поля вида select для поиска teacher
+        $this->load->view('grid/formatter/select2',
+                         array('grid' => $this->table,
+                                'url' => '/grid/'.$this->MY_table.'/'.$this->MY_module.'/grid/',
+                                'selector' => '#gs_teacher',
+                                'width' => '350px',
+                                'containerCss' => array('text-align' => 'left'),
+                                'event' => 'jqGridGridComplete',
+                                //'formatSelection' => '',
+                                //'formatResult' => ''
+                         )
+        );
+
 
 
         if($this->input->post('_search')){
