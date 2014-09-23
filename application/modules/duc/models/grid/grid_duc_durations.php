@@ -18,6 +18,7 @@ class grid_duc_durations extends jqGrid
 		$this->config = $this->loader->get('config');
 
         $this->params['groups'] = Modules::run('duc/duc_groups/listGroups');
+        $this->params['groupsEscape'] = Modules::run('duc/duc_groups/listGroupsEscape');
         //print_r($this->params['groups']);
         //exit;
         //$this->params['groups'] = array();
@@ -87,7 +88,7 @@ class grid_duc_durations extends jqGrid
 
                                    'edittype' => "select",
                                    'editoptions' => array(
-                                   							'value' => new jqGrid_Data_Value($this->params['groups']),
+                                   							'value' => new jqGrid_Data_Value($this->params['groupsEscape']),
                                 	),
                                    'editrules' => array('required' => true,
                                                      'integer' => true,
@@ -98,7 +99,7 @@ class grid_duc_durations extends jqGrid
                                    'stype' => 'select',
                                    //'replace' => $this->params['categories'],
                                    'searchoptions' => array(
-                                        				'value' => new jqGrid_Data_Value($this->params['groups'], 'All'),
+                                        				'value' => new jqGrid_Data_Value($this->params['groupsEscape'], 'All'),
                                         				//'value' => array('' => 'All') + $this->params['categories'],
                                         				//'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
                   				   ),
@@ -461,7 +462,8 @@ class grid_duc_durations extends jqGrid
     }
 
 
-    protected function opTruncate($id){    	throw new jqGrid_Exception('операция Truncate');
+    protected function opTruncate($id){
+    	throw new jqGrid_Exception('операция Truncate');
     }
 
 }
