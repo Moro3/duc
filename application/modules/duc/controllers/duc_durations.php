@@ -5,7 +5,7 @@ if( ! class_exists('duc')){
 }
 
 /*
- * Класс Duc_directions
+ * Класс Duc_durations
  *
  */
 
@@ -98,7 +98,8 @@ class Duc_durations extends Duc {
     function listWeekJobs(){
          //$res = array_merge(array(1=>1), range(2,10));
          //$res = array(1=>1)+ range(2,10);
-         for($i=1; $i<=10; $i++){         	$res[$i] = $i;
+         for($i=1; $i<=10; $i++){
+         	$res[$i] = $i;
          }
          return $res;
     }
