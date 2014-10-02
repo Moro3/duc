@@ -33,11 +33,19 @@ register_shutdown_function(function () {
    if ($error && ($error['type'] == E_ERROR || $error['type'] == E_PARSE || $error['type'] == E_COMPILE_ERROR)) {
        if (strpos($error['message'], 'Allowed memory size') === 0) { // если кончилась память
            ini_set('memory_limit', (intval(ini_get('memory_limit'))+64)."M"); // выделяем немножко что бы доработать корректно
-           Log::error("PHP Fatal: not enough memory in ".$error['file'].":".$error['line']);
+           //Log::error("PHP Fatal: not enough memory in ".$error['file'].":".$error['line']);
+           log_message('error', "PHP Fatal: not enough memory in ".$error['file'].":".$error['line']);
     } else {
-           Log::error("PHP Fatal: ".$error['message']." in ".$error['file'].":".$error['line']);
+           //Log::error("PHP Fatal: ".$error['message']." in ".$error['file'].":".$error['line']);
+           log_message('error', "PHP Fatal: ".$error['message']." in ".$error['file'].":".$error['line']);
         }
         // ... завершаемая корректно ....
+        if(!headers_sent()) {
+             //show_error('Ошибка при выполнении приложения' , '503' );
+             show_404('Ошибка при выполнении приложения');
+             //header($_SERVER['SERVER_PROTOCOL'].' '.'503');
+             // ... и тд
+        }
     }
 });
 
