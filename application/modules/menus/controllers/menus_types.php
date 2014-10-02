@@ -114,6 +114,7 @@ class Menus_types extends Menus {
 	}
 
 	public function get_id_is_name($name){    	$res = $this->get_data_is_name($name);
+
     	if(isset($res->id)) return $res->id;
     	return false;
 	}
@@ -126,8 +127,9 @@ class Menus_types extends Menus {
 		    //select
 			array('id', 'name', 'active', 'description', 'alias'),
 			//where
-			array('alias' => $name)
+			array('name' => $name)
 		);
+
 		if(isset($res)) return $res;
 		return false;
 	}

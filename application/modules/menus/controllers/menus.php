@@ -316,9 +316,11 @@ class Menus extends MY_Controller {
   *
   *	@return array - массив с узлами
   */
-  public function get_path($node, $type = 'page'){
-  		$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
-  		$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
+  public function get_path($node, $type = false){
+  		if($type !== false){
+  			$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
+  			$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
+  		}
   		$all_nodes = $this->_run_command('get_path', $node);
   		//echo $this->db->last_query();
   		//print_r($all_nodes);
@@ -333,8 +335,10 @@ class Menus extends MY_Controller {
   *
   * @return array - массив с id узлами
   */
-  public function get_id_nodes($name, $type = 'page'){      $id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
-  		$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
+  public function get_id_nodes($name, $type = false){      	if($type !== false){
+      		$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
+  			$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
+  		}
 
       $all_nodes = $this->_run_command('get_id_nodes', $name);
   		return $all_nodes;
@@ -395,7 +399,7 @@ class Menus extends MY_Controller {
     *
     *	@return array - массив с меню
     */
-    public function get_menu_of_place($alias, $type = 'page'){    	$id_place = Modules::run('menus/menus_places/MY_data_row',
+    public function get_menu_of_place($alias, $type = false){    	$id_place = Modules::run('menus/menus_places/MY_data_row',
     		//select
     		array('id', 'alias'),
     		//where
@@ -405,9 +409,10 @@ class Menus extends MY_Controller {
     	if($id_place === false) return false;
     	$this->setting['condition_field']['place_id'] = $id_place->id;
 
-    	$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
-  		$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
-
+    	if($type !== false){
+    		$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
+  			$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
+        }
       	$all_nodes = $this->get_nodes();
   		return $all_nodes;
     }
@@ -418,12 +423,16 @@ class Menus extends MY_Controller {
     *   @param $alias - псевдоним место положени€
     *
     */
-    public function get_trees_place($alias){		$places = Modules::run('menus/menus/get_places_of_group', $alias);
+    public function get_trees_place($alias){
+		$places = Modules::run('menus/menus/get_places_of_group', $alias);
+
 		foreach($places as $key_1=>$items){
 			$res = Modules::run('menus/menus/get_menu_of_place', $items->places->alias);
+            //echo '<br><b>Source = '.__FILE__.' : Line = '.__LINE__.'</b><br>';
             //echo '<pre>';
             //var_dump($res);
             //echo '</pre>';
+
             if(is_array($res)){
 	            foreach($res as &$item){	            	uasort($item, array($this, '_order_by'));
 	            }
@@ -438,61 +447,31 @@ class Menus extends MY_Controller {
     }
 
     /**
-    *	¬озвращает дерево меню c информацией о страницах
-    *	‘ормат array[alias place][parent id][id][data node][data]
-    *   @param $alias - псевдоним место положени€
-    *
-    */
-    public function get_trees_place_data($alias){    	$nodes = $this->get_trees_place($alias);
-    	//echo '<pre>';
-		//print_r($nodes);
-		//echo '</pre>';
-    	if(is_array($nodes)){    		foreach($nodes as &$items){    			foreach($items as &$item){                	foreach($item as &$value){                		if($value['type_id'] == 1){                			$ids[] = $value['name'];
-                		}
-                	}
-    			}
-    		}
-    		$data_pages = Modules::run('pages/pages/get_data_pages_array', $ids);
-    		//print_r($data_pages);
-    		//exit;
-    		foreach($nodes as &$items){
-    			foreach($items as &$item){
-                	foreach($item as &$value){
-                		if($value['type_id'] == 1){
-                			if(isset($data_pages[$value['name']])){
-                				$value['data'] = $data_pages[$value['name']];
-                			}
-                		}
-                	}
-    			}
-    		}
-    	}
-
-    	//$value['data'] = Modules::run('pages/pages/get_data_page', $value['name']);
-    	return $nodes;
-    	//return false;
-    }
-
-    /**
     *	¬озвращает узлы которые содержат указанные имена
     *	@param $name - им€ узла
     *	@param $type - тип узла (по умолчанию считаетс€ страницей)
     *
     *	@return array - массив из узлов или false
     */
-    public function get_nodes_of_name($name, $type = 'page'){    	$type = Modules::run('menus/menus_types/MY_data_row',
-    		//select
-    		array('id'),
-    		//where
-    		array('name' => $type)
-    	);
-    	if( ! isset($type->id)) return false;
+    public function get_nodes_of_name($name, $type = false){    	if($type !== false){
+	    	$type = Modules::run('menus/menus_types/MY_data_row',
+	    		//select
+	    		array('id'),
+	    		//where
+	    		array('name' => $type)
+	    	);
+	    	if( ! isset($type->id)) return false;
+	    	$where_type = array('type_id' => $type->id);
+    	}
+
+    	if( ! $where_type) $where_type = '';
+
     	$res = Modules::run('menus/menus_trees/MY_data',
     		//select
     		array('id', 'parent_id'),
     		//where
     		array('name' => $name,
-    			  'type_id' => $type->id
+    			  $where_type
     		)
     	);
     	if($res) return $res;

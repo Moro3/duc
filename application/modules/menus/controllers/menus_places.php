@@ -156,10 +156,11 @@ class Menus_places extends Menus {
 	*
 	* @return array - массив с id узлами
 	*/
-	public function get_id_nodes($name, $type = 'page', $place = false){
-	    $id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
-		  $this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
-
+	public function get_id_nodes($name, $type = false, $place = false){
+	    if($type !== false){
+	    	$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
+		  	$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
+        }
 	    if($place != false){	    	$place_id = $this->data_place_of_alias($place);
 	    	if(!empty($place_id->id)) $this->setting['condition_field']['place_id'] = $place_id->id;
 	    }

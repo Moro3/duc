@@ -160,10 +160,11 @@ class Menus_groups extends Menus {
 	*
 	* @return array - массив с id узлами
 	*/
-	public function get_id_nodes($name, $type = 'page', $group = false){
-	    $id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
-		  $this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
-
+	public function get_id_nodes($name, $type = false, $group = false){
+		if($type !== false){
+			$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
+		  	$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
+        }
 	    if($group !== false){
 	    	//получаем данные по местам в группе
 	    	$place_ids = $this->get_id_places_is_group($group);
