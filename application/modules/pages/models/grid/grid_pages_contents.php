@@ -7,7 +7,7 @@ class grid_duc_groups extends jqGrid
 
     protected function init()
     {
-        $this->CI = &get_instance();
+
         $this->table = 'duc_groups';
 
 		$this->params['directions'] = Modules::run('duc/duc_directions/MY_data_array_one');

@@ -36,7 +36,7 @@ class Pages extends MY_Controller {
         $this->load_models();
 
         $this->table = 'pages';
-        
+
     }
 
     function load_config(){
@@ -75,7 +75,7 @@ class Pages extends MY_Controller {
 
         // запускаем маршрут для модуля с именем группы admin (file: route), модуля duc, вернуть сгенерированное маршрутом
         $buf .= $this->router_modules->run('admin', 'pages', true);
-        
+
         echo $buf;
         //exit();
         //return $buf;
@@ -229,9 +229,9 @@ class Pages extends MY_Controller {
         echo 'function gridEditWysiwyg(field)
 			{
                 var oFCKeditor = new FCKeditor( field ) ;
-				oFCKeditor.BasePath = "/wysiwyg/fckeditor/";
+				oFCKeditor.BasePath = "/wysiwyg/fckeditor/" ;
                 oFCKeditor.Height = 300 ;
-                //oFCKeditor.ToolbarSet = "BasicC";
+                oFCKeditor.ToolbarSet = "BasicC";
 				oFCKeditor.ReplaceTextarea() ;
 			}';
 
@@ -243,8 +243,7 @@ class Pages extends MY_Controller {
 
     function grid_params(){
         $get = '';
-        if(isset($_GET['id']) && is_numeric($_GET['id'])){
-        	$get = 'id='.$_GET['id'];
+        if(isset($_GET['id']) && is_numeric($_GET['id'])){        	$get = 'id='.$_GET['id'];
         }
         $path_to_tables = Modules::current_path().'models/grid/';
         $this->grid->loader->set("grid_path", $path_to_tables);
@@ -283,8 +282,7 @@ class Pages extends MY_Controller {
         $dir_source = $this->setting['path']['root'].$this->setting['path']['icons'].$this->setting['image_config']['dir'].'/';
         $i = 2;
         $name_tmp = $name;
-        while(is_file($dir_source.$name_tmp.$ext)){
-        	$name_tmp = $name.'_'.$i;
+        while(is_file($dir_source.$name_tmp.$ext)){        	$name_tmp = $name.'_'.$i;
         	$i++;
         }
     	//echo $name_tmp;
@@ -475,18 +473,16 @@ class Pages extends MY_Controller {
 	*/
 	function array_icon(){
 		$path_icon = $this->setting['path']['icons'].$this->setting['image_config']['dir'].'/';
+		$dh  = opendir($path_icon);
+		//$files[0] = 'не выбрано';
 		$files = array();
-		if($dh  = opendir($path_icon)){
-			//$files[0] = 'не выбрано';		
-			$i = 1;
-			while (false !== ($filename = readdir($dh))) {
-	            if(is_file($path_icon.$filename)){
-			    	$files[$i] = $filename;
-			    	$i++;
-	            }
-			}
-		};
-		
+		$i = 1;
+		while (false !== ($filename = readdir($dh))) {
+            if(is_file($path_icon.$filename)){
+		    	$files[$i] = $filename;
+		    	$i++;
+            }
+		}
         return $files;
 	}
 
@@ -497,21 +493,17 @@ class Pages extends MY_Controller {
 	*/
 	function array_img_fon(){
 		//$path_icon = $this->setting['path']['img_fon'];
-		
 		$path_img = $this->assets->get_assets_path_source(false, 'img').'fon_header/';
+		$dh  = opendir($path_img);
+		//$files[0] = 'не выбрано';
 		$files = array();
-		if($dh  = opendir($path_img)){
-			//$files[0] = 'не выбрано';		
-			dd($path_img);
-			$i = 1;
-			while (false !== ($filename = readdir($dh))) {
-	            if(is_file($path_img.$filename)){
-			    	$files[$i] = $filename;
-			    	$i++;
-	            }
-			}
-		};		
-
+		$i = 1;
+		while (false !== ($filename = readdir($dh))) {
+            if(is_file($path_img.$filename)){
+		    	$files[$i] = $filename;
+		    	$i++;
+            }
+		}
         return $files;
 	}
 
@@ -638,30 +630,27 @@ class Pages extends MY_Controller {
 	* 	Возвращает данные страниц
 	*
 	*/
-	public function get_pages($arr){
-
+	public function get_pages($arr){
 	}
 
 	public function get_all_id(){
 
 	}
 
-    public function pages_select(){
-    	$res = Modules::run('pages/pages_headers/MY_data',
+    public function pages_select(){    	$res = Modules::run('pages/pages_headers/MY_data',
     		//select
     		array('id',
     			  'related' => array('content' => array('id','name')),
     			  'uri'
     		)
     	);
-    	foreach($res as $items){
-    		$replace = array('"','\'');
+    	foreach($res as $items){    		$replace = array('"','\'');
     		$name = str_replace($replace, ' ', $items->content[0]->name);
     		$result[$items->id] = '<b>'.htmlentities($name, ENT_QUOTES,'UTF-8'). '</b> : '. htmlspecialchars($items->uri) . ' : <i style=\'grey\'>id=' . $items->id . '</i>';
     		//$result[$items->id] = $items->{content}[0]->name;
     	}
 
-		if(isset($result)) return $result;
+		if($result) return $result;
 		return array();
     }
 
@@ -675,7 +664,7 @@ class Pages extends MY_Controller {
     		//$res_pr[$key] = '<a id=\'iframe cboxElement\' href=/ajaxs/?resource=pages/admin/pages~&id='.$key.'>'.$item.'</a>';
 
     	}
-    	if(isset($res_pr)) return $res_pr;
+    	if($res_pr) return $res_pr;
 		return array();
     }
 
@@ -685,8 +674,7 @@ class Pages extends MY_Controller {
     *
     *	@return number - номер id или false, если страница не найдена
     */
-    public function id_is_uri($uri){
-    	//cho 'Uri: '.$uri.'<br/>';
+    public function id_is_uri($uri){    	//cho 'Uri: '.$uri.'<br/>';
     	//exit;
     	//$uri = trim($uri, '/');
     	$res = Modules::run('pages/pages_headers/MY_data_row',
@@ -708,8 +696,7 @@ class Pages extends MY_Controller {
     * Данный способ служит для отслеживания правильной страницы в случае сохранения цепочки uri в иерархии
     *
     */
-    public function id_is_valid_uri($uri){
-        $uri = $this->get_uri_valid($uri);
+    public function id_is_valid_uri($uri){        $uri = $this->get_uri_valid($uri);
         if($uri === false) return false;
     	if($uri == '/') return $this->id_is_uri($uri);
     	$arr_uri = explode('/', $uri);
@@ -725,16 +712,14 @@ class Pages extends MY_Controller {
     *
     *	@return number - номер id или false, если страница не найдена
     */
-    public function id_is_uri_old($uri){
-    	$uri = trim($uri, '/');
+    public function id_is_uri_old($uri){    	$uri = trim($uri, '/');
     	$res = Modules::run('pages/pages_headers/MY_data_row',
     		//select
     		array('id'),
     		//where
     		array('uri_old' => $uri)
     	);
-    	if(isset($res->id)){
-    		return $res->id;
+    	if(isset($res->id)){    		return $res->id;
     	}
     	return false;
     }
@@ -750,8 +735,7 @@ class Pages extends MY_Controller {
 	*	Если требуется проверять правильность цепочки иерархического меню, проверяйте по полученному uri отдельными средствами
 	*
 	*/
-	public function get_uri_valid($uri_full){
-        //проверка только главной страницы
+	public function get_uri_valid($uri_full){        //проверка только главной страницы
         if($uri_full == '/'){
     		if($this->id_is_uri($uri_full)) return $uri_full;
     	}
@@ -764,13 +748,11 @@ class Pages extends MY_Controller {
     			break;
     		}
     	}
-    	if(isset($path_uri)){
-    		//return $path_uri;
+    	if(isset($path_uri)){    		//return $path_uri;
     		$res = implode('/', $path_uri);
     	}
 
-    	if(isset($res)){
-    		//делаем проверку наличие завершающего слеша для страницы
+    	if(isset($res)){    		//делаем проверку наличие завершающего слеша для страницы
     		$pos = strpos($uri_full, $res.'/');
     		if($pos !== false){
 
@@ -812,19 +794,16 @@ class Pages extends MY_Controller {
 	}
 
 
-    public function get_pages_menus(){
-    	return Modules::run('menus/menus_trees/get_nodes');
+    public function get_pages_menus(){    	return Modules::run('menus/menus_trees/get_nodes');
     }
 
     /**
     * 	Возвращает информацию о странице
     *
     */
-    public function get_data_page($id){
-   		if( ! is_numeric($id)) return false;
-   		$res = Modules::run('pages/pages_headers/MY_data_array_row',
-   			//select
-   			array('main.id','main.active', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon',
+    public function get_data_page($id){   		if( ! is_numeric($id)) return false;
+   		$res = Modules::run('pages/pages_headers/MY_data_array_row',   			//select
+   			array('main.id','main.active', 'main.label', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon',
    				 //'seo.title', 'seo.description', 'seo.keywords', 'seo.h1',
    				 //'content.id', 'content.name', 'content.active', 'content.description',
    					'related' => array('content' => array(
@@ -854,7 +833,7 @@ class Pages extends MY_Controller {
         if( ! is_array($ids)) $ids = array($ids);
    		$res = Modules::run('pages/pages_headers/MY_data',
    			//select
-   			array('main.id','main.active', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon',
+   			array('main.id','main.active', 'main.label', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon',
    				 //'seo.title', 'seo.description', 'seo.keywords', 'seo.h1',
    				 //'content.id', 'content.name', 'content.active', 'content.description',
    					'related' => array('content' => array(
@@ -884,7 +863,7 @@ class Pages extends MY_Controller {
         if( ! is_array($ids)) $ids = array($ids);
    		$res = Modules::run('pages/pages_headers/MY_data_array',
    			//select
-   			array('main.id','main.active', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon',
+   			array('main.id','main.active', 'main.label', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon',
    				 //'seo.title', 'seo.description', 'seo.keywords', 'seo.h1',
    				 //'content.id', 'content.name', 'content.active', 'content.description',
    					'related' => array('content' => array(
@@ -903,8 +882,7 @@ class Pages extends MY_Controller {
    			)
 
    		);
-   		foreach($ids as $items){
-   			if(isset($res[$items])) $result[$items] = $res[$items];
+   		foreach($ids as $items){   			if(isset($res[$items])) $result[$items] = $res[$items];
    		}
    		return $result;
     }
@@ -921,23 +899,16 @@ class Pages extends MY_Controller {
          if(empty($id)) return false;
          $result = $this->get_data_page($id);
 
-         if(is_array($result)){
-         	$this->load->driver('replaced');
+         if(is_array($result)){         	$this->load->driver('replaced');
          	if(is_object($this->replaced->page)){
          		$data_access = $this->replaced->page->get_allow_value();
-         	}else{
-         		return false;
+         	}else{         		return false;
          	}
          	//print_r($data_access);
          	//exit;
-         	foreach($result as $key=>$value){
-         		if(in_array($key, $data_access)){
-         			$data_page[$key] = $value;
-         		}else{
-         			foreach($result['content'][0] as $field_content=>$value_content){
-         				if(in_array($field_content, $data_access)){
-         					if(!isset($result[$field_content])){
-         						$data_page[$field_content] = $value_content;
+         	foreach($result as $key=>$value){         		if(in_array($key, $data_access)){         			$data_page[$key] = $value;
+         		}else{         			foreach($result['content'][0] as $field_content=>$value_content){         				if(in_array($field_content, $data_access)){
+         					if(!isset($result[$field_content])){         						$data_page[$field_content] = $value_content;
          					}
          					$data_page['content.'.$field_content] = $value_content;
          				}
@@ -949,12 +920,9 @@ class Pages extends MY_Controller {
          return false;
     }
 
-    public function getFieldUri($uri){
-    	if($uri == '/'){
-    		return '/';
+    public function getFieldUri($uri){    	if($uri == '/'){    		return '/';
     	}
-    	if(is_string($uri)){
-    		return '/'.trim($uri, '\/').'/';
+    	if(is_string($uri)){    		return '/'.trim($uri, '\/').'/';
     	}
     	return '/';
     }
@@ -974,8 +942,7 @@ class Pages extends MY_Controller {
   function breadcrumbs($id, $name_group = false, $name_menu = false){
         if($name_menu !== false){
         	$ids_pages = $this->get_path($id, $name_menu);
-        }else{
-        	$ids_pages = $this->get_path_group($id, $name_group);
+        }else{        	$ids_pages = $this->get_path_group($id, $name_group);
         }
 
 
@@ -997,8 +964,7 @@ class Pages extends MY_Controller {
 	        	);
 	        	Modules::run('breadcrumbs/breadcrumbs/add', $data, 'pages');
         	}
-        	foreach($pages as $key=>$items){
-                if($items['active'] == 1){
+        	foreach($pages as $key=>$items){                if($items['active'] == 1){
 	                $data = array(
 	                	    'name' => $items['content'][0]->name,
 	        	 			'link' => $this->getFieldUri($items['uri']),
@@ -1068,8 +1034,7 @@ class Pages extends MY_Controller {
         $array = Modules::run('menus/menus_places/get_id_nodes', $id_page, 'page', $name_menu);
         /*
 		$data = Modules::run('menus/menus_places/get_data_nodes', $nodes);
-        foreach($data as $key=>$value){
-        	$array[] = $value->name;
+        foreach($data as $key=>$value){        	$array[] = $value->name;
         }
         */
 	  	if(isset($array)) return $array;
@@ -1090,20 +1055,16 @@ class Pages extends MY_Controller {
         $nodes = Modules::run('menus/menus_groups/get_id_nodes', $id_page, 'page',  $group);
 
         //если есть узлы, берем первый
-        if(is_array($nodes)){
-        	$node = array_shift($nodes);
-        }else{
-        	$node = false;
+        if(is_array($nodes)){        	$node = array_shift($nodes);
+        }else{        	$node = false;
         }
         //если есть узел в меню, вычисляем весь его путь
-        if(!empty($node)) {
-        	$arr_node = Modules::run('menus/menus/get_path', $node, 'page');
+        if(!empty($node)) {        	$arr_node = Modules::run('menus/menus/get_path', $node, 'page');
 
         	foreach($arr_node as $key=>$value){
         		$array[] = $value['name'];
         	}
-        }else{
-        	$array[] = $id_page;
+        }else{        	$array[] = $id_page;
         }
 
 	  	if(isset($array)) return $array;

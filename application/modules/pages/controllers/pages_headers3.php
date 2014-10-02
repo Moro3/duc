@@ -64,16 +64,16 @@ label;
 
         $this->tpl_js_images_edit();
         $this->grid_render();
-        
+
         //====== Для поиска с диапазоном дат
         echo '<script>';
         echo "function dateRangePicker_onChange() {
-	        var input = $('#gs_date');
-	        var old_val = input.val();
+	        var $input = $('#gs_date');
+	        var old_val = $input.val();
 
 	        setTimeout(function () {
-	            if (input.val() == old_val) {
-	                \$grid[0].triggerToolbar();
+	            if ($input.val() == old_val) {
+	                $grid[0].triggerToolbar();
 	            }
 	        }, 50);
 	    }";
@@ -147,8 +147,7 @@ $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
     	//var_dump($uri);
         //exit;
     	$pattern = '|^[A-z0-9_-]+$|i';
-    	if( preg_match($pattern, $uri)){
-        	return true;
+    	if( preg_match($pattern, $uri)){        	return true;
     	}
     	return false;
  	}
@@ -157,8 +156,7 @@ $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
 	* Возвращает корректный uri
 	* т.е. без повторений
 	*/
-	public function get_correct_uri($uri){
-		$i = 2;
+	public function get_correct_uri($uri){		$i = 2;
         $urich = $uri;
         while($this->get_check_uri($urich)){
         	$urich = $uri.'_'.$i;
@@ -174,8 +172,7 @@ $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
     *
     *	@return boolean
     */
-    public function delete_page($id){
-    	$where = array('id' => $id);
+    public function delete_page($id){    	$where = array('id' => $id);
 
     	$res = $this->MY_data(
     		//select
@@ -186,12 +183,8 @@ $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
     		$where
     	);
     	//throw new jqGrid_Exception(print_r($res));
-    	if(is_array($res)){
-    		foreach($res as $items){
-    			if(isset($items->content)){
-    				foreach($items->content as $item){
-    					if(isset($item->id)){
-    						$res_content = Modules::run('pages/pages_contents/MY_data',
+    	if(is_array($res)){    		foreach($res as $items){
+    			if(isset($items->content)){    				foreach($items->content as $item){    					if(isset($item->id)){    						$res_content = Modules::run('pages/pages_contents/MY_data',
 					    		//select
 					    		array(
 					    			'related' => array('seo'),
@@ -205,10 +198,7 @@ $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
     		}
     	}
 
-		if(isset($res_content) && is_array($res_content)){
-			foreach($res_content as $items_content){
-				if(isset($items_content->seo)){
-                	foreach($items_content->seo as $item){
+		if(isset($res_content) && is_array($res_content)){			foreach($res_content as $items_content){				if(isset($items_content->seo)){                	foreach($items_content->seo as $item){
     					if(isset($item->id)){
     						$res_seo = Modules::run('pages/pages_seo/MY_data',
 					    		//select
@@ -224,10 +214,7 @@ $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
 			}
 		}
 		//Удаление из таблицы pages_seo
-		if(isset($res_seo)){
-			foreach($res_seo as $item){
-				if(isset($item->id)){
-					Modules::run('pages/pages_seo/MY_delete',
+		if(isset($res_seo)){			foreach($res_seo as $item){				if(isset($item->id)){					Modules::run('pages/pages_seo/MY_delete',
 						//where
 						array('id' => $item->id)
 					);
@@ -272,8 +259,7 @@ $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
     *	@return возвращает текст ошибки сообщения при срабатывания событий
     */
     public function eventDeletePage($id){
-    	if(Modules::run('pages/pages_headers/delete_page', $id)){
-    		return true;
+    	if(Modules::run('pages/pages_headers/delete_page', $id)){    		return true;
     	}
     	return false;
     }

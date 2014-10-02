@@ -3,7 +3,6 @@ class grid_pages_headers extends jqGrid
 {
     protected function beforeInit(){
     	 $this->CI = &get_instance();
-
     }
 
     protected function init()
@@ -14,13 +13,9 @@ class grid_pages_headers extends jqGrid
         $this->params['year_create'][] = '';
         $this->params['year_create'] += range(1990,date('Y'));
         $this->params['array_files'] = array(0=>'нет') + Modules::run('pages/pages/array_icon');
-
         $this->params['array_img_fon'] = array(0=>'нет') + Modules::run('pages/pages/array_img_fon');
-        
-        $this->params['tooltip_snippets'] = Modules::run('snippets/snippets/tpl_tooltip_page');
-        $this->params['tooltip_configs'] = Modules::run('configs/configs/tpl_tooltip_page');
-        
-		    $this->config = $this->loader->get('config');
+
+		$this->config = $this->loader->get('config');
         /*
         $this->query = "
             SELECT {fields}
@@ -62,43 +57,11 @@ class grid_pages_headers extends jqGrid
                                    ),
             ),
             'active_icon'  => array('label' => lang('pages_active'),
-                                   'db' => 'object.active',
+                                   'manual'=> true,
                                    'width' => 80,
                                    'align' => 'center',
                                    //'editable' => true,
                                    'encode' => false,
-                                   'sortable' => false,
-                                   'stype' => 'select',
-                                   'searchoptions' => array(
-                                        				'value' => new jqGrid_Data_Value(array('Откл','Вкл'), 'All'),
-                                        				//'value' => array('' => 'All','Откл','Вкл'),
-                                        				'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
-                  				   ),
-            ),
-            'label'  => array('label' => lang('pages_label'),
-                                   'db' => 'object.label',
-                                   'width' => 50,
-                                   'hidden' => true,
-                                   'editable' => true,
-                                   'encode' => false,
-                                   'edittype' => "checkbox",
-                                   'editrules' => array('required' => true,
-                                                     'edithidden' => true,
-                                   ),
-            ),
-            'label_icon'  => array('label' => lang('pages_label'),
-                                   'db' => 'object.label',
-                                   'width' => 80,
-                                   'align' => 'center',
-                                   //'editable' => true,
-                                   'encode' => false,
-                                   'sortable' => false,
-                                   'stype' => 'select',
-            					   'searchoptions' => array(
-                                        				'value' => new jqGrid_Data_Value(array('Откл','Вкл'), 'All'),
-                                        				//'value' => array('' => 'All','Откл','Вкл'),
-                                        				'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
-                  				   ),
             ),
             'date'   => array('label' => lang('pages_date'),
                                    'db' => 'object.date',
@@ -258,11 +221,6 @@ class grid_pages_headers extends jqGrid
                                                        'edithidden' => true,
                                    ),
                                    'editoptions' => array('size' => 100),
-                                   /*
-                                   'formoptions'=>array(
-                  				                       'elmsuffix' => $this->params['tooltip_snippets'],
-                  				   ),
-                  				   */
             ),
             'description'    => array('label' => lang('pages_description'),
                                     'db' => 'content.description',
@@ -276,10 +234,6 @@ class grid_pages_headers extends jqGrid
                                                        'edithidden' => true,
                                    ),
                                    'editoptions' => array('size' => 100),
-                                   'formoptions'=>array(
-                  				                       //'elmprefix' => $this->params['tooltip_configs'].$this->params['tooltip_snippets'],
-                  				                       'elmsuffix' => $this->params['tooltip_configs'].$this->params['tooltip_snippets']
-                  				   ),
             ),
             'description_active'    => array('label' => lang('pages_description'),
                                     'db' => 'content.description',
@@ -476,12 +430,6 @@ class grid_pages_headers extends jqGrid
         }else{
             $r['active_icon'] = '<img src="'.assets_img('admin/button_red.gif', false).'">';
         }
-        if($r['label'] == 1){
-            $r['label_icon'] = '<img src="'.assets_img('admin/button_green.gif', false).'">';
-
-        }else{
-            $r['label_icon'] = '<img src="'.assets_img('admin/button_red.gif', false).'">';
-        }
         if(!empty($r['description'])){
             $r['description_active'] = '<img src="'.assets_img('admin/yes.gif', false).'">';
         }else{
@@ -526,11 +474,6 @@ class grid_pages_headers extends jqGrid
         }else{
             $data['active'] = 0;
         }
-        if(isset( $data['label']) && $data['label'] == 'on' || $data['label'] == 1){
-            $data['label'] = 1;
-        }else{
-            $data['label'] = 0;
-        }
         if(isset( $data['active_content']) && $data['active_content'] == 'on' || $data['active_content'] == 1){
             $data['active_content'] = 1;
         }else{
@@ -539,10 +482,8 @@ class grid_pages_headers extends jqGrid
         $data['sorter'] = (!empty($data['sorter'])) ? $data['sorter'] : 10;
         $data['sorter_content'] = (!empty($data['sorter_content'])) ? $data['sorter_content'] : 10;
         $data['date'] = strtotime($data['date']);
-        if(empty($data['uri'])){
-        	$data['uri'] = Modules::run('pages/pages_headers/generate_uri', $data['name']);
-        }else{
-        	//$this->isset_uri($data['uri']);
+        if(empty($data['uri'])){        	$data['uri'] = Modules::run('pages/pages_headers/generate_uri', $data['name']);
+        }else{        	//$this->isset_uri($data['uri']);
 
         }
 
@@ -565,15 +506,12 @@ class grid_pages_headers extends jqGrid
     */
     protected function opEdit($id, $data) {
         //throw new jqGrid_Exception('Ошибка в написании URI. Адрес должен состоять из латинских букв, цифр и может содержать символы -_');
-    		if(!empty($id) && is_numeric($id)){
-            	$result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
+    		if(!empty($id) && is_numeric($id)){            	$result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
             	$row = $this->DB->fetch($result);
 
             	$arr_header['active'] = $data['active'];
-            	$arr_header['label'] = $data['label'];
             	$arr_header['sorter'] = $data['sorter'];
-            	if($this->isset_uri($data['uri'], $row['id'])){
-            		$arr_header['uri'] = Modules::run('pages/pages_headers/get_correct_uri', $data['uri']);
+            	if($this->isset_uri($data['uri'], $row['id'])){            		$arr_header['uri'] = Modules::run('pages/pages_headers/get_correct_uri', $data['uri']);
             	}else{
             		$arr_header['uri'] = $data['uri'];
             	}
@@ -663,7 +601,6 @@ class grid_pages_headers extends jqGrid
         	$this->isset_uri($data['uri']);
         	$data['uri'] = Modules::run('pages/pages_headers/get_correct_uri', $data['uri']);
         		$arr_header['active'] = $data['active'];
-        		$arr_header['label'] = $data['label'];
             	$arr_header['sorter'] = $data['sorter'];
             	$arr_header['uri'] = $data['uri'];
 
@@ -686,8 +623,7 @@ class grid_pages_headers extends jqGrid
 	                                true
 	            );
 
-	            if(!empty($id) && is_numeric($id)){
-	            	$arr_content['id_page_header'] = $id;
+	            if(!empty($id) && is_numeric($id)){	            	$arr_content['id_page_header'] = $id;
 	            	$arr_content['active'] = $data['active_content'];
             		$arr_content['sorter'] = $data['sorter_content'];
             		$arr_content['name'] = $data['name'];
@@ -702,11 +638,9 @@ class grid_pages_headers extends jqGrid
 	                                $arr_content,
 	                                true
 	            	);
-	            }else{
-	            	throw new jqGrid_Exception('Не удалось записать в таблицу content, т.к. нет id page');
+	            }else{	            	throw new jqGrid_Exception('Не удалось записать в таблицу content, т.к. нет id page');
 	            }
-	            if(!empty($id_content) && is_numeric($id_content)){
-	            	$arr_seo['id_page_content'] = $id_content;
+	            if(!empty($id_content) && is_numeric($id_content)){	            	$arr_seo['id_page_content'] = $id_content;
 	            	$arr_seo['title'] = $data['seo_title'];
             		$arr_seo['description'] = $data['seo_description'];
             		$arr_seo['keywords'] = $data['seo_keywords'];
@@ -742,22 +676,18 @@ class grid_pages_headers extends jqGrid
 		{
 			throw new jqGrid_Exception('Table is not defined');
 		}
-		if($res = Modules::run('menus/menus/get_nodes_of_name', $id, 'page')){
-			$str = '(';
-			foreach($res as $items){
-				$str .=	$items->id.',';
+		if($res = Modules::run('menus/menus/get_nodes_of_name', $id, 'page')){			$str = '(';
+			foreach($res as $items){				$str .=	$items->id.',';
 			}
 			$str .= ')';
 			throw new jqGrid_Exception('Нельзя удалить страницу, пока она содержится в пунктах меню: '.$str);
 		}
-		if( ! Modules::run('pages/pages_headers/eventDeletePage', $id)){
-			throw new jqGrid_Exception('Не удалось удалить страницу');
+		if( ! Modules::run('pages/pages_headers/eventDeletePage', $id)){			throw new jqGrid_Exception('Не удалось удалить страницу');
 		}
 
     }
 
-	protected function upload_image(){
-		 // проверяем был ли обновлен файл и если да,
+	protected function upload_image(){		 // проверяем был ли обновлен файл и если да,
 	                // загружаем файл и добавляем к массиву с данными
 	                if(isset($_FILES['foto_upload'])){
 	                	$name = $_FILES['foto_upload']['name'];
@@ -846,8 +776,7 @@ class grid_pages_headers extends jqGrid
     }
 
     protected function searchOpDate($c, $val)
-    {
-    	$start = strtotime(trim($val));
+    {    	$start = strtotime(trim($val));
     	$end = $start + 86400;
 
     	return $c['db'] . " BETWEEN '$start' AND '$end'";
@@ -861,12 +790,9 @@ class grid_pages_headers extends jqGrid
     /**
     * Возвращает проверенный uri
     */
-    protected function isset_uri($uri, $ignore_id = false){
-    	if(Modules::run('pages/pages_headers/get_check_uri', $uri, $ignore_id)){
-    		throw new jqGrid_Exception('Такой URI уже используется, придумайте другой или оставьте строку пустой тогда URI сгенерируется автоматически');
+    protected function isset_uri($uri, $ignore_id = false){    	if(Modules::run('pages/pages_headers/get_check_uri', $uri, $ignore_id)){    		throw new jqGrid_Exception('Такой URI уже используется, придумайте другой или оставьте строку пустой тогда URI сгенерируется автоматически');
     		return true;
-    	}else{
-            return false;
+    	}else{            return false;
     	}
 
     }
