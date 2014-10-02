@@ -8,7 +8,7 @@
  *   $config['enable_query_strings'] = TRUE;
  * - Set the SecretKey
  */
-$config['render'] = false;
+$config['render'] = true;
 
 /*
  * Secret Key

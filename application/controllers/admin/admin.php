@@ -7,7 +7,7 @@ class Admin extends MX_Controller {
 		parent::__construct();
             //$this->output->enable_profiler(TRUE);
             $this->load->library('session');
-            $this->load->helper(array('form', 'url'));
+            $this->load->helper(array('form', 'url', 'debug'));
             if($this->input->post('exit_admin') && $this->input->post('close') == 'door'){
               $this->session->sess_destroy();
               header('location: /adminka');
