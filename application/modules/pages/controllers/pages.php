@@ -500,9 +500,9 @@ class Pages extends MY_Controller {
 		
 		$path_img = $this->assets->get_assets_path_source(false, 'img').'fon_header/';
 		$files = array();
-		if($dh  = opendir($path_img)){
-			//$files[0] = 'не выбрано';		
-			dd($path_img);
+		if(is_dir($path_img)){
+			$dh  = opendir($path_img);
+			//$files[0] = 'не выбрано';			
 			$i = 1;
 			while (false !== ($filename = readdir($dh))) {
 	            if(is_file($path_img.$filename)){

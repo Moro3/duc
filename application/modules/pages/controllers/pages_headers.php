@@ -63,22 +63,24 @@ label;
 
 
         $this->tpl_js_images_edit();
-        $this->grid_render();
-        
+
         //====== Для поиска с диапазоном дат
         echo '<script>';
         echo "function dateRangePicker_onChange() {
-	        var input = $('#gs_date');
-	        var old_val = input.val();
+            var input = $('#gs_date');
+            var old_val = input.val();
 
-	        setTimeout(function () {
-	            if (input.val() == old_val) {
-	                \$grid[0].triggerToolbar();
-	            }
-	        }, 50);
-	    }";
-    	echo '</script>';
+            setTimeout(function () {
+                if (input.val() == old_val) {
+                    \$grid[0].triggerToolbar();
+                }
+            }, 50);
+        }";
+        echo '</script>';
 
+        $this->grid_render();
+        
+        
         echo '<script>
 $grid.bind("jqGridAddEditBeforeShowForm", function(event, $form)
 {

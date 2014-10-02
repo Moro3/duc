@@ -101,11 +101,11 @@ class grid_pages_headers extends jqGrid
                   				   ),
             ),
             'date'   => array('label' => lang('pages_date'),
-                                   'db' => 'object.date',
+                                    'db' => 'object.date',
                                     'width' => 140,
-                                   'editable' => true,
-
-                                   'searchoptions' => array('dataInit' => $this->initDatepicker(array(
+                                    'editable' => true,
+                                    /*
+                                    'searchoptions' => array('dataInit' => $this->initDatepicker(array(
                                         'dateFormat'     => 'yy/mm/dd',
                                         'changeMonth'    => true,
                                         'changeYear'     => true,
@@ -113,27 +113,48 @@ class grid_pages_headers extends jqGrid
                                         'maxDate'        => date('Y/m/d'),
                                         // обновление данных в общем окне
                                         'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
-                                    ))),
+                                    ))),                                    
                                     'search_op' => 'date',
-                                    /*
-                                    'searchoptions' => array('dataInit' => $this->initDateRangePicker(array(
-					                    //'earliestDate' => '2011/01/01',
-					                    //'latestDate' => '2011/06/10',
-					                    'dateFormat' => 'yy/mm/dd',
-					                    'onChange' => new jqGrid_Data_Raw('dateRangePicker_onChange'),
-					                    'presetRanges' => array(
-					                        array('text' => 'January 2011', 'dateStart' => '2011/01/01', 'dateEnd' => '2011/02/01'),
-					                        array('text' => 'February 2011', 'dateStart' => '2011/02/01', 'dateEnd' => '2011/03/01'),
-					                    ),
-					                    'datepickerOptions' => array(
-					                        'changeMonth' => true,
-					                        'dateFormat' => 'yy/mm/dd',
-					                        'minDate' => '2011/01/01',
-					                        'maxDate' => '2011/06/10',
-					                    ),
-					                ))),
                                     */
-                                    //'search_op' => 'date_range',
+                                    'searchoptions' => array('dataInit' => $this->initDateRangePicker(array(
+          					                    'earliestDate' => '2011/01/01',
+          					                    'latestDate' => date('Y/m/d'),
+                                        'language' => 'cn',
+          					                    'dateFormat' => 'yy/mm/dd',                                        
+          					                    'onChange' => new jqGrid_Data_Raw('dateRangePicker_onChange'),
+          					                    'presetRanges' => array(
+          					                        array('text' => 'Год 2012', 'dateStart' => '2012/01/01', 'dateEnd' => '2012/12/31'),
+          					                        array('text' => 'Год 2013', 'dateStart' => '2013/02/01', 'dateEnd' => '2013/12/31'),
+                                            array('text' => 'За последни 3 месяца', 'dateStart' => date('Y/m/d', time()-7776000), 'dateEnd' => date('Y/m/d')),
+                                            array('text' => 'За последний месяц', 'dateStart' => date('Y/m/d', time()-2592000), 'dateEnd' => date('Y/m/d')),
+          					                    ),
+                                        'presets' => array(
+                                            'specificDate' => 'Определенный день',
+                                            'allDatesBefore' => 'Дата до',
+                                            'allDatesAfter' => 'Дата после',
+                                            'dateRange' => 'Интервал дат',
+                                        ),
+                                        'rangeStartTitle' => 'От',
+                                        'rangeEndTitle' => 'До',
+                                        'nextLinkText' => 'следующий месяц',
+                                        'prevLinkText' => 'предыдущий месяц',
+                                        'doneButtonText' => 'закрыть',
+          					                    'datepickerOptions' => array(
+                                            'prevText' => 'предыдущий',
+                                            'nextText' => 'следущий',
+          					                        'changeMonth' => true,
+                                            'changeYear'      => true,
+          					                        'dateFormat' => 'yy/mm/dd',
+          					                        'minDate' => '2011/01/01',
+          					                        'maxDate' => date('Y/m/d'),
+                                            'monthNamesShort' => array("Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"),
+                                            'monthNames' => array("Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"),
+                                            'dayNames'     => array("Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"),
+                                            'dayNamesShort'     => array("Вск","Пон","Вто","Сре","Чет","Пят","Суб"),
+                                            'dayNamesMin'     => array("Вс","Пн","Вт","Ср","Чт","Пт","Сб"),
+          					                    ),
+          					                ))),                                    
+                                    'search_op' => 'date_range',
 
                                     'editoptions' => array('dataInit' => $this->initDatetimepicker(array(
                                             'dateFormat'     => 'yy/mm/dd',
@@ -171,8 +192,8 @@ class grid_pages_headers extends jqGrid
                                         'defaultValue' => date('Y/m/d H:i'),
 
                                     ),
-                //'formoptions' => array('elmsuffix' => '<input type="submit" value="Моя кнопка"/>'),
-                                   //"formatter"=>"date",
+                                    //'formoptions' => array('elmsuffix' => '<input type="submit" value="Моя кнопка"/>'),
+                                    //"formatter"=>"date",
                                     ///"formatoptions"=>array("srcformat"=>"Y-m-d H:i:s","newformat"=>"m/d/Y"),
 
             ),
@@ -441,27 +462,24 @@ class grid_pages_headers extends jqGrid
             'height' => '100%',
             'autowidth' => true,
             'altRows' => true,
-    		//'multiselect' => true, // множественный выбор (checkbox)
-    		'rowList'     => array(10, 20, 30, 50, 100),
+    		    //'multiselect' => true, // множественный выбор (checkbox)
+    		    'rowList'     => array(10, 20, 30, 50, 100),
             'caption' => lang('pages_headers'),
         );
         #Set nav
         $this->nav = array(//'view' => true, 'viewtext' => 'Смотреть',
-        					'add' => true, 'addtext' => 'Добавить объект',
-        				   'edit' => true, 'edittext' => 'Редактировать',
-        				   'del' => true, 'deltext' => 'Удалить',
-        				'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
-    					'prmEdit' => array('width' => 900,
-    										//'height' => 600,
-    									   'closeAfteredit' => true,
-    					                   //'reloadAfterSubmit' => true,
-                  						 //'beforeShowForm' => "function() {	fckeditor('description');}",
-                   						 //'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
+              		        'add' => true, 'addtext' => 'Добавить объект',
+              				    'edit' => true, 'edittext' => 'Редактировать',
+              				    'del' => true, 'deltext' => 'Удалить',
+              				    'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
+          				        'prmEdit' => array('width' => 900,
+          								//'height' => 600,
+          								'closeAfteredit' => true,
+          					      //'reloadAfterSubmit' => true,
+                        	//'beforeShowForm' => "function() {	fckeditor('description');}",
+                         	//'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
 
-    									),
-
-
-
+    								),
         );
 
         $this->render_filter_toolbar = true;
@@ -805,12 +823,15 @@ class grid_pages_headers extends jqGrid
         // Date range
         //--------------
 
-        if(strpos($val, ' / ') !== false)
+        if(strpos($val, ' - ') !== false)
         {
-            list($start, $end) = explode(' / ', $val, 2);
+            list($start, $end) = explode(' - ', $val, 2);
 
             $start = strtotime(trim($start));
             $end = strtotime(trim($end));
+
+            
+            //return $c['db'] . $end;
 
             if(!$start or !$end)
             {
@@ -823,8 +844,8 @@ class grid_pages_headers extends jqGrid
                 list($start, $end) = array($end, $start);
             }
 
-            $start = date('yy/mm/dd', $start);
-            $end = date('yy/mm/dd', $end);
+            //$start = date('yy/mm/dd', $start);
+            //$end = date('yy/mm/dd', $end);
 
             return $c['db'] . " BETWEEN '$start' AND '$end'";
         }
@@ -840,7 +861,7 @@ class grid_pages_headers extends jqGrid
             throw new jqGrid_Exception('Invalid date format');
         }
 
-        $val = date('yy/mm/dd', $val);
+        //$val = date('yy/mm/dd', $val);
 
         return "DATE({$c['db']}) = '$val'";
     }
