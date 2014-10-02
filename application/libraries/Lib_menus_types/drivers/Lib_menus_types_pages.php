@@ -32,7 +32,9 @@ class Lib_menus_types_pages extends CI_Driver
     *  Получение данных
     *  @param - array: многомерный массив с даннми (name - идентификатор, id - )
     */
-    function get_data_nodes($ids){    	foreach($ids as $id){    		$arr_id[] = $id['name'];
+    function get_data_nodes($ids){
+    	foreach($ids as $id){
+    		$arr_id[] = $id['name'];
     	}
 
     	//$data = Modules::run('pages/pages/get_data_pages_array', $arr_id);
@@ -58,13 +60,18 @@ class Lib_menus_types_pages extends CI_Driver
         //преобразуем данные в требуемый формат
 
        	$type_id = $this->get_id_is_name($this->type);
-       	foreach($data as &$items){       		$active = ($items['active'] === 1 && $items->content[0]->active === 1) ? 1 : 0;
+       	//dd($data);
+        //exit;
+        foreach($data as &$items){
+       		//$active = ($items['active'] === 1 && $items->content[0]->active === 1) ? 1 : 0;
+          $active = ($items['active'] == 1) ? 1 : 0;
        		$result[$items['id']] = array(
        		                'type' => $this->type,
        		                'type_id' => $type_id,
        		                'name' => $items['content'][0]->name,
        		                'active' => $active,
-       		                'link' => Modules::run('pages/pages/getFieldUri', $items['uri'])
+       		                'link' => Modules::run('pages/pages/getFieldUri', $items['uri']),
+                          'label' => $items['label']
        		);
 
        	}
