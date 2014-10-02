@@ -10,6 +10,7 @@ class Meta {
 	}
 
   function set_param($name, $value){
+
     switch($name){
       case 'title':
         $this->meta[$name] = htmlspecialchars($value);
@@ -18,6 +19,9 @@ class Meta {
         $this->meta[$name] = htmlspecialchars($value);
         break;
       case 'keywords':
+        $this->meta[$name] = htmlspecialchars($value);
+        break;
+      case 'h1':
         $this->meta[$name] = htmlspecialchars($value);
         break;
     }
@@ -32,6 +36,9 @@ class Meta {
         if(isset($this->meta[$name])) return $this->meta[$name];
         break;
       case 'keywords':
+        if(isset($this->meta[$name])) return $this->meta[$name];
+        break;
+      case 'h1':
         if(isset($this->meta[$name])) return $this->meta[$name];
         break;
     }
