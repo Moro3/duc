@@ -197,3 +197,126 @@ if ( ! function_exists('array_diff_assoc_recursive'))
         return !isset($difference) ? 0 : $difference;
     }
 }
+
+/*****************************************
+*  Работа с многомерными массивами
+******************************************
+*/
+
+/**
+* Функция проверяет наличие данного значения в многомерном массиве
+*
+* @param array $array - многомерный массив (вложенные массивы могут представлять объекты)
+* @param string $needle - значение ищущего параметра
+* @param string $index - ключ по которому будет искаться значение (если не задан, то ищется по всем ключам)
+* @param numeric $level - уровень поиска значения в массиве (если массив более 2-ух уровней, то есть возможность указать уровень на котором искать данное значение)
+*                         по умолчанию значение ищется в двумерном массиве = значению 1, нумерация начинается с 0
+* @param array $level_path - путь для уровней (если вы ищете значение в более чем 2 уровня, то вам может понадобиться уточнить более точный путь для поиска на предыдущих уровнях)
+*                            т.е. если вам нужно найти значение id из 3 уровня в массиве $array[]['pages']['id']
+*                            параметром level_path будет array( 2 => 'pages')
+* @result boolean - true если значение найдено, false - если не найдено
+*/
+if ( ! function_exists('in_array_multi'))
+{
+    function in_array_multi($array, $needle, $index = false, $level = 1, $level_path = false) {
+   		$array_iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($array), RecursiveIteratorIterator::SELF_FIRST);
+		foreach($array_iterator as $key=>$value){
+		    $current_level = $array_iterator->getDepth();
+		    if($current_level > $level) continue;
+		    if(isset($level_path[$current_level])){
+		    	if($level_path[$current_level] != $key) continue;
+		    }
+		    if($current_level == ($level-1)){
+		    	if(is_array($value)){
+		    		if($index !== false){		    			if(isset($value[$index]) && $value[$index] == $needle){		    				return true;
+		    			}
+		    		}else{		    			if(in_array($needle, $value)) return true;
+		    		}
+		    	}elseif(is_object($value)){
+		    		if($index !== false){
+		    			if(isset($value->$index) && $value->$index == $needle){
+		    				return true;
+		    			}
+		    		}else{
+		    			if(in_array($needle, (array) $value)) return true;
+		    		}
+		    	}
+		    }
+        }
+        return false;
+    }
+}
+
+/**
+* Функция ищет значение параметра и возвращает часть массива из многомерного массива
+*
+* @param array $array - многомерный массив (вложенные массивы могут представлять объекты)
+* @param string $needle - значение ищущего параметра
+* @param string $index - ключ по которому будет искаться значение
+* @param numeric $level - уровень поиска значения в массиве (если массив более 2-ух уровней, то есть возможность указать уровень на котором искать данное значение)
+*                         по умолчанию значение ищется в двумерном массиве = значению 1, нумерация начинается с 0
+* @param array $level_path - путь для уровней (если вы ищете значение в более чем 2 уровня, то вам может понадобиться уточнить более точный путь для поиска на предыдущих уровнях)
+*                            т.е. если вам нужно найти значение id из 3 уровня в массиве $array[]['pages']['id']
+*                            параметром level_path будет array( 2 => 'pages')
+* @return array - массив с параметрами соответсвующих поиску
+*/
+if ( ! function_exists('array_multi_params'))
+{
+    function array_multi_params($array, $needle, $index, $level = 1, $level_path = false) {
+   		//if( ! is_numeric($level)) return false;
+   		//$level--;
+        //echo 'Уровень: '.$level."<br>";
+   		$array_iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($array), RecursiveIteratorIterator::SELF_FIRST);
+		foreach($array_iterator as $key=>$value){
+		    $current_level = $array_iterator->getDepth();
+		    if($current_level > $level) continue;
+		    if(isset($level_path[$current_level])){
+		    	if($level_path[$current_level] != $key) continue;
+		    }
+		    if($current_level == ($level-1)){
+		    	if(is_array($value) && isset($value[$index]) && $value[$index] == $needle){
+		    		return $value;
+		    	}elseif(is_object($value) && isset($value->$index) && $value->$index == $needle){		    		return $value;
+		    	}
+		    }
+		    //echo $key.' — '.$value."\r\n<br />";
+		    //echo $array_iterator->getDepth().'<br />';
+        }
+    }
+}
+
+/**
+* Функция возвращает индексный массив из многомерного массива
+*
+*
+* @param array $array - многомерный массив (вложенные массивы могут представлять объекты)
+* @param string $index - ключ по которому будет возвращаться значение
+* @param numeric $level - уровень поиска значения в массиве (если массив более 2-ух уровней, то есть возможность указать уровень на котором искать данное значение)
+*                         по умолчанию значение ищется в двумерном массиве = значению 1, нумерация начинается с 0
+* @param array $level_path - путь для уровней (если вы ищете значение в более чем 2 уровня, то вам может понадобиться уточнить более точный путь для поиска на предыдущих уровнях)
+*                            т.е. если вам нужно найти значение id из 3 уровня в массиве $array[]['pages']['id']
+*                            параметром level_path будет array( 2 => 'pages')
+* @return array - индексный массив со значениями соответсвующих поиску
+*/
+if ( ! function_exists('array_multi_values'))
+{
+    function array_multi_values($array, $index, $level = 1, $level_path = false) {
+        $array_iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($array), RecursiveIteratorIterator::SELF_FIRST);
+		foreach($array_iterator as $key=>$value){
+		    $current_level = $array_iterator->getDepth();
+		    if($current_level > $level) continue;
+		    if(isset($level_path[$current_level])){
+		    	if($level_path[$current_level] != $key) continue;
+		    }
+		    if($current_level == ($level-1)){
+		    	if(is_array($value) && isset($value[$index])){
+		    		$arr[] = $value[$index];
+		    	}elseif(is_object($value) && isset($value->$index)){
+		    		$arr[] = $value->$index;
+		    	}
+		    }
+        }
+        if(isset($arr)) return $arr;
+        return false;
+    }
+}
