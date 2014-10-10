@@ -119,14 +119,14 @@ class grid_pages_headers extends jqGrid
                                     'searchoptions' => array('dataInit' => $this->initDateRangePicker(array(
           					                    'earliestDate' => '2011/01/01',
           					                    'latestDate' => date('Y/m/d'),
-                                        'language' => 'cn',
+                                        'arrows' => false,
           					                    'dateFormat' => 'yy/mm/dd',                                        
           					                    'onChange' => new jqGrid_Data_Raw('dateRangePicker_onChange'),
           					                    'presetRanges' => array(
           					                        array('text' => 'Год 2012', 'dateStart' => '2012/01/01', 'dateEnd' => '2012/12/31'),
           					                        array('text' => 'Год 2013', 'dateStart' => '2013/02/01', 'dateEnd' => '2013/12/31'),
-                                            array('text' => 'За последни 3 месяца', 'dateStart' => date('Y/m/d', time()-7776000), 'dateEnd' => date('Y/m/d')),
-                                            array('text' => 'За последний месяц', 'dateStart' => date('Y/m/d', time()-2592000), 'dateEnd' => date('Y/m/d')),
+                                            array('text' => 'За последни 3 месяца', 'dateStart' => 'today-92days', 'dateEnd' => 'today'),
+                                            array('text' => 'За последний месяц', 'dateStart' => date('Y/m/d', time() - 2592000), 'dateEnd' => date('Y/m/d')),
           					                    ),
                                         'presets' => array(
                                             'specificDate' => 'Определенный день',

@@ -41,6 +41,7 @@ class Duc_schedules extends Duc {
         //$this->load->view('grid/FCKeditor');
         $this->load->view('grid/list_position');
 
+        // изменения поля вида select для редактирования группы
         $this->load->view('grid/formatter/select2',
                          array('grid' => $this->table,
                                 'url' => '/grid/'.$this->MY_table.'/'.$this->MY_module.'/grid/',

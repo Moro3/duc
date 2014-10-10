@@ -58,11 +58,13 @@ class Duc_groups extends Duc {
 
     //возвращает список групп
     function listGroupsTeacherEscape(){
+        /*
         $res = Modules::run('duc/duc_groups/MY_data_array_one',
             //key
             'main.id',
             //select
-            array('main.name', 'teacher.surname'// 'main.paid'
+            array('main.name', 
+                'related' => array('teacher' => array('surname'))// 'main.paid')
 
             ),
             //where
@@ -72,6 +74,21 @@ class Duc_groups extends Duc {
             //separator
             ' - '
         );
+        */
+        $res = Modules::run('duc/duc_groups/MY_data_array',            
+            //select
+            array('name', 'id',// 'id_teacher',
+                'related' => array('teacher' => array('surname', 'name', 'id'))// 'main.paid')
+
+            ),
+            //where
+            false,
+            //limit
+            false,
+            //order
+            'name'
+            
+        );
         foreach($res as $key=>$value){
             //$new[$key] = str_replace('"','\'',$value);
             //$new[$key] = addslashes($value);
@@ -79,6 +96,7 @@ class Duc_groups extends Duc {
             $new[$key] = mysql_real_escape_string($value);
             //$new[$key] = $value;
         }
+        dd($res);
         return $new;
     }
 
@@ -125,8 +143,8 @@ class Duc_groups extends Duc {
         				 		'url' => '/grid/'.$this->MY_table.'/'.$this->MY_module.'/grid/'
         				 )
         );
-        // изменение вида формы поля select
         
+        // изменение вида формы поля select teacher при редактировании       
         /*
         $this->load->view('grid/formatter/select2',
         				 array('grid' => $this->table,

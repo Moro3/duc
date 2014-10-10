@@ -14,6 +14,7 @@ class grid_duc_photos extends jqGrid
         );
         */
         $this->params['groups'] = Modules::run('duc/duc_groups/listGroups');
+        $this->params['groupsEscape'] = Modules::run('duc/duc_groups/listGroupsEscape');
         //$this->params['groups_sort'] = array(0=>'нет')+ $this->params['groups'];
         //natcasesort($this->params['groups_sort']);
 
@@ -75,7 +76,7 @@ class grid_duc_photos extends jqGrid
                                    //'replace' => $this->params['groups_sort'],
                                    'edittype' => "select",
                                    'editoptions' => array(
-                                   							'value' => new jqGrid_Data_Value($this->params['groups']),
+                                   							'value' => new jqGrid_Data_Value($this->params['groupsEscape']),
                                 	),
                                    'editrules' => array('required' => true,
                                                      'number' => true,
@@ -86,7 +87,7 @@ class grid_duc_photos extends jqGrid
                                    'stype' => 'select',
                                    //'replace' => $this->params['categories'],
                                    'searchoptions' => array(
-                                        				'value' => new jqGrid_Data_Value($this->params['groups'], 'All'),
+                                        				'value' => new jqGrid_Data_Value($this->params['groupsEscape'], 'All'),
                                         				//'value' => array('' => 'All') + $this->params['categories'],
                                         				//'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
                   				   ),
@@ -248,7 +249,8 @@ class grid_duc_photos extends jqGrid
 			throw new jqGrid_Exception('Коллектив не выбран');
 		}
 
-		if(!isset($_FILES[Modules::run('duc/duc_photos/formSelector', 'foto_upload')])){			throw new jqGrid_Exception('Изображение НЕ выбрано');
+		if(!isset($_FILES[Modules::run('duc/duc_photos/formSelector', 'foto_upload')])){
+			throw new jqGrid_Exception('Изображение НЕ выбрано');
 		}
             #Save
             $upd_data = array(
@@ -332,7 +334,8 @@ class grid_duc_photos extends jqGrid
 			throw new jqGrid_Exception('Table is not defined');
 		}
 
-		if(empty($upd['id_group']) || !is_numeric($upd['id_group'])){			throw new jqGrid_Exception('Коллектив не выбран');
+		if(empty($upd['id_group']) || !is_numeric($upd['id_group'])){
+			throw new jqGrid_Exception('Коллектив не выбран');
 		}
         if(isset($id)){
             #Get editing row

@@ -122,10 +122,73 @@ class grid_duc_schedules extends jqGrid
                                    //'stype' => 'select',
                                    'replace' => array(0=>'нет') + $this->params['groups'],
 
-                                   'edittype' => "select",
+                                   'edittype' => "custom",
                                    'editoptions' => array(
                                    							//'value' => array(0=>'нет') + $this->params['groups'],
                                    							'value' => new jqGrid_Data_Value($this->params['groupsTeacherEscape']),
+                                                'groups' => $this->params['groups'],
+                                                'groupsEscape' => $this->params['groupsTeacherEscape'],
+                                                
+                                                'custom_element' => new jqGrid_Data_Raw('function(value, options){                                                      
+                                                      var elemStr = \'<select id="\'+options.id +\'" class="FormElement" role="select" name="\'+options.name +\'">\';
+                                                      console.log("Смотрим options.groups");
+                                                      console.log(options.groups);
+                                                      
+                                                      if(options.groups && typeof(options.groups) == \'object\'){
+                                                        
+                                                        var group = false;
+                                                        var flagSelect = "";
+                                                        console.log("смотрим value");                                                        
+                                                        console.log(value);
+                                                        for(k in options.groups){
+                                                          console.log("смотрим цикл options.groups");                                                        
+                                                          console.log(options.groups[k]);
+                                                          if(value == options.groups[k]){
+                                                            alert(options.groups[k]);
+                                                            flagSelect = "selected";
+                                                          }else{
+                                                            flagSelect = "";
+                                                          }
+                                                          
+                                                          //alert(value);       
+                                                          elemStr += \'<option role="option" value="\' + k + \'" \' + flagSelect + \'>\' + options.groupsEscape[k] +
+                                                          \'</option>\';
+                                                          // return DOM element from jQuery object
+                                                        }                                                      
+                                                      }
+                                                      elemStr += \'</select>\';
+                                                    
+                                                      return elemStr;
+                                                }'),
+                                                'custom_value' => new jqGrid_Data_Raw('function(elem, operation, value){
+                                                      //console.log("смотрим custom_value");
+                                                      //console.log("elem: ");
+                                                      //console.log(elem);
+                                                      //console.log(operation);
+                                                      //console.log(value);
+                                                      var get_val = $(elem).value;
+                                                      //var set_val = $(\'input\',elem).val(value);
+                                                      //console.log(\'get_val:\');
+                                                      //console.log(get_val);
+                                                      //console.log(set_val);
+                                                      //return $(elem).value;
+                                                      if(operation === \'get\') {
+                                                         //return $(elem).find("input").val();
+                                                         return $(elem).val();
+                                                         //return value;
+                                                      } else if(operation === \'set\') {
+                                                         //$(\'input\',elem).val(\'!-\'+value);
+                                                         //return $(elem).find("input").val();
+                                                         var select = $("select", $(elem));
+                                                         //var select = $(elem).val();              
+                                                         
+
+                                                         //console.log(\'select:\');
+                                                         //console.log(select);
+                                                        var first = select.value;
+                                                        return first;
+                                                      }
+                                                    }'),
                                 	),
                                    'editrules' => array('required' => true,
                                                      'integer' => true,

@@ -204,35 +204,39 @@ class grid_duc_groups extends jqGrid
                                    						//'value' => new jqGrid_Data_Value($this->params['teachersData']),
                                    						//'custom_element' => new jqGrid_Data_Raw('myselect'),
                                                 		
+                                                		
                                                 		'custom_value' => new jqGrid_Data_Raw('function(elem, operation, value){
                                                 			console.log("смотрим custom_value");
                                                 			console.log("elem: ");
 														    console.log(elem);
 														    console.log(operation);
 														    console.log(value);
-														    var get_val = $(elem).value;
+														    var get_val = $("elem.selector option:selected").val();
 														    //var set_val = $(\'input\',elem).val(value);
 														    console.log(\'get_val:\');
 														    console.log(get_val);
+														    //console.log(get_val.value);
 														    //console.log(set_val);
 														    //return $(elem).value;
+														    //if ($(elem).length == 0) return;
+														    //return $(elem).val();
 														    if(operation === \'get\') {
 														       //return $(elem).find("input").val();
 														       return $(elem).val();
 														       //return value;
 														    } else if(operation === \'set\') {
-														       //$(\'input\',elem).val(\'!-\'+value);
+														       $(\'select\',elem).val(value);
 														       //return $(elem).find("input").val();
-														       var select = $("select", $(elem));
-														       //var select = $(elem).val();			       	
-														       
-
-														       console.log(\'select:\');
-														       console.log(select);
-														    	var first = select.value;
-														    	return first;
+														       //var select = $("select", $(elem));
+														       //var select = $(elem).val();
+														       //console.log(\'select:\');
+														       //console.log(select);
+														    	//var first = select.val();
+														    	//return first;
+														    	
 														    }
                                                 		}'),
+
                                                 		'custom_element' => new jqGrid_Data_Raw('function(value, options){
                                                 			console.log("смотрим custom_element");
                                                 			console.log("value:");
