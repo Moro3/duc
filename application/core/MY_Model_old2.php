@@ -116,8 +116,7 @@ class MY_Model extends CI_Model {
     *
     *  return array
     */
-	public function MY_data($select = '*', $where = false, $limit = false, $order_by = false, $group_by = false, $having = false){
-		$key_cache = $this->_genkey(func_get_args()+array('object'));
+	public function MY_data($select = '*', $where = false, $limit = false, $order_by = false, $group_by = false, $having = false){		$key_cache = $this->_genkey(func_get_args()+array('object'));
         if($r = $this->_get_cache($key_cache)) return $r;
 
 		$query = $this->MY_data_return($select, $where, $limit, $order_by, $group_by, $having);
@@ -167,14 +166,12 @@ class MY_Model extends CI_Model {
 	*
 	*	@result array - массив со связанными данными
 	*/
-	protected function MY_get_result_related($result, $select_related = false){
-
+	protected function MY_get_result_related($result, $select_related = false){
         $select_related = $this->get_correct_select_related($select_related);
 
 		$i = 1;
 		foreach($result as $key=>$value){
-			if($i == 1){
-				if(is_array($value)){
+			if($i == 1){				if(is_array($value)){
 					$type = 'array';
 				}elseif(is_object($value)){
 					$type = 'object';
@@ -185,8 +182,7 @@ class MY_Model extends CI_Model {
 			//собираем все id-шники
 			if($type == 'array'){
 				if(!empty($value['id'])) $result_key_id[$value['id']] = $value;
-            }elseif($type == 'object'){
-            	if(!empty($value->id))	$result_key_id[$value->id] = $value;
+            }elseif($type == 'object'){            	if(!empty($value->id))	$result_key_id[$value->id] = $value;
             }
 			// собираем значения для внешних ключей (связь многие к одному)
 			foreach($this->MY_belongs_to as $name_field=>$value_field){
@@ -194,8 +190,7 @@ class MY_Model extends CI_Model {
 					if(isset($value[$value_field['foreign_key']])){
 						$foreigns[$name_field][$value_field['foreign_key']][$value[$value_field['foreign_key']]] = $value[$value_field['foreign_key']];
 					}
-				}elseif($type == 'object'){
-					if(isset($value->$value_field['foreign_key'])){
+				}elseif($type == 'object'){					if(isset($value->$value_field['foreign_key'])){
 						$foreigns[$name_field][$value_field['foreign_key']][$value->$value_field['foreign_key']] = $value->$value_field['foreign_key'];
 					}
 				}
@@ -263,15 +258,8 @@ class MY_Model extends CI_Model {
 		return $result;
 	}
 
-	protected function get_correct_select_related($related){
-		if($related != false){
-			if(isset($related['related']) && is_array($related['related'])){
-				foreach($related['related'] as $key=>$value){
-					if(is_numeric($key)){
-						$result[$value] = '*';
-					}else{
-						if(is_array($value)){
-							$result[$key] = $value;
+	protected function get_correct_select_related($related){		if($related != false){			if(isset($related['related']) && is_array($related['related'])){				foreach($related['related'] as $key=>$value){					if(is_numeric($key)){						$result[$value] = '*';
+					}else{						if(is_array($value)){							$result[$key] = $value;
 						}
 					}
 				}
@@ -285,10 +273,7 @@ class MY_Model extends CI_Model {
 	*
 	*
 	*/
-	protected function get_array_key($array, $field){
-		foreach($array as $key=>$value){
-			if(is_array($value)){
-				if(!empty($value[$field])){
+	protected function get_array_key($array, $field){		foreach($array as $key=>$value){			if(is_array($value)){				if(!empty($value[$field])){
 					/* удаление из результата значения ключа, для предотвращения избыточности данных
 					$value_field = $value[$field];
 					unset($value[$field]);
@@ -297,8 +282,7 @@ class MY_Model extends CI_Model {
 					$result[$value[$field]][] = $value;
 				}
 			}
-			if(is_object($value)){
-				if(!empty($value->$field)){
+			if(is_object($value)){				if(!empty($value->$field)){
 					/* удаление из результата значения ключа, для предотвращения избыточности данных
 					$value_field = $value->$field;
 					unset($value->$field);
@@ -317,8 +301,7 @@ class MY_Model extends CI_Model {
 	*	@param array - массив
 	*
 	*/
-	protected function MY_get_result_related_belongs_to($result, $foreigns, $type = 'object'){
-		if(isset($result) && count($result) > 0 && isset($foreigns) && is_array($foreigns)){
+	protected function MY_get_result_related_belongs_to($result, $foreigns, $type = 'object'){		if(isset($result) && count($result) > 0 && isset($foreigns) && is_array($foreigns)){
 			foreach($this->MY_belongs_to as $name_field=>$value_field){
         		//echo $foreigns[$name_field][$value_field['foreign_key']];
         		if(isset($foreigns[$name_field]) && isset($foreigns[$name_field][$value_field['foreign_key']])){
@@ -350,8 +333,7 @@ class MY_Model extends CI_Model {
     *
 	*	@result object - объект результат запроса к БД
 	*/
-	protected function MY_data_return($select = '*', $where = false, $limit = false, $order_by = false, $group_by = false, $having = false){
-		$key_cache = $this->_genkey(func_get_args());
+	protected function MY_data_return($select = '*', $where = false, $limit = false, $order_by = false, $group_by = false, $having = false){		$key_cache = $this->_genkey(func_get_args());
         if($r = $this->_get_cache($key_cache)) return $r;
 
         if($select !== '*'){
@@ -371,10 +353,7 @@ class MY_Model extends CI_Model {
         	}
         	*/
         	foreach($select as $key=>$value){
-        		if($key == 'encode'){
-        			if(is_array($value)){
-        				foreach($value as $item_select){
-        					$this->db->select($item_select, false);
+        		if($key == 'encode'){        			if(is_array($value)){        				foreach($value as $item_select){        					$this->db->select($item_select, false);
         				}
         			}else{
         				$this->db->select($value, false);
@@ -385,9 +364,10 @@ class MY_Model extends CI_Model {
 	                }
 	                $sel = $this->MY_get_select_table_alias($value);
 	        		$this->db->select($sel);
-        		}        		
-        	}        	
+        		}
+        	}
         }
+
 
         if($where !== false){
            $this->MY_generate_where($where);
@@ -401,7 +381,7 @@ class MY_Model extends CI_Model {
         	}else{
         		exit('не верно задан параметр limit');
         	}
-        }        
+        }
 
         if($order_by !== false){
         	if(is_array($order_by)){
@@ -437,10 +417,8 @@ class MY_Model extends CI_Model {
         	}
         }
 
-		if($group_by !== false){
-        	$this->db->group_by($group_by);
-        	if($having !== false){
-        		$this->MY_generate_having($having);
+		if($group_by !== false){        	$this->db->group_by($group_by);
+        	if($having !== false){        		$this->MY_generate_having($having);
         	}
 		}
 
@@ -479,9 +457,7 @@ class MY_Model extends CI_Model {
     */
 	public function MY_data_row($select = '*', $where = false, $limit = false, $order_by = false){
     	 $arr = $this->MY_data($select, $where, $limit, $order_by);
-    	 if(is_array($arr) && count($arr) > 0){
-    	 	foreach($arr as $item){
-    	 		return $item;
+    	 if(is_array($arr) && count($arr) > 0){    	 	foreach($arr as $item){    	 		return $item;
     	 	}
     	 }
     	 return false;
@@ -544,14 +520,11 @@ class MY_Model extends CI_Model {
 			$tt = ($tt === $this->MY_name_table_main) ? $main_table : $tt;
 			$select_arr[$tt][$ff] = true;
 		}
-		foreach($select_arr as $t2=>$it2){
-			foreach($it2 as $f2=>$v2){
-				if(!empty($t2) && $t2 !== $main_table){
-					$related[$t2][] = $f2;
+		foreach($select_arr as $t2=>$it2){			foreach($it2 as $f2=>$v2){
+				if(!empty($t2) && $t2 !== $main_table){					$related[$t2][] = $f2;
 
 					$select_query[] = $t2.$this->MY_prefix_as.$f2;
-				}else{
-					$norelated[] = $f2;
+				}else{					$norelated[] = $f2;
 					$select_query[] = $this->MY_name_table_main.'.'.$f2;
 				}
 			}
@@ -575,23 +548,18 @@ class MY_Model extends CI_Model {
 	            $res_val = array();
 	            foreach($value_field as $tb=>$items){
 	            	/*
-	            	foreach($items as $fld=>$val_fld){
-	            		//echo 'таблица: '.$tb.', поле: '.$fld.'<br />';
-	            		if(isset($row[$tb]) && is_object($row[$tb])){
-	            			$res_val[] = $row[$tb]->$fld;
-	            		}elseif(isset($row[$fld])){
-	            			$res_val[] = $row[$fld];
+	            	foreach($items as $fld=>$val_fld){	            		//echo 'таблица: '.$tb.', поле: '.$fld.'<br />';
+	            		if(isset($row[$tb]) && is_object($row[$tb])){	            			$res_val[] = $row[$tb]->$fld;
+	            		}elseif(isset($row[$fld])){	            			$res_val[] = $row[$fld];
 	            		}
 	            	}
 	            	*/
 	            	//$res_val[] = $row[$items];
 	            }
-	            foreach($row as $key=>$value){
-	            	if($key != $main_key){
+	            foreach($row as $key=>$value){	            	if($key != $main_key){
 	            		$str_val = $value;
 	            		if(isset($sep_result[$key])){
-	            			if(isset($sep_result[$key]['prefix'])){
-	            				$str_val = $sep_result[$key]['prefix'].$str_val;
+	            			if(isset($sep_result[$key]['prefix'])){	            				$str_val = $sep_result[$key]['prefix'].$str_val;
 	            			}
 	            			if(isset($sep_result[$key]['suffix'])){
 	            				$str_val = $str_val.$sep_result[$key]['suffix'];
@@ -633,17 +601,14 @@ class MY_Model extends CI_Model {
 	*
 	* return array - массив полей с выходными параметрами в виде массива
 	*/
-	protected function MY_separator_elements($separator){
-		//разбираем separator на результирующие поля, если он является массивом
+	protected function MY_separator_elements($separator){		//разбираем separator на результирующие поля, если он является массивом
 
         if(is_array($separator)){
         	if(isset($separator['!'])){
-        		if(!is_array($separator['!'])){
-        			$separator['!'] = array('separator' => $separator['!']);
+        		if(!is_array($separator['!'])){        			$separator['!'] = array('separator' => $separator['!']);
         		}
         			foreach($separator['!'] as $sep_key=>$sep_value){
-                    	if(in_array($sep_key, $this->MY_separator_field_allow)){
-                    		$global_sep[$sep_key] = $sep_value;
+                    	if(in_array($sep_key, $this->MY_separator_field_allow)){                    		$global_sep[$sep_key] = $sep_value;
                     	}
         			}
 
@@ -651,12 +616,9 @@ class MY_Model extends CI_Model {
         	foreach($separator as $field=>$sep_field){
                	if($field == '!') continue;
                	if($sep_res = $this->MY_get_select_alias_field_prefix($field)){
-               		if( ! is_array($sep_field)){
-               			$sep_field = array('prefix' => $sep_field);
+               		if( ! is_array($sep_field)){               			$sep_field = array('prefix' => $sep_field);
                		}
-               		foreach($sep_field as $sep_f_key=>$sep_f_value){
-               			if(in_array($sep_f_key, $this->MY_separator_field_allow)){
-               				$res_separator[$sep_res][$sep_f_key] = $sep_f_value;
+               		foreach($sep_field as $sep_f_key=>$sep_f_value){               			if(in_array($sep_f_key, $this->MY_separator_field_allow)){               				$res_separator[$sep_res][$sep_f_key] = $sep_f_value;
                			}
                			if(isset($global_sep)){
 	               			$res_separator[$sep_res] = array_merge($global_sep, $res_separator[$sep_res]);
@@ -682,8 +644,7 @@ class MY_Model extends CI_Model {
 	* Генерация запроса where
 	*
 	*/
-    protected function MY_generate_where($where, $type = 'and'){
-    		if(!is_array($where)) return false;
+    protected function MY_generate_where($where, $type = 'and'){    		if(!is_array($where)) return false;
         	foreach($where as $key=>$value){
         		if($from = $this->MY_get_table_from($key)) $this->MY_temp_from_is[$from] = true;
 
@@ -713,12 +674,10 @@ class MY_Model extends CI_Model {
         	}
     }
 
-	protected function MY_generate_where_query($key, $value, $encode = true, $type = 'and'){
-		if(is_numeric($key)){
+	protected function MY_generate_where_query($key, $value, $encode = true, $type = 'and'){		if(is_numeric($key)){
 			$this->db->where($value);
 		}else{
-			switch($type){
-				case 'or':
+			switch($type){				case 'or':
 					$this->db->or_where($key,$value, $encode);
 				break;
 				case 'in':
@@ -736,8 +695,7 @@ class MY_Model extends CI_Model {
 				default:
 				    if(is_array($value)){
 						$this->db->where_in($key,$value, $encode);
-					}else{
-						$this->db->where($key,$value, $encode);
+					}else{						$this->db->where($key,$value, $encode);
 					}
 				break;
 			}
@@ -748,20 +706,17 @@ class MY_Model extends CI_Model {
 	* Генерация запроса like
 	*
 	*/
-    protected function MY_generate_like($where, $type = 'like'){
-       if(!is_array($where)) return false;
+    protected function MY_generate_like($where, $type = 'like'){       if(!is_array($where)) return false;
         	foreach($where as $key=>$value){
         		if($from = $this->MY_get_table_from($key)) $this->MY_temp_from_is[$from] = true;
 
-        		if(is_array($value)){
-        			$check_side = strtolower($key);
+        		if(is_array($value)){        			$check_side = strtolower($key);
         			if($check_side == 'before' || $check_side == 'after' || $check_side == 'both' || $check_side == 'none'){
                     	$this->MY_generate_like_query(0, $value, $type, $check_side);
         			}else{
 	        			$this->MY_generate_like_query($key, $value, $type);
         			}
-        		}else{
-        			$this->MY_generate_like_query($key, $value, $type);
+        		}else{        			$this->MY_generate_like_query($key, $value, $type);
         		}
         	}
 
@@ -880,10 +835,8 @@ class MY_Model extends CI_Model {
                         $type_join = $type;
 
                         foreach($items as $key=>$value){
-			        		if(is_array($value) && isset($value['encode'])){
-			        			$res_val[$key] = $value['encode'];
-			        		}else{
-			        			$res_val[$key] = $value;
+			        		if(is_array($value) && isset($value['encode'])){			        			$res_val[$key] = $value['encode'];
+			        		}else{			        			$res_val[$key] = $value;
 			        		}
 
 			        		/*
@@ -925,16 +878,14 @@ class MY_Model extends CI_Model {
     }
 
 	protected function MY_generate_join_query($table, $key, $value, $encode = true, $type = 'join'){
-        //вычисляем имя реальной таблицы и псевдонима
-        if($real_table = $this->MY_get_table_real($table)){
+        //вычисляем имя реальной таблицы и псевдонима        if($real_table = $this->MY_get_table_real($table)){
             $alias_table = $this->MY_get_table_alias($real_table);
 			//echo $real_table.'<br />';
 			//echo $alias_table;
 			//exit;
 			if(!empty($alias_table) && $real_table !== $alias_table){
 				$query_table = $real_table.' AS '.$alias_table;
-			}else{
-				$query_table = $real_table;
+			}else{				$query_table = $real_table;
 			}
 			//делаем фиктивный запрос на получение строки для запроса парамтра FROM
 			$join_table = $this->MY_get_table_from($alias_table.'.id');
@@ -942,8 +893,7 @@ class MY_Model extends CI_Model {
 			//echo $join_table;
 			//exit;
 			$this->MY_temp_from_is[$join_table] = false;
-		}else{
-			//exit('неверна задана таблица в запросе JOIN');
+		}else{			//exit('неверна задана таблица в запросе JOIN');
             //return false;
             $query_table = $table;
 		}
@@ -953,14 +903,13 @@ class MY_Model extends CI_Model {
         $key_table = $this->MY_get_table($key);
         $value_table = $this->MY_get_table($value);
         /*
-        if(!empty($key_table) && $this->MY_get_table_real($key_table) !== $real_table){
-        	$from_key_table = $this->MY_get_table_from($key);
+        if(!empty($key_table) && $this->MY_get_table_real($key_table) !== $real_table){        	$from_key_table = $this->MY_get_table_from($key);
         	$this->MY_temp_from_is[$from_key_table] = true;
         }
         */
         if(!empty($value_table) && $this->MY_get_table_real($value_table) !== $real_table){
-        	//$from_value_table = $this->MY_get_table_from($value);
-        	//$this->MY_temp_from_is[$from_value_table] = true;
+        	$from_value_table = $this->MY_get_table_from($value);
+        	$this->MY_temp_from_is[$from_value_table] = true;
         }
 
 		if(is_array($value)){
@@ -987,17 +936,13 @@ class MY_Model extends CI_Model {
 					}
                     $res_val = implode(' AND ', $val);
 				}
-			}else{
-				$res_val = $value;
+			}else{				$res_val = $value;
 			}
 			$this->db->join($query_table, $res_val, $type);
 		}else{
 			if(is_array($value)){
-				foreach($value as $item){
-					if(strpos(trim($key), ' ')){
-						$val[] = $key.$item;
-					}else{
-						$val[] = $key.' = '.$item;
+				foreach($value as $item){					if(strpos(trim($key), ' ')){						$val[] = $key.$item;
+					}else{						$val[] = $key.' = '.$item;
 					}
                     $res_val = implode(' AND ', $val);
 					$this->db->join($query_table,$res_val, $type);
@@ -1036,9 +981,7 @@ class MY_Model extends CI_Model {
 	* и возвращает имя псевдонима таблицы если оно разрешено
 	* @param string - имя псевдонима таблицы
 	*/
-	protected function MY_get_table_alias($name){
-		if(in_array($name, $this->MY_table_access)){
-			$arr = array_keys($this->MY_table_access, $name);
+	protected function MY_get_table_alias($name){		if(in_array($name, $this->MY_table_access)){			$arr = array_keys($this->MY_table_access, $name);
 			if( ! is_numeric($arr[0]))	return $arr[0];
 		}
 		return false;
@@ -1048,8 +991,7 @@ class MY_Model extends CI_Model {
 	* и возвращает реальное имя таблицы если оно разрешено
 	* @param string - имя реальной таблицы
 	*/
-	protected function MY_get_table_real($table){
-		if(isset($this->MY_table_access[$table])){
+	protected function MY_get_table_real($table){		if(isset($this->MY_table_access[$table])){
        		return $this->MY_table_access[$table];
        		return $table;
        	}else{
@@ -1081,9 +1023,7 @@ class MY_Model extends CI_Model {
     * @param string - имя строки таблица.поле
     *
     */
-	protected function MY_get_table_from($name){
-		if($table = $this->MY_get_table($name)){
-			if(isset($this->MY_table_access[$table])){
+	protected function MY_get_table_from($name){		if($table = $this->MY_get_table($name)){			if(isset($this->MY_table_access[$table])){
          		return $this->MY_table_access[$table].' AS '.$table;
          	}else{
          		if(in_array($table,$this->MY_table_access)){
@@ -1100,8 +1040,7 @@ class MY_Model extends CI_Model {
     * @param string - имя строки таблица.поле
     *
     */
-    protected function MY_get_select_table_alias($name){
-    	if($table = $this->MY_get_table($name)){
+    protected function MY_get_select_table_alias($name){    	if($table = $this->MY_get_table($name)){
 			if($field = $this->MY_get_field($name)){
 				if($table != $this->MY_name_table_main && $table != $this->MY_table_access[$this->MY_name_table_main]){
 					if(isset($this->MY_table_access[$table])){
@@ -1150,54 +1089,20 @@ class MY_Model extends CI_Model {
 		return $name;
     }
 
-    /**
-    * Проверяет содержится ли в переданном массиве или строке префик названия главной таблицы
-    * Это например требуется для определения с префиксом или без задан запрос в полях select, для корректного вывода их(с префиксом или без) в полях where
-    * т.к. если запрос состоит из нескольких таблиц, то могут возникнуть коллизии в результатах запроса с одинаковыми названием полей
-    *  @param mixed $select - строка или массив (если несколько полей)
-    *
-    *	@return boolean - true если префикс главной таблицы обнаружен хотя в одном из значений, иначе false
-    */
-    protected function MY_is_main_prefix_array($select){
-    	if( ! is_array($select)) $select = array($select);
-    	/*
-    	echo 'Поступивший select:';
-    	print_r($select);
-    	echo '<br>';
-        */
-    	foreach($select as $item){
-    		if($table = $this->MY_get_table($item)){
-    			//echo 'Имя найденой таблицы: '.$table.'<br>';
-    			//echo 'Имя главной таблицы: '.$this->MY_name_table_main.'<br>';
-    			//echo 'Наличие главной таблицы: '.$this->MY_table_access[$this->MY_name_table_main].'<br>';
-    			if($table == $this->MY_name_table_main){
-    				//if(isset($this->MY_table_access[$this->MY_name_table_main])) return true;
-    				//echo '<b>Название главной совпало</b><br>';
-    				return true;
-    			}
-    		}
-    	}
-    	return false;
-    }
-
 	/**
 	* Встроенная функция вставки данных для модели
 	*
 	*  @param array - массив параметров запроса 'set'
 	*
 	*/
-    public function MY_insert($set){
-    	$res = false;
+    public function MY_insert($set){    	$res = false;
     	if($set !== false){
         	if(!is_array($set)) return false;
             if($this->MY_multiarr_numeric($set)){
-				if($this->db->insert_batch($this->MY_table, $set)){
-					$res = true;
+				if($this->db->insert_batch($this->MY_table, $set)){					$res = true;
 				}
-			}else{
-				$this->MY_generate_set($set);
-				if($this->db->insert($this->MY_table)){
-					//return $this->db->insert_id();
+			}else{				$this->MY_generate_set($set);
+				if($this->db->insert($this->MY_table)){					//return $this->db->insert_id();
 					$res = true;
 				}
 			}
@@ -1211,14 +1116,11 @@ class MY_Model extends CI_Model {
 	*  Генерирует запрос типа 'set'
 	*
 	*/
-    protected function MY_generate_set($set, $encode = true){
-    	foreach($set as $key=>$items){
+    protected function MY_generate_set($set, $encode = true){    	foreach($set as $key=>$items){
     		if($key == 'encode'){
         		$this->MY_generate_set($items, false);
-        	}elseif(is_array($items)){
-        		$this->db->set($items);
-        	}else{
-        		$this->db->set($key, $items, $encode);
+        	}elseif(is_array($items)){        		$this->db->set($items);
+        	}else{        		$this->db->set($key, $items, $encode);
         	}
         }
     }
@@ -1229,10 +1131,8 @@ class MY_Model extends CI_Model {
     * @param array - массив
     * @return boolean
     */
-    protected function MY_multiarr_numeric($array){
-         if(!is_array($array)) return false;
-         foreach($array as $key=>$value){
-         	if( ! is_numeric($key)) return false;
+    protected function MY_multiarr_numeric($array){         if(!is_array($array)) return false;
+         foreach($array as $key=>$value){         	if( ! is_numeric($key)) return false;
          	if( ! is_array($value))	return false;
          }
          return true;
@@ -1273,8 +1173,7 @@ class MY_Model extends CI_Model {
         $this->MY_generate_where($where);
 
 		$res = false;
-        if($this->db->delete($this->MY_table)){
-        	$res = true;
+        if($this->db->delete($this->MY_table)){        	$res = true;
         }
         // очищаем временные псевдонимы
         $this->MY_temp_from_is = array();
@@ -1290,24 +1189,15 @@ class MY_Model extends CI_Model {
     *					параметр нужен что бы разгрузить данные от избыточных,
     *					т.к. если указать '*' будут подгружены зависимые данные связаной таблицы и т.д. по цепочке, коих может оказаться очень много
     */
-    public function MY_related_has_many($model, $value, $select = '*'){
-    	$mcm = $this->MY_get_mcm_related_has_many($model);
+    public function MY_related_has_many($model, $value, $select = '*'){    	$mcm = $this->MY_get_mcm_related_has_many($model);
     	$field = $this->MY_get_field_related_has_many($model);
     	$select = $this->MY_get_select_related_has_many($model, $select);
         //print_r($select);
     	//var_dump($field);
-        //echo 'Модель: '.$model.'<br>';
-        //print_r($select);
-        //echo '<br />';
-    	$where_key = ($this->MY_is_main_prefix_array($select)) ? $this->MY_name_table_main.'.'.$field : $field;
-    	//echo 'Условие: '.$where_key.'<br>';
-    	if(!empty($mcm) && !empty($field)){
-       		$res = Modules::run($mcm,
-       			//select
-       			$select,
+    	if(!empty($mcm) && !empty($field)){       		$res = Modules::run($mcm,
+       			//select       			$select,
        		     //where
-       		     //array($field => $value)
-       		     array($where_key => $value)
+       		     array($field => $value)
        		);
        		if(isset($res)) return $res;
     		return null;
@@ -1321,22 +1211,11 @@ class MY_Model extends CI_Model {
 	*   @param string - $model имя модели
 	*   @param array - $select массив с именами полей (по умолчанию '*')
 	*/
-	protected function MY_get_select_related_has_many($model, $select = '*'){
-		if($select == '*') return $select;
+	protected function MY_get_select_related_has_many($model, $select = '*'){		if($select == '*') return $select;
 		if(!is_array($select)) $select = array($select);
-		foreach($this->MY_has_many as $key=>$value){
-			//if(is_array($select)){
-			//$foreign_key = array($model.'.'.$value['foreign_key'], $value['foreign_key']);
-            if($key == $model){
-				if(!in_array($value['foreign_key'], $select) || !in_array($this->MY_name_table_main.'.'.$value['foreign_key'], $select)){
-                    if($this->MY_is_main_prefix_array($select)){
-                    	$select[] = $this->MY_name_table_main.'.'.$value['foreign_key'];
-                    }else{
-						$select[] = $value['foreign_key'];
-					}
+		foreach($this->MY_has_many as $key=>$value){			if(is_array($select)){				if(!in_array($value['foreign_key'], $select)){					$select[] = $value['foreign_key'];
 				}
 			}
-			//}
 		}
 		return $select;
 	}
@@ -1351,13 +1230,10 @@ class MY_Model extends CI_Model {
     	$field = $this->MY_get_field_related_belongs_to($model);
 
     	//var_dump($field);
-
-    	$where_key = ($this->MY_is_main_prefix_array($select)) ? $this->MY_name_table_main.'.'.$field : $field;
     	if(!empty($mcm) && !empty($field)){
-       		$res = Modules::run($mcm, $select,
+       		$res = Modules::run($mcm, '*',
        		     //where
-       		     //array($field => $value)
-       		     array($where_key => $value)
+       		     array($field => $value)
        		);
        		if(isset($res)) return $res;
     		return null;
@@ -1370,10 +1246,7 @@ class MY_Model extends CI_Model {
     *	@param string - имя модели связи
     *	@return string - module/controller/method
     */
-    private function MY_get_mcm_related_has_many($model){
-    	if(is_array($this->MY_has_many)){
-    		if(isset($this->MY_has_many[$model]) && is_array($this->MY_has_many[$model])){
-    			$module = (!empty($this->MY_has_many[$model]['module'])) ? $this->MY_has_many[$model]['module'].'/' : '';
+    private function MY_get_mcm_related_has_many($model){    	if(is_array($this->MY_has_many)){    		if(isset($this->MY_has_many[$model]) && is_array($this->MY_has_many[$model])){    			$module = (!empty($this->MY_has_many[$model]['module'])) ? $this->MY_has_many[$model]['module'].'/' : '';
     			$controller = (!empty($this->MY_has_many[$model]['controller'])) ? $this->MY_has_many[$model]['controller'].'/' : false;
     			if($controller === false) return false;
     			//берем результат в виде объекта (MY_data)
@@ -1413,9 +1286,7 @@ class MY_Model extends CI_Model {
 	*	Возвращает поле связи с один ко многим (has_many)
 	*
 	*/
-    private function MY_get_field_related_has_many($model){
-    	if(isset($this->MY_has_many[$model]['foreign_key'])){
-    		return $this->MY_has_many[$model]['foreign_key'];
+    private function MY_get_field_related_has_many($model){    	if(isset($this->MY_has_many[$model]['foreign_key'])){    		return $this->MY_has_many[$model]['foreign_key'];
     	}
     	return false;
     }
