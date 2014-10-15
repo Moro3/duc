@@ -74,7 +74,7 @@ function get_caller_info() {
 *	- !!! если функция вызвана в функции или методе, то после вывода данные прекращается работа скрипта через exit (чтобы можно было увидеть если функция вызвана ы методе который что-то возвращает)
 *
 */
-function dd($str) {
+function dd($str, $print = false) {
     
 	$data = get_caller_info();
 	$c = "<b>file:</b> ".$data['file'] . "; ";
@@ -82,6 +82,7 @@ function dd($str) {
     $c .= ($data['class'] != '') ? ":" . $data['class'] . "->" : "";
     $c .= ($data['func'] != '') ? $data['func'] . "(): " : "";
 
+    if($print) debug_print_backtrace();
     echo $c . "<br><pre>";
     if(isset($str)) print_r($str);
     echo "</pre>\n";
