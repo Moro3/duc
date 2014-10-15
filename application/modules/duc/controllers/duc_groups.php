@@ -56,47 +56,42 @@ class Duc_groups extends Duc {
         return $new;
     }
 
-    //возвращает список групп
-    function listGroupsTeacherEscape(){
-        /*
+    //возвращает список групп c учителями
+    function listGroupsTeacher(){
+        
+        
         $res = Modules::run('duc/duc_groups/MY_data_array_one',
             //key
             'main.id',
             //select
-            array('main.name', 
-                'related' => array('teacher' => array('surname'))// 'main.paid')
+            array('main.name', 'teacher.surname', 
+                //'related' => array('teacher' => array('surname'))// 'main.paid')
 
             ),
             //where
-            false,
+            array('main.id_teacher' => array('encode' => 'teacher.id')),
             //order
             'main.name',
             //separator
             ' - '
-        );
-        */
-        $res = Modules::run('duc/duc_groups/MY_data_array',            
-            //select
-            array('name', 'id',// 'id_teacher',
-                'related' => array('teacher' => array('surname', 'name', 'id'))// 'main.paid')
+        );        
+        //dd($res, true);
+        return $res;
+    }
 
-            ),
-            //where
-            false,
-            //limit
-            false,
-            //order
-            'name'
-            
-        );
+    //возвращает список групп
+    function listGroupsTeacherEscape(){ 
+        
+        $res = $this->listGroupsTeacher();
+
         foreach($res as $key=>$value){
             //$new[$key] = str_replace('"','\'',$value);
             //$new[$key] = addslashes($value);
             //$new[$key] = htmlspecialchars($value);
-            $new[$key] = mysql_real_escape_string($value);
+            $new[$key] = ( ! is_array($value)) ? mysql_real_escape_string($value) : $value;
             //$new[$key] = $value;
         }
-        dd($res);
+        //dd($res, true);
         return $new;
     }
 

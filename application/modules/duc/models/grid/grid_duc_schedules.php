@@ -14,9 +14,11 @@ class grid_duc_schedules extends jqGrid
 
 		$this->config = $this->loader->get('config');
 
+        $this->params['groupsTeacherEscape'] = Modules::run('duc/duc_groups/listGroupsTeacherEscape');
+        $this->params['groupsTeacher'] = Modules::run('duc/duc_groups/listGroupsTeacher');
         $this->params['groups'] = Modules::run('duc/duc_groups/listGroups');
         $this->params['groupsEscape'] = Modules::run('duc/duc_groups/listGroupsEscape');
-        $this->params['groupsTeacherEscape'] = Modules::run('duc/duc_groups/listGroupsTeacherEscape');
+        
         $this->params['teachers'] = Modules::run('duc/duc_teachers/MY_data_array_one', 'id', array('surname', 'name', 'name2'), false, 'surname');
         $this->params['teachersEscape'] = Modules::run('duc/duc_teachers/listTeachersEscape');
         $this->params['num_groups'] = Modules::run('duc/duc_numgroups/MY_data_array_one', 'id', 'name', false, 'sorter');
@@ -120,38 +122,40 @@ class grid_duc_schedules extends jqGrid
                                     'width' => 100,
                                    'editable' => true,
                                    //'stype' => 'select',
-                                   'replace' => array(0=>'нет') + $this->params['groups'],
+                                   'replace' => array(0=>'нет') + $this->params['groupsTeacher'],
 
-                                   'edittype' => "custom",
+                                   'edittype' => "select",
                                    'editoptions' => array(
                                    							//'value' => array(0=>'нет') + $this->params['groups'],
                                    							'value' => new jqGrid_Data_Value($this->params['groupsTeacherEscape']),
                                                 'groups' => $this->params['groups'],
                                                 'groupsEscape' => $this->params['groupsTeacherEscape'],
+                                                //'groupsTeacher' => $this->params['groupsTeacher'],
                                                 
+                                                /*
                                                 'custom_element' => new jqGrid_Data_Raw('function(value, options){                                                      
                                                       var elemStr = \'<select id="\'+options.id +\'" class="FormElement" role="select" name="\'+options.name +\'">\';
                                                       console.log("Смотрим options.groups");
                                                       console.log(options.groups);
                                                       
-                                                      if(options.groups && typeof(options.groups) == \'object\'){
+                                                      if(options.groupsEscape && typeof(options.groupsEscape) == \'object\'){
                                                         
                                                         var group = false;
                                                         var flagSelect = "";
                                                         console.log("смотрим value");                                                        
                                                         console.log(value);
-                                                        for(k in options.groups){
-                                                          console.log("смотрим цикл options.groups");                                                        
-                                                          console.log(options.groups[k]);
-                                                          if(value == options.groups[k]){
-                                                            alert(options.groups[k]);
+                                                        for(k in options.groupsEscape){
+                                                          console.log("смотрим цикл options.groupsEscape");                                                        
+                                                          console.log(options.groupsEscape[k]);
+                                                          if(value == options.groupsEscape[k]){
+                                                            //alert(options.groupsEscape[k]);
                                                             flagSelect = "selected";
                                                           }else{
                                                             flagSelect = "";
                                                           }
                                                           
                                                           //alert(value);       
-                                                          elemStr += \'<option role="option" value="\' + k + \'" \' + flagSelect + \'>\' + options.groupsEscape[k] +
+                                                          elemStr += \'<option role="option" value="\' + k + \'" \' + flagSelect + \'>\' + options.groups[k] +
                                                           \'</option>\';
                                                           // return DOM element from jQuery object
                                                         }                                                      
@@ -189,6 +193,7 @@ class grid_duc_schedules extends jqGrid
                                                         return first;
                                                       }
                                                     }'),
+                                                    */
                                 	),
                                    'editrules' => array('required' => true,
                                                      'integer' => true,
@@ -217,16 +222,17 @@ class grid_duc_schedules extends jqGrid
    			),
 
    			'id_numgroup'   => array('label' => lang('duc_group_number'),
-
+                                  'db' => 'object.id_numgroup',
                                     //'hidden' => true,
-                                    'width' => 50,
-                                   'editable' => true,
-                                   //'stype' => 'select',
-                                   'replace' => array(0=>'нет') + $this->params['num_groups'],
+                                  'width' => 50,
+                                  'editable' => true,
+                                  //'stype' => 'select',
+                                  'replace' => $this->params['num_groups'],
 
-                                   'edittype' => "select",
-                                   'editoptions' => array(
-                                   							'value' => new jqGrid_Data_Value($this->params['num_groups']),
+                                  'edittype' => "select",
+                                  'editoptions' => array(
+                                   							//'value' => new jqGrid_Data_Value($this->params['num_groups']),
+                                                'value' => $this->params['num_groups'],
                                 	),
                                    'editrules' => array('required' => true,
                                                      'integer' => true,
