@@ -9,6 +9,8 @@ class Mods extends MY_Controller {
 	    $this->load->library('control_uri');
 	    $this->load->library('scheme');
 
+        $this->load->helper('language');
+
 	    $this->lang->load('mods');
 
 	    //$this->load->library('datetimepicker');
@@ -276,7 +278,8 @@ class Mods extends MY_Controller {
     return $this->load->view('list_modules_main_views', $date_menu, true);
 	}
 
-    function list_config_menu(){
+    function list_config_menu(){
+
     }
 
     /**
@@ -286,8 +289,10 @@ class Mods extends MY_Controller {
     * @return array - данные о странице
     */
     public function get_data_template($name){
-        if( ! is_numeric($name)) {         	$id = $this->id_is_name($name);
-        }else{        	$id = $name;
+        if( ! is_numeric($name)) {
+         	$id = $this->id_is_name($name);
+        }else{
+        	$id = $name;
         }
 
 		if(empty($id)) return false;
@@ -318,7 +323,8 @@ class Mods extends MY_Controller {
          			$data_page[$key] = $value;
          		}
          	}
-         }else{         	echo 'не массив';
+         }else{
+         	echo 'не массив';
          	exit;
          }
          if(isset($data_page)) return $data_page;
@@ -346,7 +352,8 @@ class Mods extends MY_Controller {
     }
 
 
-    public function get_data_mod($id){    	$res = Modules::run('mods/mods/MY_data',
+    public function get_data_mod($id){
+    	$res = Modules::run('mods/mods/MY_data',
     		//select
     		array('*'),
     		//where
