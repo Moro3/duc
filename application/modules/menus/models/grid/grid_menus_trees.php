@@ -13,9 +13,10 @@ class grid_menus_trees extends jqGrid
         $this->table = 'menus_trees';
         $this->config = $this->loader->get('config');
 
-		$this->params['places'] = Modules::run('menus/menus_places/places_select');
+		    $this->params['places'] = Modules::run('menus/menus_places/places_select');
         $this->params['types'] = Modules::run('menus/menus_types/types_select');
-		$this->params['pages'] = Modules::run('pages/pages/pages_select_prefix');
+		    $this->params['pages'] = Modules::run('pages/pages/pages_select_prefix');
+        $this->params['mods'] = Modules::run('mods/mods/listSelectPrefix');
 
         #Set tree grid mode
         $this->treegrid = 'adjacency';
@@ -25,16 +26,20 @@ class grid_menus_trees extends jqGrid
 
         #Set condition for base level
         $this->where = array('object.parent_id=0');
-        if(isset($_GET['group']) && is_numeric($_GET['group'])){        	$from = ', menus_groups_places group';
-        }else{        	$from = '';
+        if(isset($_GET['group']) && is_numeric($_GET['group'])){
+        	$from = ', menus_groups_places group';
+        }else{
+        	$from = '';
         }
         $this->query = "
             SELECT {fields}
             FROM menus_trees object, menus_places place, menus_types type ".$from."
             WHERE {where}
         ";
-        if(isset($_GET['place']) && is_numeric($_GET['place'])){        	$this->where[] = 'place.id = '.$_GET['place'];
-        }else{        	$this->where[] = 'place.id = 0';
+        if(isset($_GET['place']) && is_numeric($_GET['place'])){
+        	$this->where[] = 'place.id = '.$_GET['place'];
+        }else{
+        	$this->where[] = 'place.id = 0';
         }
 
         if(isset($_GET['group']) && is_numeric($_GET['group'])){
@@ -67,6 +72,53 @@ class grid_menus_trees extends jqGrid
 
             ),
 
+            'type_id'    => array('label' => lang('menus_type'),
+                                    'db' => 'object.type_id',
+                                   // 'replace' => $this->params['types'],
+                                   'width' => 150,
+                                   'align' => 'left',
+                                   'hidden' => true,
+                                   'editable' => true,
+                                   'edittype' => 'select',
+                                   'editoptions' => array(                                                
+                                                'value' => new jqGrid_Data_Value($this->params['types']),
+                                                
+                                   ),
+                                   'editrules' => array(
+                                                      'edithidden' => true,
+                                                      'integer' => true,
+                                                      'minValue' => 1,
+                                                      'maxValue' => 1000,
+                                   ),
+            ),
+
+            'type_content'    => array('label' => lang('menus_type'),                                   
+                                  // 'replace' => $this->params['types'],
+                                  'manual' => true,
+                                  'width' => 150,
+                                  'align' => 'left',
+                                  'hidden' => true,
+                                  'editable' => true,
+                                  'edittype' => 'select',
+                                  'editoptions' => array(                                                
+                                                'value' => new jqGrid_Data_Value($this->params['pages']),
+                                                
+                                   ),
+                                   
+                                  'editrules' => array(
+                                                      'edithidden' => true,
+                                                      'integer' => true,
+                                                      'minValue' => 1,
+                                                      'maxValue' => 1000,
+                                  ),
+                                  'formoptions'=>array(
+                                                'rowpos'=> '2',
+                                                'colpos'=>1,
+                                                'elmprefix' => 'Содержимое',
+                                                'label' => 'Тип содержимого',
+                                  ),
+            ),
+
             'node_name'    => array('label' => lang('menus_name'),
                                     'db' => 'object.name',
                                    'width' => 250,
@@ -83,6 +135,7 @@ class grid_menus_trees extends jqGrid
                                    							'value' => new jqGrid_Data_Value($this->params['pages']),
                                    ),
             ),
+            
 
             'name'    => array('label' => lang('menus_name'),
                                     'db' => 'object.name',
@@ -139,9 +192,11 @@ class grid_menus_trees extends jqGrid
                                    'width' => 150,
                                    'align' => 'left',
                                    'hidden' => true,
-                                   //'editable' => true,
+                                   'editable' => true,
 
             ),
+
+
 
             'date'   => array('label' => lang('menus_date'),
                                    'db' => 'object.date',
@@ -267,7 +322,8 @@ class grid_menus_trees extends jqGrid
         );
         if(!empty($_GET['place'])){
         	$prefix_place = $this->params['places'][$_GET['place']];
-        }else{        	$prefix_place = '';
+        }else{
+        	$prefix_place = '';
         }
         $this->options = array(
             'sortname'  => 'sorter',
@@ -309,7 +365,8 @@ class grid_menus_trees extends jqGrid
     {
 
         $r['date'] = date('Y/m/d H:i',$r['date']);
-        if($r['type_name'] == 'page'){        	//$r['name'] = '<a class="iframe" href="/ajaxs/?resource=pages/admin/pages~&id='.$r['name'].'">'.$r['name'].'</a>';
+        if($r['type_name'] == 'page'){
+        	//$r['name'] = '<a class="iframe" href="/ajaxs/?resource=pages/admin/pages~&id='.$r['name'].'">'.$r['name'].'</a>';
         }
         //$r['name'] = $r['type_name'].': '.$r['name'];
         /*
@@ -320,6 +377,7 @@ class grid_menus_trees extends jqGrid
         $r['expanded'] = false;
         */
         //$r['parent'] = $r['parent_id'];
+        //$r['type_content'] = array('ad','rh','fw','dg');
         return $r;
     }
 
@@ -376,9 +434,11 @@ class grid_menus_trees extends jqGrid
         $data['date'] = strtotime($data['date']);
         $data['sorter'] = (!empty($data['sorter'])) ? $data['sorter'] : 10;
         $data['parent'] = $this->input('parent') ? $this->input('parent') : 0;
-        if(!empty($data['parent_id'])){       		$data['parent'] = $data['parent_id'];
+        if(!empty($data['parent_id'])){
+       		$data['parent'] = $data['parent_id'];
         }
-        if(!isset($data['place_name'])){        	$data['place_name'] = $_GET['place'];
+        if(!isset($data['place_name'])){
+        	$data['place_name'] = $_GET['place'];
         }
         return $data;
     }
