@@ -112,4 +112,8 @@ class Lib_menus_types_pages extends CI_Driver
    		return $result;
     }
 
+    public function getDataOfType(){
+        return Modules::run('pages/pages_api/listPagesSelect');
+    }
+
 }

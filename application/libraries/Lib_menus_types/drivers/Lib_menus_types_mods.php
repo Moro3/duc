@@ -27,4 +27,8 @@ class Lib_menus_types_mods extends CI_Driver
     	return $data;
     }
 
+    public function getDataOfType(){
+        return Modules::run('mods/mods_api/listSelectPrefix');
+    }
+
 }

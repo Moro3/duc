@@ -10,16 +10,32 @@ class Lib_menus_types extends CI_Driver_Library
 {
     public $valid_drivers;
     public $prefix;
+    public $drivers = array();
+    public $dataListTypes = array();
     public $CI;
 
     function __construct()
     {
         $this->CI = & get_instance();
         $this->CI->config->load('lib_menus_types', TRUE);
-        $this->valid_drivers = $this->CI->config->item('type', 'lib_menus_types');
+        //$this->valid_drivers = $this->CI->config->item('type', 'lib_menus_types');
+        
+        $types = Modules::run('menus/menus_types/MY_data',
+            //select
+            array('id', 'driver'),
+            //where
+            array('active' => 1)
+        );
+        
+        foreach($types as $type){
+            $this->valid_drivers[$type->id] = 'lib_menus_types_'.$type->driver;
+            $this->drivers[$type->id] = $type->driver; 
+        }
+        /*
         foreach($this->valid_drivers as $value){
         	$this->prefix[] = str_replace('lib_menus_types_','',$value);
         }
+        */
         $this->vars_data = array('name', 'link', 'type', 'type_id', 'active');
         log_message('debug', "Lib_menus_types Class Initialized");
     }
@@ -94,6 +110,35 @@ class Lib_menus_types extends CI_Driver_Library
         return $ids_data;
     }
 
+    
+    public function getDataOfType($t = false){
+        //$t = $this->input->get('id');
+        if( ! is_numeric($t)) return false;
+        
+        $types = Modules::run('menus/menus_types/MY_data_row',
+            //select
+            '*',
+            //where
+            array('id' => $t)
+        );               
+        
+        if( ! is_object($types)) return false;
 
+        if( ! isset($this->dataListTypes[$types->driver])){
+            if(in_array($types->driver, $this->drivers)){
+                $this->dataListTypes[$types->driver] = $types;
+            }
+        }
+
+        //dd($types);
+        $list = array();
+        if(isset($this->dataListTypes[$types->driver])){
+            
+            $list = $this->{$types->driver}->getDataOfType();
+            
+        }
+        dd($list);
+        return $list;        
+    }
 
 }
