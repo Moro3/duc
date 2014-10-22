@@ -9,3 +9,12 @@
     include('before_script.php');
     include('style.php');
     include('script.php');
+?>
+</head>
+<body>
+<?php
+	if($content) echo $content;
+?>
+
+</body>
+</html>

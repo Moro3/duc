@@ -37,8 +37,8 @@ assets_script_out();
 
 		$('#tabs').tabs();
 
-		hljs.tabReplace = '    ';
-		hljs.initHighlightingOnLoad();
+		//hljs.tabReplace = '    ';
+		//hljs.initHighlightingOnLoad();
 	});
 </script>
 <script>
