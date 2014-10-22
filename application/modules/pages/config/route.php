@@ -105,7 +105,7 @@ $config = array(
                      ),
 
                ),
-               'user' =>  array(
+              'user' =>  array(
                      '!' => array(
                      		'index_name' => '1',
                      		'index' => array(),
