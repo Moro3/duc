@@ -147,7 +147,22 @@ $config = array(
                             //'parent' => 'teachers_list',
                             //'menu' => true,
                      ),
-
+                     'dataTypes' =>  array(
+                            'index_name' => 'object',
+                            'index' =>  array(
+                                   'menu' => 3,
+                                   'action' => false,
+                                   //'id' => true,
+                            ),
+                            'start_segment' => 2,
+                            'name' => 'lang: menus',
+                            'module' => 'menus',
+                            'controller' => 'menus_result',
+                            'method' => 'getDataOfType',
+                            'arg' => array('index:menu'),
+                            //'parent' => 'teachers_list',
+                            //'menu' => true,
+                     ),
                ),
 
 

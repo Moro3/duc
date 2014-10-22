@@ -15,10 +15,21 @@ if( ! class_exists('menus')){
 
 class Menus_result extends Menus {
 
+    var $prefix;
+    var $dataListTypes;
+
     function __construct(){
         parent::__construct();
         // Load the library "lib_menus_types"
-    	$this->load->driver('lib_menus_types');
+    	
+        $this->load->driver('lib_menus_types');
+        /*
+        $this->config->load('lib_menus_types', TRUE);
+        $this->valid_drivers = $this->config->item('type', 'lib_menus_types');
+        foreach($this->valid_drivers as $value){
+            $this->prefix[] = str_replace('lib_menus_types_','',$value);
+        }
+        */
     }
 
     /**
@@ -70,6 +81,27 @@ class Menus_result extends Menus {
     	//$value['data'] = Modules::run('pages/pages/get_data_page', $value['name']);
     	return $nodes;
     	//return false;
+    }
+
+
+    public function getDataOfType(){
+        $t = $this->input->get_post('id');
+        
+        $list = $this->lib_menus_types->getDataOfType($t);
+        return $list;        
+    }
+
+
+    /**
+    *   Скрипт для подгрузки через ajax списочных данных в зависимости от типа данных
+    */
+    public function tplDataTypeAjax(){
+        return $this->load->view('admin/getDataTypeAjax', 
+                        array('uri' => '/ajax/?resource=dataTypes/ajax/menus~&'
+                        
+                            ),
+                        true
+        );
     }
 
 }

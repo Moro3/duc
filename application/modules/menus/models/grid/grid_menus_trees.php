@@ -15,8 +15,9 @@ class grid_menus_trees extends jqGrid
 
 		    $this->params['places'] = Modules::run('menus/menus_places/places_select');
         $this->params['types'] = Modules::run('menus/menus_types/types_select');
-		    $this->params['pages'] = Modules::run('pages/pages/pages_select_prefix');
-        $this->params['mods'] = Modules::run('mods/mods/listSelectPrefix');
+		    $this->params['pages'] = Modules::run('pages/pages_api/listPagesSelect');
+        $this->params['pagesPrefix'] = Modules::run('pages/pages_api/listPagesSelectPrefix');
+        $this->params['mods'] = Modules::run('mods/mods_api/listSelectPrefix');
 
         #Set tree grid mode
         $this->treegrid = 'adjacency';
@@ -141,7 +142,7 @@ class grid_menus_trees extends jqGrid
                                     'db' => 'object.name',
                                    'width' => 250,
                                    'align' => 'left',
-                                   'replace' => $this->params['pages'],
+                                   'replace' => $this->params['pagesPrefix'],
                                    //'hidden' => true,
                                    //'editable' => true,
                                    'edittype' => 'select',

@@ -37,6 +37,14 @@ class Menus_trees extends Menus {
         //echo '<a class="iframe" href="/ajaxs/?resource=pages/admin/pages~arg=_search=true&nd=1371768949471&rows=20&page=1&sidx=id&sord=desc&id=36">Страницы</a>';
         $this->grid_params();
 
+        //-------------- Загрузка скрипта для подгрузки списка данных меню в зависимости от типа
+        /*
+        echo "\r\n<script>";
+            echo Modules::run('menus/menus_result/tplDataTypeAjax');
+        echo '</script>';
+        */
+        assets_script(Modules::run('menus/menus_result/tplDataTypeAjax'), 'menus');
+
         //-------------- Загрузка таблицы jQGrid
    		echo "\r\n<script>";
         	echo "
