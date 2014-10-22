@@ -10,6 +10,13 @@ class Gate extends MX_Controller {
             //$this->load->library('control_uri');
             //$this->load->library('meta');
             $this->load->driver('assets');
+            
+            $this->load->helper(array('form', 'url', 'debug'));
+            $this->config->load('site', 'TRUE');
+            $this->load->library('session');
+            $this->load->library('control_uri');
+            $this->load->library('scheme');
+            $this->load->library('form_validation');
 	}
 
         /*
@@ -152,7 +159,8 @@ class Gate extends MX_Controller {
         *              &uri=string                  - целевая строка запроса
         *
         */
-        function ajax ($string = false){            /*
+        function ajax ($string = false){
+            /*
             if( Modules::run('auth/auth/is_logged')){
             	echo $this->router_modules->get_ajax();
             }else{
@@ -170,12 +178,15 @@ class Gate extends MX_Controller {
 
         }
 
-        function ajax_script(){             if( Modules::run('auth/auth/is_logged')){
-	             echo $this->load->view('admins/tpl2/index_load_script', '', true);
-	             $this->ajax();
-             }else{
+        function ajax_script(){
+            if( Modules::run('auth/auth/is_logged')){
+	            echo $this->load->view('admins/tpl2/index_load_script', array(
+                                                                            'content' => $this->router_modules->get_ajax()),
+                                                                             true
+                );	             
+            }else{
             	echo 'Функция "ajax+script" не доступна!';
-             }
+            }
         }
 
         function grid($controller, $module = false, $method = false){
@@ -314,7 +325,8 @@ class Gate extends MX_Controller {
               	$this->session->set_userdata('wysiwyg_filemanager', 'enable');
               	//echo 'Установлен wysiwyg_filemanager в сессию';
               	//exit;
-            }else{            	//echo 'НЕ Установлен wysiwyg_filemanager в сессию';
+            }else{
+            	//echo 'НЕ Установлен wysiwyg_filemanager в сессию';
               	//exit;
             }
         	//$this->session->set_userdata('wysiwyg_filemanager', 'enable');
