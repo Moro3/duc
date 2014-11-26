@@ -81,8 +81,9 @@ class MY_Model extends CI_Model {
     				$keys .= $key.$value;
     			}
     		}
-    		$keys = md5($keys);
+    		
     	}
+    	$keys = sha1($keys);
     	if(isset($keys)) return $keys;
     	return false;
     }
@@ -117,7 +118,7 @@ class MY_Model extends CI_Model {
     *  return array
     */
 	public function MY_data($select = '*', $where = false, $limit = false, $order_by = false, $group_by = false, $having = false){
-		$key_cache = $this->_genkey(func_get_args()+array('object'));
+		$key_cache = $this->_genkey(array_merge(func_get_args(),array('object')));
         if($r = $this->_get_cache($key_cache)) return $r;
 
 		$query = $this->MY_data_return($select, $where, $limit, $order_by, $group_by, $having);
@@ -143,7 +144,7 @@ class MY_Model extends CI_Model {
     *  return array
     */
 	public function MY_data_array($select = '*', $where = false, $limit = false, $order_by = false, $group_by = false, $having = false){
-        $key_cache = $this->_genkey(func_get_args()+array('array'));
+        $key_cache = $this->_genkey(array_merge(func_get_args(),array('array')));
         if($r = $this->_get_cache($key_cache)) return $r;
 
         $query = $this->MY_data_return($select, $where, $limit, $order_by, $group_by, $having);
