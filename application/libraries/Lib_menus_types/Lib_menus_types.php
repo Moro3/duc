@@ -48,8 +48,22 @@ class Lib_menus_types extends CI_Driver_Library
          	//where
          	array('name' => $name)
      	);
-     	if(is_numeric($type->id)) return $type->id;
+     	
+        if(is_numeric($type->id)) return $type->id;
      	return false;
+    }
+
+    //получение ID типа по его имени драйвера (driver)
+    function get_id_is_driver($driver){
+        $type = Modules::run('menus/menus_types/MY_data_row',
+            //select
+            'id',
+            //where
+            array('driver' => $driver)
+        );
+        
+        if(is_numeric($type->id)) return $type->id;
+        return false;
     }
 
     //получение ID типа по его имени (name)
@@ -66,11 +80,22 @@ class Lib_menus_types extends CI_Driver_Library
 
     /**
     *   Получение полных данных о типе меню
+    *   Обязательные параметры на выходе:
+    *   name - имя
+    *   id - ID узла
+    *   type_id - ID типа данных
+    *   type - имя типа данных
+    *   driver - драйвер
+    *   link - ссылка на объект
+    *   active - (1 || 0)активен ли объект
+    *   
     *   @param - $ids - многомерный массив из элементов,
-    *				 	где ключ является индентификатором типа (например id),
+    *				 	где ключ является индентификатором узла (например id),
     *					значение представляет массив из имени (name = число) и типа данных (type = число)
     *
-    *	@return array - многомерный массив
+    *	@return array - многомерный массив с требуемыми данными
+    *                   некоторые данные должны быть обязательными, чтобы быть совместимыми с общем массивом на выходе
+    *                   однако можно добавить другие поля в зависимости от каждого типа
     */
     function get_data_nodes($ids){
          //получаем все типы
@@ -84,34 +109,48 @@ class Lib_menus_types extends CI_Driver_Library
          	$ids_type[$items['type']][] = array(
          			'name' => $items['name'],
          			'id' => $id,
-                    //'type_id' => $items['type']
+                    'type_id' => $items['type']
          	);
          }
 
-		//получаем данные скопом по каждому типу
+		
+        //получаем данные скопом по каждому типу
 		foreach($types as $type){
 			if(isset($ids_type[$type->id])){
-				if(is_object($this->{$type->name})){
-					$ids_data[$type->id] = $this->{$type->name}->get_data_nodes($ids_type[$type->id]);
+				if(is_object($this->{$type->driver})){
+					$ids_data[$type->id] = $this->{$type->driver}->get_data_nodes($ids_type[$type->id]);
 				}
 
 			}
 		}
-        
+        //dd($ids_data);
 		//присоединяем данные к найденным id
 		foreach($ids as $id=>$items){
-			if(isset($ids_data[$items['type']][$items['name']])){
-				$res[$id] = $ids_data[$items['type']][$items['name']];
+			$res[$id] = array(
+                    'name' => $items['name'],
+                    'id' => $id,
+                    'node' => $id,
+                    'type_id' => $items['type']
+            );
+            if(isset($ids_data[$items['type']][$items['name']])){				
+                $res[$id]['data'] = $ids_data[$items['type']][$items['name']];
 			}else{
-				$res[$id] = $items;
+				$res[$id]['data'] = $items;
 			}
 		}
 
-        return $ids_data;
+        return $res;
     }
 
     
-    public function getDataOfType($t = false){
+    /**
+     * Возвращает массив с данными о типе
+     * 
+     * @param  numeric $t ID типа
+     * @param  $s - selector
+     * @return array      массив (key - ID типа, value - данные в форматированном виде в зависимости от типа.)
+     */
+    public function getDataOfType($t){
         //$t = $this->input->get('id');
         if( ! is_numeric($t)) return false;
         
@@ -137,8 +176,7 @@ class Lib_menus_types extends CI_Driver_Library
             $list = $this->{$types->driver}->getDataOfType();
             
         }
-        dd($list);
+        //dd($list);
         return $list;        
     }
-
 }

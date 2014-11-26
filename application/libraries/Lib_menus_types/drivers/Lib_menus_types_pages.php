@@ -4,7 +4,8 @@
 class Lib_menus_types_pages extends CI_Driver
 {
     //private $prefix = 'pages';          // префикс модуля
-    private $type = 'pages';
+    private $type = 'page';
+    private $driver = 'pages';
     private $select;
     public $CIC;
 
@@ -30,7 +31,9 @@ class Lib_menus_types_pages extends CI_Driver
 
     /**
     *  Получение данных
-    *  @param - array: многомерный массив с даннми (name - идентификатор, id - )
+    *  @param - array: многомерный массив с даными, ключ - id узла дерева(name - имя узла (идентификатор содержимого), type - идентификатор типа)
+    *
+    *
     */
     function get_data_nodes($ids){
     	foreach($ids as $id){
@@ -39,42 +42,32 @@ class Lib_menus_types_pages extends CI_Driver
 
     	//$data = Modules::run('pages/pages/get_data_pages_array', $arr_id);
 
-    	$data = $this->get_data_pages_array($arr_id);
-    		//print_r($data_pages);
-    		//exit;
-       	/*
-       	$data = Modules::run('pages/pages_headers/MY_data',
-       		//select
-       		$this->select,
-       		//where
-       		array('id' => $arr_id)
-       	);
-        */
-       	/*
-       	echo '<br><b>Source = '.__FILE__.' : Line = '.__LINE__.'</b><br>';
-       	var_dump($data);
-       	echo $this->CI->db->last_query();
-    	exit;
-        */
+    	//получаем данные страниц
+      $data = $this->get_data_pages_array($arr_id);    		
 
-        //преобразуем данные в требуемый формат
-
-       	$type_id = $this->get_id_is_name($this->type);
-       	//dd($data);
-        //exit;
-        foreach($data as &$items){
+      // получаем ID типа по его драйверу  
+      $type_id = $this->get_id_is_driver($this->driver);
+       
+      //преобразуем данные в требуемый формат
+      foreach($data as &$items){
        		//$active = ($items['active'] === 1 && $items->content[0]->active === 1) ? 1 : 0;
           $active = ($items['active'] == 1) ? 1 : 0;
        		$result[$items['id']] = array(
+                          'id' => $items['id'],
        		                'type' => $this->type,
        		                'type_id' => $type_id,
+                          'driver' => $this->driver,
        		                'name' => $items['content'][0]->name,
        		                'active' => $active,
        		                'link' => Modules::run('pages/pages/getFieldUri', $items['uri']),
-                          'label' => $items['label']
+
+                          // опциональные данные
+                          'label' => $items['label'],
+                          'img' => $items['icon']
+
        		);
 
-       	}
+      }
 
     	return $result;
     }
@@ -87,7 +80,7 @@ class Lib_menus_types_pages extends CI_Driver
         if( ! is_array($ids)) $ids = array($ids);
    		$res = Modules::run('pages/pages_headers/MY_data_array',
    			//select
-   			array('main.id','main.active', 'main.label', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon',
+   			array('main.id','main.active', 'main.label', 'main.uri', 'main.icon', 'main.text1', 'main.text2', 'main.img_fon', 'main.icon',
    				 //'seo.title', 'seo.description', 'seo.keywords', 'seo.h1',
    				 //'content.id', 'content.name', 'content.active', 'content.description',
    					'related' => array('content' => array(
