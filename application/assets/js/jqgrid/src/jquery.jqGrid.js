@@ -12415,7 +12415,7 @@ $.jgrid.extend({
 			var $t = this;
 			if(!$t.grid) { return; }
 			// Currently we disable a treeGrid sortable
-			if($t.p.treeGrid) { return; }
+			//if($t.p.treeGrid) { return; }
 			if($.fn.sortable) {
 				opts = $.extend({
 					"cursor":"move",
