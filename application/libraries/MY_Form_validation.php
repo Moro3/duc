@@ -44,8 +44,20 @@ class MY_Form_validation extends CI_Form_validation
 	 */
 	function alpha_space($str)
 	{
-		return ( ! preg_match("/^([A-z0-9А-яёЁ ])+$/iu", $str)) ? FALSE : TRUE;
+		return ( ! preg_match("/^([A-z0-9 ])+$/iu", $str)) ? FALSE : TRUE;
 	}
+
+  /**
+   * Alpha-numeric and space
+   *
+   * @access  public
+   * @param string
+   * @return  bool
+   */
+  function alpha_space_ru($str)
+  {
+    return ( ! preg_match("/^([A-z0-9А-яёЁ ])+$/iu", $str)) ? FALSE : TRUE;
+  }
 
 	/**
 	 * Alpha-maximum
@@ -76,6 +88,18 @@ class MY_Form_validation extends CI_Form_validation
 	{
 		return ( ! preg_match("/^([-A-z0-9А-яёЁ_-])+$/iu", $str)) ? FALSE : TRUE;
 	}
+
+  /**
+   * uri
+   *
+   * @access  public
+   * @param string
+   * @return  bool
+   */
+  function uri($str)
+  {
+    return ( ! preg_match("%^([A-z0-9/-])+$%iu", $str)) ? FALSE : TRUE;
+  }
 
    // Проверяем на валидность при редактирование
    // arg: $fields - массив полей форм которые будут обязательно присутствовать в проверке
