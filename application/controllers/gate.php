@@ -167,7 +167,13 @@ class Gate extends MX_Controller {
             	echo 'Функция "ajax" не доступна!';
             }
             */
-            echo $this->router_modules->get_ajax();
+            $result = $this->router_modules->get_ajax();
+
+            if(is_array($result)){
+                $result = json_encode($result);
+            }
+
+            echo $result;
         	//$arg = array(3,4);
         	//$uri = 'ajax/?resource=objects_list/user/adverts~~arg=!/!';
 
