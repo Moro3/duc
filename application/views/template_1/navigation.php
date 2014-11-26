@@ -95,7 +95,61 @@ corner;
 
 //assets_script($corner);
 
+$data = Modules::run('menus/menus_api/get_trees_group_place_data', 'top');
+        
+	//dd($this->bufer->pages);
+	
+	//dd($this->bufer->menus);
+	
+    
+    $current_node = (isset($this->bufer->menus['node_valid'])) ? $this->bufer->menus['node_valid'] : '0';
+	$data_place = Modules::run('menus/menus/get_data_node',$current_node);
+	if(isset($this->bufer->menus['uri_path']) && is_array($this->bufer->menus['uri_path'])){
+		foreach($this->bufer->menus['uri_path'] as $vvv){
+			$path_menus_name[] = $vvv['name'];
+			$path_menus_id[] = $vvv['id'];
+		}
+	}else{
+		$path_menus_name = array();
+		$path_menus_id = array();
+	}
+	//dd($data_place);
+  	
+  	dd($data);
+  	
+  	if(is_array($data)){
+		foreach($data as $place_name=>$items){
+			if($place_name == 0){
+				if(isset($items[0])){					
+					foreach($items[0] as $item){						
+						echo "<div class='button_main'>";
+							echo "<div class='button_border'>";
+				               	echo "<a href='".$item['data']['link']."'>";
+									echo "<div class='button'>";
+										echo "<div class='nav_img'>";
+					                        if(isset($item['data']['img'])){
+					                        	echo "<img src='".assets_img($item['data']['img'])."' />";
+					                        }else{
+					                        	echo "<img src='".assets_img('navigation-8.gif')."' />";
+					                        }
+					                        
+					                    echo "</div>";
+										echo "<div class='nav_text'>";
+											echo $item['data']['name'];
+										echo "</div>";
+									echo "</div>";
+				               	echo "</a>";
+							echo "</div>";
+						echo "</div>";
+					}
+				}
+			}
+		}
+	}
+
+
 ?>
+
 <script type="text/javascript" language="javascript">
                                         $(".button_jquery").corner("round 10px");
                                         $(".button_border_jquery").corner("round 10px");
@@ -121,7 +175,7 @@ corner;
 				</div>
                </a>
 			</div>
-		   </div>
+		</div>
 
 
 		  <div class='button_main'>

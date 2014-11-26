@@ -1,14 +1,15 @@
 <?php
-  $data = Modules::run('menus/menus/get_trees_place_data', 'top');
-  //echo '<pre>';
-  //print_r($contents);
-  //echo '</pre>';
+  $data = Modules::run('menus/menus_result/get_trees_place_data', 'top');
+  
+  dd($data);
 
-
-
-	if(is_array($data)){		echo '<table cellspacing="0" cellpadding="0" border="0">';
+	if(is_array($data)){
+		echo '<table cellspacing="0" cellpadding="0" border="0">';
 		echo '<tbody><tr>';
-		foreach($data as $items){			foreach($items as $item){            	foreach($item as $page){            		if(isset($page['data']) && $page['data']['active'] == 1 && isset($contents)){
+		foreach($data as $items){
+			foreach($items as $item){
+            	foreach($item as $page){
+            		if(isset($page['data']) && $page['data']['active'] == 1 && isset($contents)){
 	            		echo '<td class="hmenu_td">';
 	            		if($contents['id_page'] !== $page['name']){
 	            			echo '<a href="/'.trim($page['data']['uri'],'/').'/">';
