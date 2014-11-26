@@ -38,21 +38,21 @@ if( ! isset($selector)) $selector = 'multiselect';
 		   var row_id = $(this).getGridParam("selrow");
 		';
 
-	foreach($selector as $item){
-			echo '
-			gridEditMultiselect("'.$item.'");
-		    ';
-		    /*
-		    echo'
-			    	$(".ui-"+'.$item.').remove();
-	              	$("."+'.$item.').show().multiselect(
-	              	{
-	              		sortable: '.$sortable.',
-	              		searchable: '.$searchable.'
-	              	});
-            	';
-           */
-	}
-	echo '});
+		foreach($selector as $item){
+				echo '
+				gridEditMultiselect("'.$item.'");
+			    ';
+			    /*
+			    echo'
+				    	$(".ui-"+'.$item.').remove();
+		              	$("."+'.$item.').show().multiselect(
+		              	{
+		              		sortable: '.$sortable.',
+		              		searchable: '.$searchable.'
+		              	});
+	            	';
+	           */
+		}
+		echo '});
 		</script>';
 
