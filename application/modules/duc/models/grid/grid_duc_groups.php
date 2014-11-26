@@ -12,7 +12,7 @@ class grid_duc_groups extends jqGrid
         $this->start_row_age = 21;
 
 
-		$this->params['directions'] = Modules::run('duc/duc_directions/MY_data_array_one', 'id', 'name', false, 'name');
+		    $this->params['directions'] = Modules::run('duc/duc_directions/MY_data_array_one', 'id', 'name', false, 'name');
         $this->params['departments'] = Modules::run('duc/duc_departments/MY_data_array_one', 'id', 'name', false, 'name');
         $this->params['sections'] = Modules::run('duc/duc_sections/MY_data_array_one', 'id', 'name', false, 'name');
         $this->params['activities'] = Modules::run('duc/duc_activities/MY_data_array_one', 'id', 'name', false, 'name');
@@ -27,7 +27,7 @@ class grid_duc_groups extends jqGrid
         $this->params['schedulesGroups'] = Modules::run('duc/duc_schedules/MY_data_array_one', 'id_group', 'active', array('active' => 1));
 
         //$this->params['concertmasters'] = Modules::run('duc/duc_concertmasters/MY_data_array_one');
-		$this->params['ages'] = Modules::run('duc/duc_settings/listAges');
+		    $this->params['ages'] = Modules::run('duc/duc_settings/listAges');
         $this->params['sexs'] = Modules::run('duc/duc_settings/listSexs');
 
         $this->params['year_create'] = Modules::run('duc/duc_groups/listYearCreate');
@@ -682,12 +682,12 @@ class grid_duc_groups extends jqGrid
             'autowidth' => true,
             'altRows' => true,
             //'gridComplete'=> new jqGrid_Data_Raw('function(){$(this).jqGrid(\'extHighlight\');}'), //Чтобы отработала функция parseRow (ниже)
-    		'multiselect' => true, // множественный выбор (checkbox)
-    		'multiboxonly' => true,
-    		'rowList'     => array(10, 20, 30, 50, 100),
+    		    'multiselect' => true, // множественный выбор (checkbox)
+    		    'multiboxonly' => true,
+    		    'rowList'     => array(10, 20, 30, 50, 100),
             //'navkeys' => true,
             'caption' => lang($this->table),
-			//'onSelectRow' => new jqGrid_Data_Raw('function(id){alert("Selected row: " +id);}'),
+		        //'onSelectRow' => new jqGrid_Data_Raw('function(id){alert("Selected row: " +id);}'),
             // показывает кол-во всех записей
             'viewrecords' => true,
              
