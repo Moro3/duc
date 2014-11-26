@@ -32,6 +32,21 @@ $config = array(
                             'menu' => true,
                      ),
 
+                     'mods_route' =>  array(
+                            'index_name' => 'object',
+                            'index' =>  array(
+                                   'menu' => 'mods_route',
+                                   'action' => 'all',
+                                   'id' => false,
+                            ),
+                            'start_segment' => 4,
+                            'name' => 'lang: mods_route',
+                            'module' => 'mods',
+                            'controller' => 'mods_route',
+                            'method' => 'grid_admin_object',
+                            'menu' => true,
+                     ),
+
                      'mods_tpl' =>  array(
                             'index_name' => 'object',
                             'index' =>  array(

@@ -64,83 +64,7 @@ class grid_mods extends jqGrid
                                         				'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
                   				   ),
             ),
-
-            'date'   => array('label' => lang('mods_date'),
-                                   'db' => 'object.date',
-                                    'width' => 140,
-                                   'editable' => true,
-
-                                   'searchoptions' => array('dataInit' => $this->initDatepicker(array(
-                                        'dateFormat'     => 'yy/mm/dd',
-                                        'changeMonth'    => true,
-                                        'changeYear'     => true,
-                                        'minDate'        => '1950/01/01',
-                                        'maxDate'        => date('Y/m/d'),
-                                        // обновление данных в общем окне
-                                        'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
-                                    ))),
-                                    'search_op' => 'date',
-                                    /*
-                                    'searchoptions' => array('dataInit' => $this->initDateRangePicker(array(
-					                    //'earliestDate' => '2011/01/01',
-					                    //'latestDate' => '2011/06/10',
-					                    'dateFormat' => 'yy/mm/dd',
-					                    'onChange' => new jqGrid_Data_Raw('dateRangePicker_onChange'),
-					                    'presetRanges' => array(
-					                        array('text' => 'January 2011', 'dateStart' => '2011/01/01', 'dateEnd' => '2011/02/01'),
-					                        array('text' => 'February 2011', 'dateStart' => '2011/02/01', 'dateEnd' => '2011/03/01'),
-					                    ),
-					                    'datepickerOptions' => array(
-					                        'changeMonth' => true,
-					                        'dateFormat' => 'yy/mm/dd',
-					                        'minDate' => '2011/01/01',
-					                        'maxDate' => '2011/06/10',
-					                    ),
-					                ))),
-                                    */
-                                    //'search_op' => 'date_range',
-
-                                    'editoptions' => array('dataInit' => $this->initDatetimepicker(array(
-                                            'dateFormat'     => 'yy/mm/dd',
-                                            'separator'      => ' ',
-                                            'timeFormat'     => 'hh:mm',
-                                            //'hour'           => 0,
-                                            //'minute'         => 15,
-                                            'timeOnlyTitle' => 'Выберите время',
-                                            'timeText'      => 'Время',
-                                            'hourText'      => 'Часы',
-                                            'minuteText'    => 'Минуты',
-                                            'secondText'    => 'Секунды',
-                                            'currentText'   => 'Текущее',
-                                            'closeText'     => 'Закрыть',
-                                            'numberOfMonths' => array(1,3),
-                                            //'showCurrentAtPos' => 1,
-                                            'showButtonPanel'  => true,
-                                            'showOtherMonths' => true,
-                                            'addSliderAccess' => true,
-                                            'sliderAccessArgs' => array('touchonly' => false),
-                                            //'minDate'        => '1950-01-01',
-                                            'maxDate'        => date('Y/m/d H:i'),
-                                            //'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
-                                            'changeMonth'     => true,
-                                            'changeYear'      => true,
-
-                                            //'showOn'          => "button",
-                                            //'buttonImage'     => "client/calendar.gif",
-                                            //'buttonImageOnly' => true,
-                                            'firstDay'        => '1',
-                                            'monthNamesShort' => array("Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"),
-                                            'dayNamesMin'     => array("Вс","Пн","Вт","Ср","Чт","Пт","Сб"),
-                                            'showAnim'        => 'slideDown',
-                                        )),
-                                        'defaultValue' => date('Y/m/d H:i'),
-
-                                    ),
-                //'formoptions' => array('elmsuffix' => '<input type="submit" value="Моя кнопка"/>'),
-                                   //"formatter"=>"date",
-                                    ///"formatoptions"=>array("srcformat"=>"Y-m-d H:i:s","newformat"=>"m/d/Y"),
-
-            ),
+            
             'sorter'  => array('label' => lang('mods_sorter'),
                                    'db' => 'object.sorter',
                                    'width' => 50,
@@ -333,27 +257,24 @@ class grid_mods extends jqGrid
             'height' => '100%',
             'autowidth' => true,
             'altRows' => true,
-    		//'multiselect' => true, // множественный выбор (checkbox)
-    		'rowList'     => array(10, 20, 30, 50, 100),
+    		    //'multiselect' => true, // множественный выбор (checkbox)
+    		    'rowList'     => array(10, 20, 30, 50, 100),
             'caption' => lang('pages_headers'),
         );
         #Set nav
         $this->nav = array(//'view' => true, 'viewtext' => 'Смотреть',
-        					'add' => true, 'addtext' => 'Добавить объект',
-        				   'edit' => true, 'edittext' => 'Редактировать',
-        				   'del' => true, 'deltext' => 'Удалить',
-        				'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
-    					'prmEdit' => array('width' => 900,
-    										//'height' => 600,
-    									   'closeAfteredit' => true,
-    					                   //'reloadAfterSubmit' => true,
-                  						 //'beforeShowForm' => "function() {	fckeditor('description');}",
-                   						 //'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
+            				    'add' => true, 'addtext' => 'Добавить объект',
+            				    'edit' => true, 'edittext' => 'Редактировать',
+            				    'del' => true, 'deltext' => 'Удалить',
+            				    'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
+        		            'prmEdit' => array('width' => 900,
+        								//'height' => 600,
+        								'closeAfteredit' => true,
+        					      //'reloadAfterSubmit' => true,
+                      	//'beforeShowForm' => "function() {	fckeditor('description');}",
+                       	//'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
 
     									),
-
-
-
         );
 
         $this->render_filter_toolbar = true;
@@ -374,7 +295,7 @@ class grid_mods extends jqGrid
         }else{
             $r['description_active'] = '<img src="'.assets_img('admin/no.gif', false).'">';
         }
-        $r['date'] = date('Y/m/d H:i',$r['date']);
+        
         if(isset($r['foto_upload'])){
         	$path = $this->config['path']['icons'].$this->config['image_config']['dir'].'/'.$r['foto_upload'];
         	//echo $path;
@@ -416,8 +337,10 @@ class grid_mods extends jqGrid
 
         $data['sorter'] = (!empty($data['sorter'])) ? $data['sorter'] : 10;
         $data['date'] = strtotime($data['date']);
-        if(empty($data['uri'])){        	$data['uri'] = Modules::run('mods/mods/generate_uri', $data['name']);
-        }else{        	//$this->isset_uri($data['uri']);
+        if(empty($data['uri'])){
+        	$data['uri'] = Modules::run('mods/mods/generate_uri', $data['name']);
+        }else{
+        	//$this->isset_uri($data['uri']);
 
         }
 
@@ -440,13 +363,15 @@ class grid_mods extends jqGrid
     */
     protected function opEdit($id, $data) {
         //throw new jqGrid_Exception('Ошибка в написании URI. Адрес должен состоять из латинских букв, цифр и может содержать символы -_');
-    		if(!empty($id) && is_numeric($id)){            	$result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
+    		if(!empty($id) && is_numeric($id)){
+            	$result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
             	$row = $this->DB->fetch($result);
 
             	$arr_header['active'] = $data['active'];
             	$arr_header['label'] = $data['label'];
             	$arr_header['sorter'] = $data['sorter'];
-            	if($this->isset_uri($data['uri'], $row['id'])){            		$arr_header['uri'] = Modules::run('mods/mods/get_correct_uri', $data['uri']);
+            	if($this->isset_uri($data['uri'], $row['id'])){
+            		$arr_header['uri'] = Modules::run('mods/mods/get_correct_uri', $data['uri']);
             	}else{
             		$arr_header['uri'] = $data['uri'];
             	}
@@ -469,52 +394,8 @@ class grid_mods extends jqGrid
 	                                array('id' => $row['id']
 	                                )
 	            );
-	            if(!empty($row['id']) && is_numeric($row['id'])){
-	            	$result = $this->DB->query('SELECT * FROM `pages_contents` WHERE id_page_header='.intval($row['id']));
-            		$row_content = $this->DB->fetch($result);
-
-	            	//$arr_content['id_page_header'] = $row_content['id'];
-	            	$arr_content['active'] = $data['active_content'];
-            		$arr_content['sorter'] = $data['sorter_content'];
-            		$arr_content['name'] = $data['name'];
-            		$arr_content['description'] = $data['description'];
-            		//$arr_content['date_create'] = $data['date_create'];
-            		$arr_content['date_update'] = time();
-            		//$arr_content['ip_create'] = $_SERVER['REMOTE_ADDR'];
-            		$arr_content['ip_update'] = $_SERVER['REMOTE_ADDR'];
-
-            		$this->DB->update('pages_contents',
-	                                $arr_content,
-	                                array('id' => $row_content['id']
-	                                )
-	            	);
-	            }else{
-	            	throw new jqGrid_Exception('Не удалось записать в таблицу content, т.к. нет id page');
-	            }
-	            if(!empty($row_content['id']) && is_numeric($row_content['id'])){
-	            	$result = $this->DB->query('SELECT * FROM `pages_seo` WHERE id_page_content='.intval($row_content['id']));
-            		$row_seo = $this->DB->fetch($result);
-
-	            	//$arr_seo['id_page_content'] = $id_content;
-	            	$arr_seo['title'] = $data['seo_title'];
-            		$arr_seo['description'] = $data['seo_description'];
-            		$arr_seo['keywords'] = $data['seo_keywords'];
-            		$arr_seo['h1'] = $data['seo_h1'];
-            		//$arr_seo['date_create'] = $data['date_create'];
-            		$arr_seo['date_update'] = time();
-            		//$arr_seo['ip_create'] = $_SERVER['REMOTE_ADDR'];
-            		$arr_seo['ip_update'] = $_SERVER['REMOTE_ADDR'];
-
-            		return $this->DB->update('pages_seo',
-	                                $arr_seo,
-	                                array('id' => $row_seo['id']
-	                                )
-	            	);
-
-
-	            }else{
-	            	throw new jqGrid_Exception('Не удалось записать в таблицу seo, т.к. нет id content');
-	            }
+	            
+	            
     		}else{
             	throw new jqGrid_Exception('Запрос не выполнен, нет id');
         	}
@@ -558,42 +439,6 @@ class grid_mods extends jqGrid
 	                                true
 	            );
 
-	            if(!empty($id) && is_numeric($id)){	            	$arr_content['id_page_header'] = $id;
-	            	$arr_content['active'] = $data['active_content'];
-            		$arr_content['sorter'] = $data['sorter_content'];
-            		$arr_content['name'] = $data['name'];
-            		$arr_content['description'] = $data['description'];
-
-            		$arr_content['date_create'] = time();
-            		$arr_content['date_update'] = time();
-            		$arr_content['ip_create'] = $_SERVER['REMOTE_ADDR'];
-            		$arr_content['ip_update'] = $_SERVER['REMOTE_ADDR'];
-
-            		$id_content = $this->DB->insert('pages_contents',
-	                                $arr_content,
-	                                true
-	            	);
-	            }else{	            	throw new jqGrid_Exception('Не удалось записать в таблицу content, т.к. нет id page');
-	            }
-	            if(!empty($id_content) && is_numeric($id_content)){	            	$arr_seo['id_page_content'] = $id_content;
-	            	$arr_seo['title'] = $data['seo_title'];
-            		$arr_seo['description'] = $data['seo_description'];
-            		$arr_seo['keywords'] = $data['seo_keywords'];
-            		$arr_seo['h1'] = $data['seo_h1'];
-            		$arr_seo['date_create'] = time();
-            		$arr_seo['date_update'] = time();
-            		$arr_seo['ip_create'] = $_SERVER['REMOTE_ADDR'];
-            		$arr_seo['ip_update'] = $_SERVER['REMOTE_ADDR'];
-
-            		$id_content = $this->DB->insert('pages_seo',
-	                                $arr_seo,
-	                                true
-	            	);
-	            }else{
-	            	throw new jqGrid_Exception('Не удалось записать в таблицу seo, т.к. нет id content');
-	            }
-
-
         }else{
         	throw new jqGrid_Exception('Не задано имя');
         }
@@ -605,129 +450,36 @@ class grid_mods extends jqGrid
     *  @param array $ins
     *  @return boolean
     */
-    protected function opDel($id) {
-
-        if(empty($this->table))
-		{
+  protected function opDel($id) {
+    if(empty($this->table))
+    {
 			throw new jqGrid_Exception('Table is not defined');
-		}
-		if($res = Modules::run('menus/menus/get_nodes_of_name', $id, 'page')){			$str = '(';
-			foreach($res as $items){				$str .=	$items->id.',';
-			}
-			$str .= ')';
-			throw new jqGrid_Exception('Нельзя удалить страницу, пока она содержится в пунктах меню: '.$str);
-		}
-		if( ! Modules::run('pages/pages_headers/eventDeletePage', $id)){			throw new jqGrid_Exception('Не удалось удалить страницу');
-		}
-
     }
+  }
 
-	protected function upload_image(){		 // проверяем был ли обновлен файл и если да,
+	protected function upload_image(){
+		 // проверяем был ли обновлен файл и если да,
 	                // загружаем файл и добавляем к массиву с данными
 	                if(isset($_FILES['foto_upload'])){
 	                	$name = $_FILES['foto_upload']['name'];
 	                	//throw new jqGrid_Exception('Было загружено изображение');
-	                	$data_load = Modules::run('pages/pages_headers/upload_file', $name);
+	                	$data_load = Modules::run('mods/mods/upload_file', $name);
 	                    //var_dump($data);
 	                }
 		if(isset($data_load['file_name'])) return $data_load['file_name'];
 		return false;
 	}
 
-    protected function initDatepicker($options=null)
-    {
-        $options = is_array($options) ? $options : array();
-
-        return new jqGrid_Data_Raw('function(el){$(el).datepicker(' . jqGrid_Utils::jsonEncode($options) . ');}');
-    }
-
-    protected function initTimepicker($options=null)
-    {
-
-        $options = is_array($options) ? $options : array();
-//        $r = $this->parseRow();
-//        $options['hour'] = date('H', $r['date_create']);
-        return new jqGrid_Data_Raw('function(el){$(el).timepicker(' . jqGrid_Utils::jsonEncode($options) . ');}');
-    }
-
-    protected function initDatetimepicker($options=null)
-    {
-        $options = is_array($options) ? $options : array();
-
-        return new jqGrid_Data_Raw('function(el){$(el).datetimepicker(' . jqGrid_Utils::jsonEncode($options) . ');}');
-    }
-
-	protected function initDateRangePicker($options = null)
-    {
-        $options = is_array($options) ? $options : array();
-
-        return new jqGrid_Data_Raw('function(el){$(el).daterangepicker(' . jqGrid_Utils::jsonEncode($options) . ');}');
-    }
-
-    protected function searchOpDateRange($c, $val)
-    {
-        //--------------
-        // Date range
-        //--------------
-
-        if(strpos($val, ' / ') !== false)
-        {
-            list($start, $end) = explode(' / ', $val, 2);
-
-            $start = strtotime(trim($start));
-            $end = strtotime(trim($end));
-
-            if(!$start or !$end)
-            {
-                throw new jqGrid_Exception('Invalid date format');
-            }
-
-            #Stap dates if start is bigger than end
-            if($start > $end)
-            {
-                list($start, $end) = array($end, $start);
-            }
-
-            $start = date('yy/mm/dd', $start);
-            $end = date('yy/mm/dd', $end);
-
-            return $c['db'] . " BETWEEN '$start' AND '$end'";
-        }
-
-        //------------
-        // Single date
-        //------------
-
-        $val = strtotime(trim($val));
-
-        if(!$val)
-        {
-            throw new jqGrid_Exception('Invalid date format');
-        }
-
-        $val = date('yy/mm/dd', $val);
-
-        return "DATE({$c['db']}) = '$val'";
-    }
-
-    protected function searchOpDate($c, $val)
-    {    	$start = strtotime(trim($val));
-    	$end = $start + 86400;
-
-    	return $c['db'] . " BETWEEN '$start' AND '$end'";
-    }
-
-    protected function button_delete_foto(){
-    	$str = '<input type="submit" name="foto_delete" value="Удалить" onclick="foto_delete()" />';
-    	return $str;
-	}
-
+   
     /**
     * Возвращает проверенный uri
     */
-    protected function isset_uri($uri, $ignore_id = false){    	if(Modules::run('pages/pages_headers/get_check_uri', $uri, $ignore_id)){    		throw new jqGrid_Exception('Такой URI уже используется, придумайте другой или оставьте строку пустой тогда URI сгенерируется автоматически');
+    protected function isset_uri($uri, $ignore_id = false){
+    	if(Modules::run('mods/mods/get_check_uri', $uri, $ignore_id)){
+    		throw new jqGrid_Exception('Такой URI уже используется, придумайте другой или оставьте строку пустой тогда URI сгенерируется автоматически');
     		return true;
-    	}else{            return false;
+    	}else{
+            return false;
     	}
 
     }

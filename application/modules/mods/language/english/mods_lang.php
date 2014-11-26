@@ -11,6 +11,7 @@
 
 // Form message
 $lang['mods'] 	  	 = 'Модули';
+$lang['mods_mod'] 	  	 = 'Модуль';
 $lang['mods_id'] 	  	 = 'ID';
 $lang['mods_show'] 	 	 = 'Опубликовать';
 $lang['mods_date'] 	 	 = 'Дата';
@@ -39,6 +40,16 @@ $lang['mods_type']           = 'Тип модуля';
 $lang['mods_types']           = 'Типы модулей';
 $lang['mods_tpl']           = 'Шаблон модуля';
 $lang['mods_tpls']           = 'Шаблоны модулей';
+
+$lang['mods_route']           = 'Маршрут модуля';
+$lang['mods_routes']           = 'Маршруты модулей';
+$lang['mods_route_name']           = 'Имя маршрута';
+$lang['mods_route_uri']           = 'Ссылка на маршрут';
+$lang['mods_route_icon_upload']           = 'Загрузка изображения';
+$lang['mods_route_icon']           = 'Изображение';
+$lang['mods_route_alias']           = 'Псевдоним';
+$lang['mods_mod_uri']           = 'Модуль (URI)';
+
 
 $lang['mods_setting']           = 'Настройка';
 $lang['mods_setting_admin']           = 'Административные настройки';

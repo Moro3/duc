@@ -1,0 +1,21 @@
+--
+-- Table structure for table `mods_route`
+--
+
+CREATE TABLE `mods_route` (
+  	`id` int(6) NOT NULL auto_increment,
+  	`mod_id` smallint(3) default '1',
+	`active` smallint(1) NOT NULL default '0',
+	`sorter` smallint(3) NOT NULL default '0', 
+	`name` char(30) NOT NULL,
+	`alias` char(30) NOT NULL,
+	`icon` char(50) NOT NULL,
+	`description` char(255) default NULL,  
+	`uri` char(30) NOT NULL,    
+	`date_create` int(10) NOT NULL default '0',
+	`date_update` int(10) NOT NULL default '0',
+	`ip_create` char(15) NOT NULL default '0.0.0.0',
+	`ip_update` char(15) NOT NULL default '0.0.0.0',
+	PRIMARY KEY  (`id`),
+	KEY `mod_id` (`mod_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;

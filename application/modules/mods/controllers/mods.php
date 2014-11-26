@@ -36,7 +36,7 @@ class Mods extends MY_Controller {
     	$this->load->model('mods_model');
     	$this->load->model('mods_type_model');
     	$this->load->model('mods_tpl_model');
-    	//$this->load->model('pages_mod_model');
+    	$this->load->model('mods_route_model');
     }
 
     // Маршрутизация модуля

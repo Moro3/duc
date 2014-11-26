@@ -36,4 +36,23 @@ class Mods_api extends Mods {
 		if(isset($result)) return $result;
 		return array();
     }
+
+    /**
+    *   возвращает массив маршрутов модулей с определенным форматированием
+    */
+    public function listModsRouteSelectPrefix(){
+        $res = Modules::run('mods/mods_route/MY_data',
+            //select
+            '*'
+        );
+        foreach($res as $items){
+            $replace = array('"','\'');
+            $name = str_replace($replace, ' ', $items->name);
+            $result[$items->id] = '<b>'.htmlspecialchars($name, ENT_QUOTES,'UTF-8'). '</b> : '. htmlspecialchars($items->uri) . ' : <i style=\'grey\'>id=' . $items->id . '</i>';
+            //$result[$items->id] = $items->{content}[0]->name;
+        }
+
+        if(isset($result)) return $result;
+        return array();
+    }
 }
