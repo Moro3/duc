@@ -70,7 +70,10 @@ class Uri_generation {
   *				uri - строка uri
   *				start_segment - точка начала сегмента для учёта
   */
-  function init($config = array()){  	 if(is_array($config) && count($config) > 0){  	 	foreach($config as $key=>$value){  	 		$this->set_param($key, $value);
+  function init($config = array()){
+  	 if(is_array($config) && count($config) > 0){
+  	 	foreach($config as $key=>$value){
+  	 		$this->set_param($key, $value);
   	 	}
   	 }
   	 $this->parse_uri();
@@ -82,18 +85,23 @@ class Uri_generation {
 	* Применение для ajax запросов со скрытием координат маршрута
 	*
 	*/
-	function set_uri($uri){		$this->data[$this->current_name]['uri_request'] = $uri;
+	function set_uri($uri){
+		$this->data[$this->current_name]['uri_request'] = $uri;
 	}
+  
   /**
   * Установка параметра приложения
   */
-  private function set_param($name, $value){  	$this->data[$this->current_name][$name] = $value;
+  private function set_param($name, $value){
+  	$this->data[$this->current_name][$name] = $value;
   }
 
   /**
   * Возвращает значение параметра приложения
   */
-  public function get_param($name){  	if(isset($this->data[$this->current_name][$name])){  		return $this->data[$this->current_name][$name];
+  public function get_param($name){
+  	if(isset($this->data[$this->current_name][$name])){
+  		return $this->data[$this->current_name][$name];
   	}
   }
   //заменять неуказанные индексы пустыми значениями?
@@ -369,7 +377,8 @@ class Uri_generation {
       if(isset($this->data[$this->current_name]['config']['index'][$key]['num_segment'])){
           if($value == '?'){
               $arr_new[] = $this->data[$this->current_name]['config']['index'][$key]['name'].'='.$this->flag_replace;
-          }elseif($value !== false){          	  $arr_new[] = $this->data[$this->current_name]['config']['index'][$key]['name'].'='.$value;
+          }elseif($value !== false){
+          	  $arr_new[] = $this->data[$this->current_name]['config']['index'][$key]['name'].'='.$value;
           }
       }
     }
@@ -386,7 +395,8 @@ class Uri_generation {
   *
   */
   function parse_uri(){
-    if(!isset($this->data[$this->current_name]['uri_request'])){    	$this->data[$this->current_name]['uri_request'] = $_SERVER['REQUEST_URI'];
+    if(!isset($this->data[$this->current_name]['uri_request'])){
+    	$this->data[$this->current_name]['uri_request'] = $_SERVER['REQUEST_URI'];
     }
     //echo 'строка запроса для ('.$this->current_name.'): ';
     //echo $this->data[$this->current_name]['uri_request'].'<br />';
@@ -451,7 +461,8 @@ class Uri_generation {
     }else{
       $current_name = $this->current_name;
     }
-    if(empty($current_name)){    	echo 'Не определено имя запроса для замены uri';
+    if(empty($current_name)){
+    	echo 'Не определено имя запроса для замены uri';
     	return false;
     }
     if( ! is_array($replace)){
@@ -472,7 +483,8 @@ class Uri_generation {
           $arr[$key] = $value;
         }
       }
-    }else{    	echo 'Не найдена строка запроса '.$uri.' в текущей базе uri';
+    }else{
+    	echo 'Не найдена строка запроса '.$uri.' в текущей базе uri';
     	exit();
     }
     //print_r($arr);
