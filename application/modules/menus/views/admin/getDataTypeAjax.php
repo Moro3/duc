@@ -2,24 +2,35 @@
 	if( ! isset($uri)) return;
 ?>
 
-$(document).ready(function(){	
-	$("#sorter").on("click", function(){
-		alert("Кнопка type_id");
-	});
+//$grid.bind("jqGridAddEditAfterShowForm", function(event, $form){
+	var id = $("<?=$selector_event?>").val();
+	var node = $("<?=$selector_node?>").val();
+	//alert("Кнопка <?=$selector_event?> по умолчанию: " + id);
+	getDataType();
+//});
+$("body").on("change", "<?=$selector_event?>", function(){	
+	id = $(this).val();
+	//alert("Кнопка <?=$selector_event?>: " + id);
+	getDataType();
 });
 
-var id = 1;
-$.ajax({
-	type: "POST",
-	url: "<?=$uri?>",
-	data: { id : id},
-	beforeSend: function(){
-		/* что-то сделать перед */
-	},
-	success: function(data){
-		/* обработать результат */
-	},
-	error: function(){
-		/* обработать ошибку */
-	}
-});
+function getDataType()  
+    {
+	$.ajax({
+		type: "POST",
+		url: "<?=$uri?>",
+		data: { id : id, node : node},
+		beforeSend: function(){
+			/* что-то сделать перед */
+
+		},
+		success: function(data){
+			/* обработать результат */			
+			//alert(data);
+			$("<?=$selector_replace?>").empty().html(data);
+		},
+		error: function(){
+			/* обработать ошибку */
+		}
+	});
+}

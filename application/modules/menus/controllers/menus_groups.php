@@ -26,6 +26,7 @@ class Menus_groups extends Menus {
 		//echo '<script type="text/javascript" src="/wysiwyg/tiny_mce/tiny_mce.js"></script>';
         //echo '<script type="text/javascript" src="/wysiwyg/ckeditor/ckeditor.js"></script>';
 
+        /*
         echo "<script>";
         echo 'function gridEditMultiselect(field)
 			{
@@ -35,12 +36,14 @@ class Menus_groups extends Menus {
                 //$("."+field).show();
                 $("."+field).show().multiselect(
                 {
-                	sortable: false,
+                	sortable: true,
                 	searchable: true
                 });
 
 			}';
         echo '</script>';
+        */
+
 
         //-------------- Загрузка таблицы jQGrid
    		echo "\r\n<script>";
@@ -88,18 +91,30 @@ class Menus_groups extends Menus {
 
         echo '</script>';
 
+        
+        // Обработчик события для полей multiselect
+        
+        $this->load->view('grid/formatter/multiselect',
+                            array(
+                            	'selector' => 'multiselect',                                
+                                'sortable' => 'true',
+                                'searchable' => 'true',                                
+                            )
+        );
+        
+       
         //------------- Обработчик события для полей multiselect
-       	echo "<script>";
-		echo '$grid.bind("jqGridAddEditAfterShowForm", function(event, $form)
-			{
-				//$.localise(\'ui-multiselect\', {/*language: \'ru\',*/ path: \'/{assets}jquery-ui/plugins/multiselect-master/js/locale/\'});
-				//$(".multiselect").multiselect({sortable: false, searchable: true});
-				gridEditMultiselect("multiselect");
-
-			});
-		';
-
-        echo '</script>';
+       	
+       	//echo "<script>";
+		//echo '$grid.bind("jqGridAddEditAfterShowForm", function(event, $form)
+		//	{
+		//		//$.localise(\'ui-multiselect\', {/*language: \'ru\',*/ path: \'/{assets}jquery-ui/plugins/multiselect-master/js/locale/\'});
+		//		//$(".multiselect").multiselect({sortable: false, searchable: true});
+		//		gridEditMultiselect("multiselect");
+		//	});
+		//';
+        //echo '</script>';
+        
 	}
 
 	/**
@@ -109,8 +124,10 @@ class Menus_groups extends Menus {
 	*
 	*	@return boolean
 	*/
-	public function check_double_name($name, $id = false){
-		if($id !== false){			$where = array('id !=' => $id);
+	public function check_double_name($name, $id = false){
+
+		if($id !== false){
+			$where = array('id !=' => $id);
 		}
 		$where['name'] = $name;
 
@@ -147,7 +164,8 @@ class Menus_groups extends Menus {
 		return false;
 	}
 
-	public function places_select(){		$res = $this->MY_data_array_one();
+	public function places_select(){
+		$res = $this->MY_data_array_one();
 		if($res) return $res;
 		return array();
 	}
@@ -169,7 +187,8 @@ class Menus_groups extends Menus {
 	    	//получаем данные по местам в группе
 	    	$place_ids = $this->get_id_places_is_group($group);
             //если есть данные заносим в условия для выборки
-	    	if(is_array($place_ids)){	    		//отфильтровываем id мест
+	    	if(is_array($place_ids)){
+	    		//отфильтровываем id мест
 	    		foreach($place_ids as $items){
 	    			$ids[] = $items->place_id;
 	    		}
@@ -180,6 +199,31 @@ class Menus_groups extends Menus {
 			return $all_nodes;
 	}
 
-  	public function get_id_places_is_group($group){        return Modules::run('menus/menus/get_places_of_group', $group);
+  	public function get_id_places_is_group($group){
+        return Modules::run('menus/menus/get_places_of_group', $group);
   	}
+
+  	
+
+  	public function get_places_is_group(){
+        $group = 'top';
+        $places = $this->get_id_places_is_group($group);
+        
+        $selResult = '<select>';
+        $sResult = '';
+        if(is_array($places) && count($places) > 0){
+        	foreach($places as $items){
+        		$selResult .= '<option role="option" value='.$items->id.'>'.$items->place_id;
+        		//$selResult .= '</option>';
+        		
+        	}
+        	//$sResult .= '"';
+        	$sResult .= join(';', array_map(function($x, $y){return $y->id.':'.$y->place_id.'';}, array_keys($places), array_values($places)));
+        	//$sResult .= '"';
+        }
+        //$selResult .= '</select>';
+        //dd($sResult);
+        return $selResult;
+  	}
+
 }

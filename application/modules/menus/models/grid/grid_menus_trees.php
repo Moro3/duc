@@ -5,22 +5,45 @@ class grid_menus_trees extends jqGrid
 
     protected function beforeInit(){
     	 $this->CI = &get_instance();
+       $this->CI->load->driver('lib_menus_types');
     }
 
     protected function init()
     {
-        $this->CI = &get_instance();
+        
         $this->table = 'menus_trees';
         $this->config = $this->loader->get('config');
 
 		    $this->params['places'] = Modules::run('menus/menus_places/places_select');
+        $this->params['typesName'] = Modules::run('menus/menus_types/MY_data', array('id', 'name'));
         $this->params['types'] = Modules::run('menus/menus_types/types_select');
 		    $this->params['pages'] = Modules::run('pages/pages_api/listPagesSelect');
         $this->params['pagesPrefix'] = Modules::run('pages/pages_api/listPagesSelectPrefix');
         $this->params['mods'] = Modules::run('mods/mods_api/listSelectPrefix');
-
+        $this->params['nodes'] = Modules::run('menus/menus_trees/MY_data',
+          //select
+          '*'
+        );
+        foreach($this->params['nodes'] as $node=>$items){
+          $this->params['nodesOfTypes'][$node] = array('name' => $items->name, 'type' => $items->type_id);
+        }
+        //dd($this->params['nodes']);
+        $this->params['nodes_data'] = $this->CI->lib_menus_types->get_data_nodes($this->params['nodesOfTypes']);
+        //dd($this->params['nodes_data']);
+        
+        /*
+        $this->params['nodes_trees'] = Modules::run('menus/menus_api/get_trees_place_data', $_GET['place']);
+        $this->params['nodes_list'][0] = 'корень';
+        foreach($this->params['nodes_trees'] as $id_node=>$items){
+          $this->params['nodes_list'][$id_node] = $items['data']['name'];
+        }
+        */
+        //dd($this->params['nodes_trees']);
+        
         #Set tree grid mode
         $this->treegrid = 'adjacency';
+
+        $this->ExpandColumn = 'type_description';
 
         $this->level = intval($this->input('n_level', 0));
         $this->parent_id = intval($this->input('nodeid', 0));
@@ -32,10 +55,11 @@ class grid_menus_trees extends jqGrid
         }else{
         	$from = '';
         }
+
         $this->query = "
             SELECT {fields}
             FROM menus_trees object, menus_places place, menus_types type ".$from."
-            WHERE {where}
+            WHERE {where}             
         ";
         if(isset($_GET['place']) && is_numeric($_GET['place'])){
         	$this->where[] = 'place.id = '.$_GET['place'];
@@ -93,6 +117,7 @@ class grid_menus_trees extends jqGrid
                                    ),
             ),
 
+            /*
             'type_content'    => array('label' => lang('menus_type'),                                   
                                   // 'replace' => $this->params['types'],
                                   'manual' => true,
@@ -119,7 +144,7 @@ class grid_menus_trees extends jqGrid
                                                 'label' => 'Тип содержимого',
                                   ),
             ),
-
+            */
             'node_name'    => array('label' => lang('menus_name'),
                                     'db' => 'object.name',
                                    'width' => 250,
@@ -135,6 +160,12 @@ class grid_menus_trees extends jqGrid
                                    							//'value' => $this->params['pages'],
                                    							'value' => new jqGrid_Data_Value($this->params['pages']),
                                    ),
+                                   'formoptions'=>array(
+                                                'rowpos'=> '2',
+                                                'colpos'=>1,
+                                                'elmprefix' => 'Содержимое',
+                                                'label' => 'Тип содержимого',
+                                  ),
             ),
             
 
@@ -142,7 +173,7 @@ class grid_menus_trees extends jqGrid
                                     'db' => 'object.name',
                                    'width' => 250,
                                    'align' => 'left',
-                                   'replace' => $this->params['pagesPrefix'],
+                                   //'replace' => $this->params['pagesPrefix'],
                                    //'hidden' => true,
                                    //'editable' => true,
                                    'edittype' => 'select',
@@ -267,17 +298,21 @@ class grid_menus_trees extends jqGrid
                                    ),
                                    'search' => false,
             ),
-            'parent_id' => array('hidden' => true,
-                					'db' => 'object.parent_id',
-                					'editable' => true,
-                					//'edittype' => 'select',
-                                    'editrules' => array(
+            'parent_id' => array('label' => lang('menus_parent'),
+                                  //'hidden' => true,
+                        					'db' => 'object.parent_id',
+                        					'editable' => true,
+                        					//'edittype' => 'select',
+                                  'editoptions' => array(//'size' => 100,
+                                                          //'value' => $this->params['places'],
+                                                          //'value' => new jqGrid_Data_Value($this->params['nodes_list']),
+                                   ),
+                                  'editrules' => array(
                                                      	//'edithidden' => true,
                                                      	'integer' => true,
                                                      	//'minValue' => 1,
-                                                     	//'maxValue' => 1000,
-                                                     	//'value' => new jqGrid_Data_Value($this->params['places']),
-                                   ),
+                                                     	//'maxValue' => 1000,                                                     	
+                                  ),
             ),
 
             'parent_u' => array('hidden' => true,
@@ -320,6 +355,7 @@ class grid_menus_trees extends jqGrid
                 				'db' => '(SELECT id FROM menus_trees WHERE parent_id=object.id LIMIT 1)',
             ),
             */
+            
         );
         if(!empty($_GET['place'])){
         	$prefix_place = $this->params['places'][$_GET['place']];
@@ -335,27 +371,31 @@ class grid_menus_trees extends jqGrid
             'height' => '100%',
             'autowidth' => true,
             'altRows' => true,
-    		//'multiselect' => true, // множественный выбор (checkbox)
-    		'rowList'     => array(10, 20, 30, 50, 100),
+    		    'multiselect' => true, // множественный выбор (checkbox)
+            'multiboxonly' => true,//
+    		    'rowList'     => array(10, 20, 30, 50, 100),
             'caption' => lang('menus_trees'). ': '.$prefix_place,
+            
+            'treeGridModel' => 'adjacency',
+            'ExpandColumn' => 'name',
+            'ExpandColClick' => true,
+            'viewrecords' => false,
+            'treeGrid' => true,
         );
         #Set nav
         $this->nav = array(//'view' => true, 'viewtext' => 'Смотреть',
-        					'add' => true, 'addtext' => 'Добавить объект',
-        				   'edit' => true, 'edittext' => 'Редактировать',
-        				   'del' => true, 'deltext' => 'Удалить',
-        				'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
-    					'prmEdit' => array('width' => 900,
-    										//'height' => 600,
-    									   'closeAfteredit' => true,
-    					                   //'reloadAfterSubmit' => true,
-                  						 //'beforeShowForm' => "function() {	fckeditor('description');}",
-                   						 //'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
+                    'add' => true, 'addtext' => 'Добавить объект',
+        				    'edit' => true, 'edittext' => 'Редактировать',
+        				    'del' => true, 'deltext' => 'Удалить',
+        				    'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
+    				        'prmEdit' => array('width' => 900,
+    								//'height' => 600,
+    								'closeAfteredit' => true,
+                    //'reloadAfterSubmit' => true,
+                  	//'beforeShowForm' => "function() {	fckeditor('description');}",
+                   	//'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
 
-    									),
-
-
-
+    								),
         );
 
         $this->render_filter_toolbar = true;
@@ -366,17 +406,34 @@ class grid_menus_trees extends jqGrid
     {
 
         $r['date'] = date('Y/m/d H:i',$r['date']);
-        if($r['type_name'] == 'page'){
-        	//$r['name'] = '<a class="iframe" href="/ajaxs/?resource=pages/admin/pages~&id='.$r['name'].'">'.$r['name'].'</a>';
+        //проверяем есть данные по узлу
+        if(isset($this->params['nodes_data'][$r['id']]['data'])){
+        	
+          //если данный узел является страницей, заменяем название на ссылочную строку
+          if($this->params['nodes_data'][$r['id']]['data']['type'] == 'page'){
+              if(isset($this->params['pagesPrefix'][$this->params['nodes_data'][$r['id']]['data']['id']])){
+                $r['name'] = $this->params['pagesPrefix'][$this->params['nodes_data'][$r['id']]['data']['id']];
+              }else{
+                $r['name'] = $this->params['nodes_data'][$r['id']]['data']['name'];
+              }
+          }else{
+            $r['name'] = $this->params['nodes_data'][$r['id']]['data']['name'];
+          }
+          
+          //dd($r['name']);
+        }else{
+          $r['name'] = 'не найдены данные для type_id='.$r['type_id'].'; id='.$r['id'];
         }
         //$r['name'] = $r['type_name'].': '.$r['name'];
+        
+		    #Fields required to build tree grid
         /*
-		#Fields required to build tree grid
         $r['level'] = $this->input('nodeid') ? ($this->level + 1) : 0;
         $r['parent'] = $r['parent_id'];
         $r['isLeaf'] = $r['has_child'] ? false : true;
         $r['expanded'] = false;
         */
+
         //$r['parent'] = $r['parent_id'];
         //$r['type_content'] = array('ad','rh','fw','dg');
         return $r;
@@ -387,6 +444,7 @@ class grid_menus_trees extends jqGrid
         #Set new condition for query builder
 
         $this->where = array('object.parent_id=' . intval($orig_row['id']));
+        $this->where[] = 'object.type_id = type.id';
         if(isset($_GET['place']) && is_numeric($_GET['place'])){
         	$this->where[] = 'place.id = '.$_GET['place'];
         }
@@ -449,10 +507,10 @@ class grid_menus_trees extends jqGrid
     */
     protected function opEdit($id, $data) {
         if(empty($this->table))
-		{
-			throw new jqGrid_Exception('Table is not defined');
-		}
-		if(isset($id)){
+    		{
+    			throw new jqGrid_Exception('Table is not defined');
+    		}
+    		if(isset($id)){
             #Get editing row
             $result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
             $row = $this->DB->fetch($result);
@@ -461,20 +519,21 @@ class grid_menus_trees extends jqGrid
             #Save
             return $this->DB->update($this->table,
                                 array(
-                                	  'name' => $data['name'],
-                                      'sorter' => $data['sorter'],
-                                      'parent_id' => $data['parent'],
-                                      'date' => $data['date'],
-                                      'place_id' => $data['place_name'],
-                                      //'date_create' => $data['date_create'],
+                                    'name' => $data['name'],
+                                    'sorter' => $data['sorter'],
+                                    'parent_id' => $data['parent'],
+                                    'date' => $data['date'],
+                                    'place_id' => $data['place_name'],
+                                    //'date_create' => $data['date_create'],
+                                    'type_id' => $data['type_id'],
 
-                                      'date_update' => time(),
-                                      'ip_update' => $_SERVER['REMOTE_ADDR'],
-                                      ),
+                                    'date_update' => time(),
+                                    'ip_update' => $_SERVER['REMOTE_ADDR'],
+                                    ),
                                 array('id' => $row['id']
-                                      )
+                                    )
             );
-  		}
+  		  }
     }
 
      /**
@@ -483,12 +542,12 @@ class grid_menus_trees extends jqGrid
 
     protected function opAdd($data) {
         if(empty($this->table))
-		{
-			throw new jqGrid_Exception('Table is not defined');
-		}
+    		{
+    			throw new jqGrid_Exception('Table is not defined');
+    		}
         if(isset($data['date'])){            #Get editing row
             //print_r($data);
-			//exit;
+		    //exit;
             //echo "@@@@";
             #Save book name to books table
             $id = $this->DB->insert($this->table,
@@ -496,6 +555,7 @@ class grid_menus_trees extends jqGrid
                                       'sorter' => $data['sorter'],
                                       'parent_id' => $data['parent'],
                                       'place_id' => $data['place_name'],
+                                      'type_id' => $data['type_id'],
                                       'date' => $data['date'],
                                       'date_create' => time(),
                                       'date_update' => time(),

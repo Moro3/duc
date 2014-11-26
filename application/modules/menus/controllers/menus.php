@@ -18,8 +18,8 @@ class Menus extends MY_Controller {
         $this->load->helper('language');
         $this->load->helper('text');
 
-		// Load the library "utree"
-    	$this->load->library('utree');
+		    // Load the library "utree"
+    	 $this->load->library('utree');
 
         //$this->config->load('index_request', TRUE);
         //$this->index_request = $this->config->item('index_request', 'index_request');
@@ -34,12 +34,13 @@ class Menus extends MY_Controller {
         $this->load_models();
 
         $this->table = 'menus_trees';
+        $this->MY_module = 'menus';
 
     }
 
     function load_config(){
-		$this->config->load('setting', true);
-		$this->setting = $this->config->item('setting');
+		  $this->config->load('setting', true);
+		  $this->setting = $this->config->item('setting');
         //print_r($this->setting);
         //exit;
 	}
@@ -141,7 +142,8 @@ class Menus extends MY_Controller {
         }
 	}
 
-	public function menus_places(){		$data['uri']['point'] = $this->load->module('menus/menus')->uri_point('admin');
+	public function menus_places(){
+		$data['uri']['point'] = $this->load->module('menus/menus')->uri_point('admin');
 		$data['uri']['link'] = $data['uri']['point'].$this->router_modules->generate_link('menus', 'admin', 'menus');
 		$data['level'] = 1;
 		$data['objects'] = Modules::run('menus/menus_places/MY_data',
@@ -151,7 +153,8 @@ class Menus extends MY_Controller {
 		//var_dump($data['objects']);
 		if(isset($_GET['place']) && is_numeric($_GET['place'])){
         	$data['active_id'] = $_GET['place'];
-        }else{        	$data['active_id'] = false;
+        }else{
+        	$data['active_id'] = false;
         }
         if(isset($_GET['group']) && is_numeric($_GET['group'])){
         	$data['group_id'] = $_GET['group'];
@@ -222,6 +225,10 @@ class Menus extends MY_Controller {
             }else{
             	$this->grid->loader->oper($this->table, 'add');
             }
+        }elseif($this->input->get_post('oper')){
+              
+              $this->grid->loader->oper($this->table, $this->input->get_post('oper'));
+            
         }else{
         	$this->grid->loader->output($this->table);
         }
@@ -279,7 +286,11 @@ class Menus extends MY_Controller {
   *	”становка устовий дл€ выборки из таблиц
   *
   */
-  private function _set_where($params = array(), $value = false){  		if(is_array($params) && count($params) > 0){  			foreach($params as $key=>$items){  				if(is_string($key)){  					$this->setting['condition_field'][$key] = $items;
+  private function _set_where($params = array(), $value = false){
+  		if(is_array($params) && count($params) > 0){
+  			foreach($params as $key=>$items){
+  				if(is_string($key)){
+  					$this->setting['condition_field'][$key] = $items;
   				}
   			}
   		}
@@ -305,7 +316,8 @@ class Menus extends MY_Controller {
   *
   *	@return array - массив узлов
   */
-  public function get_nodes(){  		$all_nodes = $this->_run_command('get_tree_parent');
+  public function get_nodes(){
+  		$all_nodes = $this->_run_command('get_tree_parent');
   		return $all_nodes;
   }
 
@@ -335,7 +347,8 @@ class Menus extends MY_Controller {
   *
   * @return array - массив с id узлами
   */
-  public function get_id_nodes($name, $type = false){      	if($type !== false){
+  public function get_id_nodes($name, $type = false){
+      	if($type !== false){
       		$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
   			$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
   		}
@@ -365,14 +378,16 @@ class Menus extends MY_Controller {
 	    	  	array('group_id' => $id_group->id)
 	    	);
     	}
-    	if(isset($res)){    		uasort($res, array($this, '_order_by_places'));
+    	if(isset($res)){
+    		uasort($res, array($this, '_order_by_places'));
     		return $res;
     	}
     	return false;
     }
 
 
-    private function _order_by_places($a,$b){    	if(is_object($a->places)){
+    private function _order_by_places($a,$b){
+    	if(is_object($a->places)){
     		if($a->places->sorter == $b->places->sorter) return 0;
     		return ($a->places->sorter > $b->places->sorter) ? 1 : -1;
         }
@@ -394,12 +409,13 @@ class Menus extends MY_Controller {
     }
 
     /**
-    * ¬озвращает меню содержащие в place
+    * ¬озвращает массив дерева узлов содержащие в place
     * @param $alias - псевдоним места положени€
     *
     *	@return array - массив с меню
     */
-    public function get_menu_of_place($alias, $type = false){    	$id_place = Modules::run('menus/menus_places/MY_data_row',
+    public function get_trees_place($alias, $type = false){
+    	$id_place = Modules::run('menus/menus_places/MY_data_row',
     		//select
     		array('id', 'alias'),
     		//where
@@ -423,26 +439,23 @@ class Menus extends MY_Controller {
     *   @param $alias - псевдоним место положени€
     *
     */
-    public function get_trees_place($alias){
-		$places = Modules::run('menus/menus/get_places_of_group', $alias);
+    public function get_trees_group_place($alias){
 
-		foreach($places as $key_1=>$items){
-			$res = Modules::run('menus/menus/get_menu_of_place', $items->places->alias);
-            //echo '<br><b>Source = '.__FILE__.' : Line = '.__LINE__.'</b><br>';
-            //echo '<pre>';
-            //var_dump($res);
-            //echo '</pre>';
+  		$places = Modules::run('menus/menus/get_places_of_group', $alias);
 
-            if(is_array($res)){
-	            foreach($res as &$item){	            	uasort($item, array($this, '_order_by'));
-	            }
-                $nodes[$items->places->alias] = $res;
-            }
+  		foreach($places as $key_1=>$items){
+  			$res = Modules::run('menus/menus/get_trees_place', $items->places->alias);       
 
-		}
+              if(is_array($res)){
+  	            foreach($res as &$item){
+  	            	uasort($item, array($this, '_order_by'));
+  	            }
+                  $nodes[$items->places->alias] = $res;
+              }
+  		}
 
-		if(isset($nodes)) return $nodes;
-		return false;
+  		if(isset($nodes)) return $nodes;
+  		return false;
 
     }
 
@@ -453,7 +466,8 @@ class Menus extends MY_Controller {
     *
     *	@return array - массив из узлов или false
     */
-    public function get_nodes_of_name($name, $type = false){    	if($type !== false){
+    public function get_nodes_of_name($name, $type = false){
+    	if($type !== false){
 	    	$type = Modules::run('menus/menus_types/MY_data_row',
 	    		//select
 	    		array('id'),
@@ -489,7 +503,12 @@ class Menus extends MY_Controller {
 		return false;
 	}
 
-    public function get_data_nodes($nodes){
+  /**
+   * [get_data_nodes description]
+   * @param  [type] $nodes [description]
+   * @return [type]        [description]
+   */
+  public function get_data_nodes($nodes){
 		$res = Modules::run('menus/menus_trees/MY_data',
 					//select
 					array('id', 'parent_id', 'place_id', 'name'),

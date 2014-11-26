@@ -74,7 +74,14 @@ class Menus_places extends Menus {
 
         echo '</script>';
 
-
+         // возможность сортировки полей методом drag and drop
+        $this->load->view('grid/sorter/sortrows',
+                         array(
+                                //'selector' => '.ui-row-ltr',
+                                'grid' => $this->table,
+                                'url' => '/grid/'.$this->MY_table.'/'.$this->MY_module.'/grid/'
+                         )
+        );
 	}
 
 	/**
@@ -84,8 +91,10 @@ class Menus_places extends Menus {
 	*
 	*	@return boolean
 	*/
-	public function check_double_name($name, $id = false){
-		if($id !== false){			$where = array('id !=' => $id);
+	public function check_double_name($name, $id = false){
+
+		if($id !== false){
+			$where = array('id !=' => $id);
 		}
 		$where['name'] = $name;
 
@@ -122,7 +131,8 @@ class Menus_places extends Menus {
 		return false;
 	}
 
-	public function places_select(){		$res = $this->MY_data_array_one();
+	public function places_select(){
+		$res = $this->MY_data_array_one();
 		if($res) return $res;
 		return array();
 	}
@@ -130,7 +140,8 @@ class Menus_places extends Menus {
 	/**
 	* События на удаление объекта
 	*/
-	public function eventDelete($id){
+	public function eventDelete($id){
+
 	}
 
 	/**
@@ -138,7 +149,8 @@ class Menus_places extends Menus {
 	*
 	*
 	*/
-	public function data_place_of_alias($alias){		$res = $this->MY_data_row(
+	public function data_place_of_alias($alias){
+		$res = $this->MY_data_row(
 			//select
 			array('id', 'name', 'active', 'description', 'alias'),
 			//where
@@ -161,7 +173,8 @@ class Menus_places extends Menus {
 	    	$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
 		  	$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
         }
-	    if($place != false){	    	$place_id = $this->data_place_of_alias($place);
+	    if($place != false){
+	    	$place_id = $this->data_place_of_alias($place);
 	    	if(!empty($place_id->id)) $this->setting['condition_field']['place_id'] = $place_id->id;
 	    }
 

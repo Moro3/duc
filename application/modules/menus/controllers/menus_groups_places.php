@@ -86,26 +86,32 @@ class Menus_groups_places extends Menus {
 	               return false;
 	    	}
     	}
-        //вычисляем данные для добавления
+        
+        /* 
+        //==== Данные с учетом разницы введенных и существующих ====
 
+        //вычисляем данные для добавления
         $cols_add = array_diff($rows_in, $rows_id);
         $cols_add = array_unique($cols_add);
         //вычисляем данные для удаления
         $cols_del = array_diff($rows_id, $rows_in);
         $cols_del = array_unique($cols_del);
-        /*
-        echo "Были данные:\r\n";
-        print_r($rows_id);
-        echo "Введены данные:\r\n";
-        print_r($rows_in);
-        echo "Всего учителей:\r\n";
-        print_r($arr_teachers);
-        echo "Данные для добавления:\r\n";
-        print_r($cols_add);
-        echo "Данные для удаления:\r\n";
-        print_r($cols_del);
-        exit;
         */
+        
+        //==== Данные без учетом разницы введенных и существующих ====
+        //==== сохраняется последовательность введенных и тем самым возможность добавить запись для сортировки
+        $cols_add = $rows_in;
+        $cols_del = $rows_id;
+
+        /*
+        dd(array("Data be:" => $rows_id,
+                "Data input:" => $rows_in,
+                "Data for add:" => $cols_add,
+                "Data for delete:" => $cols_del,
+            )
+        );
+        */
+        
         // удаляем
         if(is_array($cols_del) && count($cols_del) >= 1){
         	$where = array('group_id' => $id_group,
@@ -125,8 +131,10 @@ class Menus_groups_places extends Menus {
         	$set = array('group_id' => $id_group,
         	);
 
-        	foreach($cols_add as $item){
+        	foreach($cols_add as $key=>$item){
         		$set['place_id'] = $item;
+                //добавляем ключ в качестве сортировки
+                $set['sorter'] = $key;
         		if( ! Modules::run('menus/menus_groups_places/MY_insert', $set)){
          			throw new jqGrid_Exception('Не удалось добавить "место положение" у объекта "menus_groups_places"');
          			return false;

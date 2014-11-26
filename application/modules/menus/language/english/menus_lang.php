@@ -29,6 +29,9 @@ $lang['menus_pagination']             = 'Страницы';
 
 $lang['menus_trees']           = 'Меню';
 $lang['menus_tree']           = 'Выберите меню';
+$lang['menus_parent_id']           = 'ID родителя';
+$lang['menus_parent']           = 'Родитель';
+
 $lang['menus_places']           = 'Место расположения';
 $lang['menus_place']           = 'Место расположения';
 $lang['menus_groups']           = 'Группы расположения';
@@ -36,6 +39,7 @@ $lang['menus_group']           = 'Группа расположения';
 $lang['menus_types']           = 'Типы содержимого';
 $lang['menus_type']           = 'Тип содержимого';
 $lang['menus_alias']           = 'Псевдоним';
+
 
 $lang['menus_setting']           = 'Настройка';
 $lang['menus_setting_admin']           = 'Административные настройки';

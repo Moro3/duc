@@ -89,26 +89,43 @@ class grid_menus_groups extends jqGrid
             'places'   => array('label' => lang('menus_places'),
                                     //'db' => 'object.id_category',
                                     'manual'=> true,
-                                    'hidden' => true,
+                                    //'hidden' => true,
                                     'width' => 100,
                                    'editable' => true,
                                    'stype' => 'checkbox',
                                    //'replace' => array('Check1','Check2','Check3','Check4'),
 
-                                   //'value' => new jqGrid_Data_Value($this->params['directions'], 'All'),
+                                   //'value' => new jqGrid_Data_Value($this->params['places'], 'All'),
                                    'edittype' => "select",
                                    'editoptions' => array(
                                    						  //textarea
-                                   						  //'value' => new jqGrid_Data_Value($this->params['teachers'], 'НЕТ'),
+                                   						  
                                    						  //jquery multiselect
                                    						  'value' => new jqGrid_Data_Value($this->params['places']),
+                                                //'value' => array(),
                                    						  'multiple' => true,
                                    						  //'list' => '1,3,5,6,7',
                                    						  //'selected' => array(1,3,5,6,7),
                                    						  'size' => 10,
                                    						  'class' => 'multiselect',
-
-                                                          //'dataUrl' => '/grid/lands_permits/lands/data_select'
+                                                //'dataUrl' => '/ajax/?resource=dataPlaceInGroup/ajax/menus~&',
+                                                // dataUrl get value format: "FE:FedEx; IN:InTime; TN:TNT"                                                
+                                                
+                                                //'dataUrl' => '/grid/menus_groups/menus/grid/?&oper=get_select',
+                                                /*
+                                                'buildSelect' => "function(data) {
+                                                     alert(data);
+                                                     var response = jQuery.parseJSON(data.responseText);
+                                                     var s = '<select>';
+                                                     if (response && response.length) {
+                                                         for (var i = 0, l=response.length; i<l ; i++) {
+                                                             var ri = response[i];
+                                                             s += '<option value=\"'+ri+'\">'+ri+'</option>';
+                                                         }
+                                                     }                                                      
+                                                     return s + '</select>';
+                                                }",
+                                                */
                                    ),
                                    'editrules' => array(//'required' => true,
                                                      //'integer' => true,
@@ -157,23 +174,23 @@ class grid_menus_groups extends jqGrid
             'height' => '100%',
             'autowidth' => true,
             'altRows' => true,
-    		//'multiselect' => true, // множественный выбор (checkbox)
-    		'rowList'     => array(10, 20, 30, 50, 100),
+    		    //'multiselect' => true, // множественный выбор (checkbox)
+    		    'rowList'     => array(10, 20, 30, 50, 100),
             'caption' => lang('menus_groups'),
         );
         #Set nav
         $this->nav = array(//'view' => true, 'viewtext' => 'Смотреть',
-        					'add' => true, 'addtext' => 'Добавить объект',
-        				   'edit' => true, 'edittext' => 'Редактировать',
-        				   'del' => true, 'deltext' => 'Удалить',
-        				'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
-    					'prmEdit' => array('width' => 900,
-    										//'height' => 600,
-    									   'closeAfteredit' => true,
-    									   'viewPagerButtons' => false, //скрывает кнопки навигации предыдущая, следующая,
-    					                   //'reloadAfterSubmit' => true,
-                  						 //'beforeShowForm' => "function() {	fckeditor('description');}",
-                   						 //'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
+        				      'add' => true, 'addtext' => 'Добавить объект',
+        				      'edit' => true, 'edittext' => 'Редактировать',
+        				      'del' => true, 'deltext' => 'Удалить',
+        				      'prmAdd' => array('width' => 800, 'closeAfterAdd' => true),
+    		              'prmEdit' => array('width' => 900,
+    									//'height' => 600,
+    									'closeAfteredit' => true,
+    									'viewPagerButtons' => false, //скрывает кнопки навигации предыдущая, следующая,
+    					        //'reloadAfterSubmit' => true,
+                  		//'beforeShowForm' => "function() {	fckeditor('description');}",
+                   		//'onclickSubmit' => "function() {	var oEditorText = fckeditorAPI.GetInstance('description');	return {description: oEditorText.GetHTML()};}",
 
     									),
 
@@ -198,14 +215,29 @@ class grid_menus_groups extends jqGrid
         }else{
             $r['description_active'] = '<img src="'.assets_img('admin/no.gif', false).'">';
         }
+        
+        // places трокой через запятую        
         $r['places'] = implode(',',Modules::run('menus/menus_groups_places/MY_data_array_one',
         												'id',
         												'place_id',
         												//where
-        												array('group_id' => $r['id'])
-
-        							)
+        												array('group_id' => $r['id']),                                
+                                //order
+                                'sorter'
+        						          )
         );
+        
+        /*
+        // places массивом
+        $r['places'] = Modules::run('menus/menus_groups_places/MY_data_array_one',
+                                'id',
+                                'place_id',
+                                //where
+                                array('group_id' => $r['id']),                                
+                                //order
+                                'sorter'                              
+        );
+        */
         return $r;
     }
 
@@ -233,7 +265,8 @@ class grid_menus_groups extends jqGrid
     * 	редактирование объекта
     */
     protected function opEdit($id, $data) {
-    	if(Modules::run('menus/menus_groups/check_double_name', $data['name'], $id)){    		throw new jqGrid_Exception('Такое имя уже используется, придумайте другое');
+    	if(Modules::run('menus/menus_groups/check_double_name', $data['name'], $id)){
+    		throw new jqGrid_Exception('Такое имя уже используется, придумайте другое');
     	}
     	if(Modules::run('menus/menus_groups/check_double_alias', $data['alias'], $id)){
     		throw new jqGrid_Exception('Такой псевдоним уже используется, придумайте другой');
@@ -307,14 +340,14 @@ class grid_menus_groups extends jqGrid
     }
 
      /**
-    * Редактирование параметров concertmasters
+    * Редактирование параметров 
     * @param int - id group
-    * @param string - строка id concertmasters перечисленных через запятую
+    * @param string - строка id перечисленных через запятую
     */
     protected function editPlaces($id, $places){
     	if(!empty($id) && isset($places)){
 
-                    //if(!empty($upd['concertmasters'])){
+                    
 	                    //если находим разделитель 'запятая' в веденных данных
 	                    //тогда переводим в массив значений
 	                    //если разделителя нет - в массив с одним значением
@@ -327,7 +360,7 @@ class grid_menus_groups extends jqGrid
 	                    if( ! Modules::run('menus/menus_groups_places/write_places',$id, $comm)){
                             throw new jqGrid_Exception('Не удалось обновить "место расположение"');
 	                    }
-                    //}
+                   
 
      	}
     }
@@ -337,7 +370,8 @@ class grid_menus_groups extends jqGrid
     *	@param $id - id group
     *
     */
-    protected function delPlaces($id){    	Modules::run('menus/menus_groups_places/delete_places',$id);
+    protected function delPlaces($id){
+    	Modules::run('menus/menus_groups_places/delete_places',$id);
     }
 
     /**
@@ -348,6 +382,12 @@ class grid_menus_groups extends jqGrid
     	if(Modules::run('menus/menus_groups_places/get_have_places_groups', $id)){
     		throw new jqGrid_Exception('Объект используется в связке с местом положения. Удалите сначало объект из мест положения.');
     	}
+
+    }
+
+    protected function opGetSelect()
+    {      
+      $this->response['select'] = Modules::run('menus/menus_groups/get_places_is_group');
 
     }
 }

@@ -70,8 +70,10 @@ class Menus_types extends Menus {
 	*
 	*	@return boolean
 	*/
-	public function check_double_name($name, $id = false){
-		if($id !== false){			$where = array('id !=' => $id);
+	public function check_double_name($name, $id = false){
+
+		if($id !== false){
+			$where = array('id !=' => $id);
 		}
 		$where['name'] = $name;
 
@@ -108,12 +110,14 @@ class Menus_types extends Menus {
 		return false;
 	}
 
-	public function types_select(){		$res = $this->MY_data_array_one();
+	public function types_select(){
+		$res = $this->MY_data_array_one('id', 'description');
 		if($res) return $res;
 		return array();
 	}
 
-	public function get_id_is_name($name){    	$res = $this->get_data_is_name($name);
+	public function get_id_is_name($name){
+    	$res = $this->get_data_is_name($name);
 
     	if(isset($res->id)) return $res->id;
     	return false;
@@ -123,7 +127,8 @@ class Menus_types extends Menus {
 	* Получение данных о типе по его имени
 	*
 	*/
-	public function get_data_is_name($name){		$res = $this->MY_data_row(
+	public function get_data_is_name($name){
+		$res = $this->MY_data_row(
 		    //select
 			array('id', 'name', 'active', 'description', 'alias'),
 			//where
