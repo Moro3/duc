@@ -95,9 +95,9 @@ class Menus_trees extends Menus {
         echo '</script>';
         
          // возможность сортировки полей методом drag and drop
-        $this->load->view('grid/sorter/sortrows',
+        $this->load->view('grid/sorter/sortRowsTree',
                          array(
-                                //'selector' => '.ui-widget-content',
+                                'selector' => '.tr',
                                 'grid' => $this->table,
                                 'url' => '/grid/'.$this->MY_table.'/'.$this->MY_module.'/grid/'
                          )
