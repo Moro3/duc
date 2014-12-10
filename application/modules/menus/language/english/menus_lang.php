@@ -40,6 +40,13 @@ $lang['menus_types']           = 'Типы содержимого';
 $lang['menus_type']           = 'Тип содержимого';
 $lang['menus_alias']           = 'Псевдоним';
 
+$lang['menus_images']           = 'Изображения';
+$lang['menus_image']           = 'Изображение';
+$lang['menus_image_upload']           = 'Загрузка изображения';
+$lang['menus_file_upload']           = 'Загрузка файла';
+$lang['menus_file']           = 'Файл';
+$lang['menus_images_list']           = 'Список изображений';
+
 
 $lang['menus_setting']           = 'Настройка';
 $lang['menus_setting_admin']           = 'Административные настройки';

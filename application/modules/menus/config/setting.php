@@ -9,6 +9,16 @@
 
     $config['path']['images'] = assets_uploads().'images/menus/objects/';
     $config['path']['icons'] = assets_uploads().'images/menus/icons/';
-
+	//$config['path']['images_teachers'] = assets_uploads().'images/duc/teachers/';
 
     $config['path']['root'] = FCPATH;
+
+    $config['user']['per_page'] = '7';
+    $config['user']['step_page'] = '5';
+    // варианты кол-ва строк на странице
+    $config['user']['allow_per_page'] = array(3,5,7,10,20,50,100);
+
+    // Кол-во спец предложений  на главной
+    $config['user']['count_special_main'] = 4;
+    // Кол-во спец предложений  на внутренней
+    $config['user']['count_special'] = 6;

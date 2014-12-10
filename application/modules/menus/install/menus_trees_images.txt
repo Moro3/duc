@@ -1,0 +1,10 @@
+-- Структура таблицы `menus_trees_images`
+-- 
+
+CREATE TABLE `menus_trees_images` (
+  	`id` int(3) NOT NULL auto_increment,
+	`tree_id` int(3) NOT NULL,
+	`image_id` int(4) NOT NULL,
+	`sorter` smallint(3) NOT NULL,	
+  	PRIMARY KEY  (`id`)		
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

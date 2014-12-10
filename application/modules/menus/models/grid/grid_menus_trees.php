@@ -20,7 +20,8 @@ class grid_menus_trees extends jqGrid
 		    $this->params['pages'] = Modules::run('pages/pages_api/listPagesSelect');
         $this->params['pagesPrefix'] = Modules::run('pages/pages_api/listPagesSelectPrefix');
         $this->params['mods'] = Modules::run('mods/mods_api/listSelectPrefix');
-        $this->params['nodes'] = Modules::run('menus/menus_trees/MY_data',
+        $this->params['images_files'] = Modules::run('menus/menus_images/listImages');
+        $this->params['nodes'] = Modules::run('menus/menus_trees/MY_data',         
           //select
           '*'
         );
@@ -81,6 +82,7 @@ class grid_menus_trees extends jqGrid
         */
         $this->where[] = 'object.place_id = place.id';
         $this->where[] = 'object.type_id = type.id';
+        //$this->where[] = 'object.image_id = image.id';
 
 
 
@@ -228,7 +230,55 @@ class grid_menus_trees extends jqGrid
 
             ),
 
+            'image_upload'    => array('label' => lang('menus_image_upload'),
+                                   'db' => 'object.image_id',
+                                   'width' => 150,
+                                   'align' => 'left',
+                                   'hidden' => true,
+                                   'editable' => true,
+                                   'encode' => false,
+                                   'edittype' => 'file',
+                                   'editrules' => array(
+                                                       'maxValue' => 100,
+                                                       'edithidden' => true,
+                                   ),
+                                   'editoptions' => array('size' => 60),
+                                   //'formoptions' => array('elmsuffix' => $this->button_delete_foto()),
+            ),
+            'image'    => array('label' => lang('menus_image'),
+                                   'db' => 'object.image_id',
+                                   'width' => 150,
+                                   'align' => 'left',
+                                   'editable' => true,
+                                   'encode' => false,
+                                   //'edittype' => 'file',
+                                   'editrules' => array(
+                                                       'maxValue' => 100,
+                                   ),
+                                   //'editoptions' => array('size' => 60),
+                                   'formoptions' => array('elmsuffix' => Modules::run('menus/menus_images/tplButtonDeleteImage')),
+            ),
+            'image_list'    => array('label' => lang('menus_image_list'),
+                                   'db' => 'object.image_id',
+                                   //'manual' => true,
+                                   'replace' => $this->params['images_files'],
+                                   'width' => 150,
+                                   'align' => 'left',
+                                   'hidden' => true,
+                                   'editable' => true,
+                                   //'encode' => false,
+                                   'edittype' => 'select',
+                                   'editrules' => array(
+                                                       'maxValue' => 100,
+                                                       'edithidden' => true,
+                                   ),
+                                   'editoptions' => array(
+                                                         //'value' => array(0=>'нет') + $this->params['array_files'],
+                                                         'value' => $this->params['images_files'],
 
+                                   ),
+                                   //'formoptions' => array('elmsuffix' => $this->button_delete_foto()),
+            ),
 
             'date'   => array('label' => lang('menus_date'),
                                    'db' => 'object.date',
@@ -424,6 +474,22 @@ class grid_menus_trees extends jqGrid
         }else{
           $r['name'] = 'не найдены данные для type_id='.$r['type_id'].'; id='.$r['id'];
         }
+
+        if(isset($r['image_upload'])){
+          $resize_config = Modules::run('menus/menus_settings/get_config_resize', 'trees');
+          $resize_param = Modules::run('menus/menus_settings/get_param_resize', 'trees');
+          $path = $resize_config['path'].$resize_param['small']['dir'].'/'.$r['image_upload'];
+          //echo $path;
+          //заключаем картинку в блок с идентификатором над которым
+          //будут производится действия с картинкой
+          //$r['foto'] = '<div id="foto">';
+          if(is_file($this->config['path']['root'].$path)){
+            $r['image'] = '<img src="/'.$path.'" height="60px" />';
+          }else{
+            $r['image'] = '';
+          }
+          //$r['foto'] = '</div>';
+        }
         //$r['name'] = $r['type_name'].': '.$r['name'];
         
 		    #Fields required to build tree grid
@@ -499,6 +565,13 @@ class grid_menus_trees extends jqGrid
         if(!isset($data['place_name'])){
         	$data['place_name'] = $_GET['place'];
         }
+
+        if(!empty($data['image_list']) && isset($this->params['images_files'][$data['image_list']])){
+          $data['image_list'] = $this->params['images_files'][$data['image_list']];
+        }else{
+          $data['image_list'] = '';
+        }        
+
         return $data;
     }
 
@@ -515,6 +588,20 @@ class grid_menus_trees extends jqGrid
             $result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
             $row = $this->DB->fetch($result);
 
+
+            // загружаем файл и добавляем к массиву с данными
+                if(isset($_FILES[Modules::run('menus/menus_images/formSelector', 'image_upload')])){
+                  //throw new jqGrid_Exception('Было загружено изображение');
+                  $data_upload = Modules::run('menus/menus_images/upload_file', $id, $upd);
+                    //var_dump($data);
+                    if($row['file'] != $data_upload['file']){
+                    Modules::run('menus/menus_images/delete_image_object', $row['file']);
+                    $data['file'] = $data_upload['file'];
+                  }
+                }else{
+
+                  //throw new jqGrid_Exception('Изображение НЕ загружено');
+                }
 
             #Save
             return $this->DB->update($this->table,

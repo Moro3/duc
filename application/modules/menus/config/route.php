@@ -75,7 +75,20 @@ $config = array(
                             'method' => 'grid_admin_object',
                             'menu' => true,
                      ),
-
+                     'menus_images' =>  array(
+                            'index_name' => 'object',
+                            'index' =>  array(
+                                   'menu' => 'images',
+                                   'action' => 'all',
+                                   'id' => false,
+                            ),
+                            'start_segment' => 4,
+                            'name' => 'lang: menus_images',
+                            'module' => 'menus',
+                            'controller' => 'menus_images',
+                            'method' => 'grid_admin_object',
+                            'menu' => true,
+                     ),
                      'setting' =>  array(
                             'index_name' => 'object',
                             'index' =>  array(

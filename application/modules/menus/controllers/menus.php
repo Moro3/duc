@@ -38,20 +38,23 @@ class Menus extends MY_Controller {
 
     }
 
-    function load_config(){
-		  $this->config->load('setting', true);
-		  $this->setting = $this->config->item('setting');
+  function load_config(){
+		  //$this->config->load('setting', true);
+		  //$this->setting = $this->config->item('setting');
         //print_r($this->setting);
         //exit;
+      Modules::run('menus/menus_settings/getConfig');
 	}
 
 	function load_models(){
     	$this->load->model('menus_trees_model');
     	$this->load->model('menus_places_model');
-        $this->load->model('menus_groups_model');
-        $this->load->model('menus_types_model');
-        $this->load->model('menus_groups_places_model');
-    }
+      $this->load->model('menus_groups_model');
+      $this->load->model('menus_types_model');
+      $this->load->model('menus_groups_places_model');
+      $this->load->model('menus_images_model');
+      //$this->load->model('menus_trees_images_model');
+  }
 
     function index(){
 
