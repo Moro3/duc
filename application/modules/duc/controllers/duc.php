@@ -396,7 +396,7 @@ class Duc extends MY_Controller {
         return false;
     }
 
-    	/**
+    /**
 	* создает папки для ресайзов изображений если их нет
 	*
 	*/
