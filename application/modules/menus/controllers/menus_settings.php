@@ -40,10 +40,10 @@ class Menus_settings extends Menus {
 
 		$this->config->load('setting', true);
 		$this->config->load('resize', true);
-		$this->setting = array_merge_assoc_recursive_distinct($this->config->item('setting'), $this->config->item('resize'));
+		$configs = array_merge_assoc_recursive_distinct($this->config->item('setting'), $this->config->item('resize'));
 		//$config = $this->config->item('setting');
         
-        return $this->setting;
+        return $configs;
     }
 
     /**
@@ -74,7 +74,8 @@ class Menus_settings extends Menus {
     *  @return	array
     */
     public function get_config_resize($name_resize = false){
-    	if(empty($name_resize) || $name_resize === '!') return false;
+    	//dd($this->setting);
+        if(empty($name_resize) || $name_resize === '!') return false;
         if(isset($this->setting['images']['config'][$name_resize])){
         	$res = array_merge($this->setting['images']['config']['!'], $this->setting['images']['config'][$name_resize]);
         	return $res;
@@ -87,7 +88,7 @@ class Menus_settings extends Menus {
     * Шаблон настройки изображений
     *
     */
-    public function tpl_photos(){
+    public function tpl_images(){
     	$this->load->view('admin/settings_photos');
     }
 

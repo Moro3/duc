@@ -43,12 +43,23 @@ class Menus_api extends Menus {
         $nodes = $this->get_trees_place($alias, $type);
         //dd($nodes);
         
+        //получаем все изображения
+         $images = Modules::run('menus/menus_images/MY_data',
+            //select
+            '*'
+         );
+
+        
+
         if(is_array($nodes)){
             foreach($nodes as &$items){                
                     foreach($items as &$value){
+                        
                         $ids[$value['id']] = array(
                             'name' => $value['name'],
-                            'type' => $value['type_id']
+                            'type' => $value['type_id'],
+                            
+
                         );
                     }                
             }
@@ -58,10 +69,12 @@ class Menus_api extends Menus {
             
 
             foreach($nodes as &$items){                
-                    foreach($items as &$value){                        
+                    foreach($items as &$value){
+                        $img_objects = (isset($images[$value['image_id']])) ? $images[$value['image_id']] : false;                        
                             if(isset($data_nodes[$value['id']])){
                                 $value += $data_nodes[$value['id']];
-                            }                        
+                            }
+                        $value['images'] = $img_objects;                        
                     }                
             }
         }

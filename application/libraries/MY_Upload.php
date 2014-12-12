@@ -88,9 +88,9 @@ class MY_Upload extends CI_Upload {
     $filename = str_replace($this->file_ext, '', $filename);
     if($this->registr == 'up'){
 
-      $this->UpLow(&$filename,'up');
+      $this->UpLow($filename,'up');
     }elseif($this->registr == 'low'){
-      $this->UpLow(&$filename,'low');
+      $this->UpLow($filename,'low');
     }
     $filename = $filename.$this->file_ext;
     if($this->rus_convert == TRUE){

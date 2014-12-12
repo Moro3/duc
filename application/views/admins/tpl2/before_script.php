@@ -80,6 +80,7 @@ $multiselect = '
 //---- jQuery UI Plugin ajaxupload --------
 assets_script('jquery/plugins/ajaxupload.js', false);
 
+
 // общий код для всего сайта
 assets_script('public.js', false);
 
@@ -104,12 +105,16 @@ $this->assets->script->package('jqgrid',
 							       		//-- Other plugins --
 							       			'jqgrid/js/jquery/form/2.67/jquery.form.min.js',
 							       		//-- Code highlighter -- подсветка кода в блоге
-							       			//'jqgrid/js/highlightjs/6.0/styles/vs.css',
-							       			//'jqgrid/js/highlightjs/6.0/highlight.min.js',
+							       			'jqgrid/js/highlightjs/6.0/styles/vs.css',
+							       			'jqgrid/js/highlightjs/6.0/highlight.min.js',
 
 							 ),
 							 false
 );
+
+//---- jQuery Plugin Form --------
+//assets_script('jquery/plugins/jquery.form.js', false);
+
 
 //---- jQuery arcticModal - Модальные окна --------
 $this->assets->script->package('jquery/plugins/arcticmodal',

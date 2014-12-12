@@ -50,6 +50,13 @@ class grid_menus_images extends jqGrid
                                    'align' => 'center',
                                    //'editable' => true,
                                    'encode' => false,
+                                   'sortable' => false,
+                                   'stype' => 'select',
+                                   'searchoptions' => array(
+                                                'value' => new jqGrid_Data_Value(array('Откл','Вкл'), 'All'),
+                                                //'value' => array('' => 'All','Откл','Вкл'),
+                                                'onSelect'       => new jqGrid_Data_Raw('function(){$grid[0].triggerToolbar();}'),
+                                    ),
             ),
             'sorter'  => array('label' => lang('menus_sorter'),
                                    'db' => 'object.sorter',
@@ -63,6 +70,7 @@ class grid_menus_images extends jqGrid
                                                      	'minValue' => 1,
                                                      	'maxValue' => 1000,
                                    ),
+                                   'search' => false,
             ),
             
             'image_upload'    => array('label' => lang('menus_image_upload'),
@@ -81,16 +89,19 @@ class grid_menus_images extends jqGrid
                                    //'formoptions' => array('elmsuffix' => $this->button_delete_foto()),
             ),
             'image'    => array('label' => lang('menus_image'),
-                                   'db' => 'object.file',
+                                   //'db' => 'object.file',
+                                   'manual' => true,
                                    'width' => 150,
                                    'align' => 'left',
-                                   'editable' => true,
+                                   //'hidden' => true,
+                                   'editable' => false,
                                    'encode' => false,
                                    //'edittype' => 'file',
                                    'editrules' => array(
                                                        'maxValue' => 100,
                                    ),
                                    //'editoptions' => array('size' => 60),
+                                   'search' => false,
 
             ),
             'name'    => array('label' => lang('menus_name'),
@@ -103,17 +114,33 @@ class grid_menus_images extends jqGrid
                                    ),
                                    'editoptions' => array('size' => 60),
             ),
-            'info'    => array('label' => lang('duc_img_info'),
-            					'manual' => true,
-             					//'db' => 'object.name',
-                                'encode' => false,
-                  				  'width' => 250,
-                                   'align' => 'left',
-                                   'editable' => true,
-                                   'editrules' => array(//'required' => true,
+            'name_is_file'    => array('label' => lang('menus_name_is_namefile'),
+                                    //'db' => 'object.name',
+                                    'manual' => true,
+                                    'width' => 250,
+                                    'align' => 'left',
+                                    'hidden' => true,
+                                    'editable' => true,
+                                    'edittype' => 'checkbox',
+                                    'editrules' => array(//'required' => true,
                                                        'maxValue' => 100,
-                                   ),
-                                   'editoptions' => array('size' => 60),
+                                                       'edithidden' => true,
+                                    ),
+                                    'editoptions' => array('size' => 60),
+            ),
+            'info'    => array('label' => lang('menus_image_info'),
+                        					'manual' => true,
+                         					//'db' => 'object.name',
+                                  'encode' => false,
+                  				        'width' => 250,
+                                  'align' => 'left',
+                                  'editable' => false,
+                                  'editrules' => array(//'required' => true,
+                                                       'maxValue' => 100,
+
+                                  ),
+                                  'editoptions' => array('size' => 60),
+                                  'search' => false,
             ),
 
         );
@@ -168,7 +195,7 @@ class grid_menus_images extends jqGrid
         $resize_config = Modules::run('menus/menus_settings/get_config_resize', 'trees');
         $resize_param = Modules::run('menus/menus_settings/get_param_resize', 'trees');
         if(isset($r['image_upload'])){
-        	$path = $resize_config['path'].$resize_param['mini']['dir'].'/'.$r['image_upload'];
+        	$path = $resize_param['small']['path'].$resize_param['small']['dir'].'/'.$r['image_upload'];
         	$path_original = $resize_config['path'].$resize_config['dir'].'/'.$r['image_upload'];
         	//echo $path;
         	//заключаем картинку в блок с идентификатором над которым
@@ -176,13 +203,19 @@ class grid_menus_images extends jqGrid
         	//$r['foto'] = '<div id="foto">';
         	if(is_file($this->config['path']['root'].$path)){
         		$r['image'] = '<img src="/'.$path.'" />';
-        		$img_info = getimagesize($path_original);
-        		$r['info'] = 'Ширина: '.$img_info[0].' px<br />';
-        		$r['info'] .= 'Высота: '.$img_info[1].' px<br />';
-        		$r['info'] .= 'Размер: '.round(filesize($path_original)/1024).' КБайт';
+        		if(is_file($this->config['path']['root'].$path_original)){
+              $img_info = getimagesize($this->config['path']['root'].$path_original);
+          		$r['info'] = 'Ширина: '.$img_info[0].' px<br />';
+          		$r['info'] .= 'Высота: '.$img_info[1].' px<br />';
+          		$r['info'] .= 'Размер: '.round(filesize($this->config['path']['root'].$path_original)/1024).' КБайт';
+            }else{
+              $r['info'] = 'Не найден оригинал файла';
+            }
         	}else{
-        		$r['img'] = '';
+        		$r['image'] = 'файла нет';
         	}
+
+          $r['name_is_file'] = '';
         	//$r['foto'] = '</div>';
         }
 
@@ -213,29 +246,25 @@ class grid_menus_images extends jqGrid
     * 	Добавление объекта
     */
 
-    protected function opAdd($upd) {
+    protected function opAdd($data) {
         if(empty($this->table))
-		{
-			throw new jqGrid_Exception('Table is not defined');
-		}
-        if(empty($upd['id_group']) || !is_numeric($upd['id_group'])){
-			throw new jqGrid_Exception('Коллектив не выбран');
-		}
+    		{
+    			throw new jqGrid_Exception('Table is not defined');
+    		}        
 
-		if(!isset($_FILES[Modules::run('menus/menus_images/formSelector', 'image_upload')])){
-			throw new jqGrid_Exception('Изображение НЕ выбрано');
-		}
+    		if(!isset($_FILES[Modules::run('menus/menus_images/formSelector', 'image_upload')])){
+    			throw new jqGrid_Exception('Изображение НЕ выбрано');
+    		}
             #Save
             $upd_data = array(
-            		  'active' => $upd['active'],
-            		  'id_group' => $upd['id_group'],
-                	  'sorter' => $upd['sorter'],
-                      'name' => $upd['name'],
+            		  'active' => $data['active'],            		  
+                	'sorter' => $data['sorter'],
+                  'name' => $data['name'],
 
-                      'date_create' => time(),
-            		'date_update' => time(),
-            		'ip_create' => $_SERVER['REMOTE_ADDR'],
-            		'ip_update' => $_SERVER['REMOTE_ADDR'],
+                  'date_create' => time(),
+              		'date_update' => time(),
+              		'ip_create' => $_SERVER['REMOTE_ADDR'],
+              		'ip_update' => $_SERVER['REMOTE_ADDR'],
 
             );
             #Save book name to books table
@@ -247,25 +276,86 @@ class grid_menus_images extends jqGrid
             if(is_numeric($id)){
 
                 	//throw new jqGrid_Exception('Было загружено изображение');
-                	$data = Modules::run('menus/menus_images/upload_file', $id);
-                	if(isset($data['errors'])) throw new jqGrid_Exception($data['errors']);
-                    //var_dump($data);
+                	$data_file = Modules::run('menus/menus_images/upload_file', $id);
+                	//dd($data_file);
+                  if(isset($data_file['errors'])){
+                    Modules::run('menus/menus_images/deleteObject', $id);
+                    throw new jqGrid_Exception($data_file['errors']);
+                  }
+                  //var_dump($data);
 
-                	if(!empty($data['data']['file_name'])){
+                	if(!empty($data_file['data']['file_name'])){
 
-	                	$upd_foto['img'] = $data['data']['file_name'];
-	                	#Save book name to books table
-		            	$this->DB->update($this->table,
-		                                $upd_foto,
-	                                	array('id' => $id
-	                                      )
-	                            );
+  	                $upd_foto['file'] = $data_file['data']['file_name'];
+  	                #Save book name to books table
+  		            	$this->DB->update($this->table,
+  		                                $upd_foto,
+  	                                	array('id' => $id
+  	                                      )
+  	                            );
                 	};
 
             }
 
 
         return;
+    }
+
+     /**
+    *   редактирование объекта
+    */
+    protected function opEdit($id, $upd) {
+        if(empty($this->table))
+        {
+          throw new jqGrid_Exception('Table is not defined');
+        }
+    
+        if(isset($id)){
+            #Get editing row
+            $result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
+            $row = $this->DB->fetch($result);
+
+
+            #Save
+            $upd_data = array(
+                  'active' => $upd['active'],                 
+                  'sorter' => $upd['sorter'],
+                  'name' => $upd['name'],
+                  //'img' => $upd['img'],
+
+                  'date_update' => time(),
+                  'ip_update' => $_SERVER['REMOTE_ADDR'],
+
+            );
+            //if(isset($upd['foto_upload']))
+            // проверяем был ли обновлен файл и если да,
+
+                // загружаем файл и добавляем к массиву с данными
+                if(isset($_FILES[Modules::run('menus/menus_images/formSelector', 'image_upload')])){
+                  //throw new jqGrid_Exception('Было загружено изображение');
+                  $data = Modules::run('menus/menus_images/upload_file', $id);
+                    //var_dump($data);
+                  if(isset($data['data']['file_name']) && $row['file'] != $data['data']['file_name']){
+                    Modules::run('menus/menus_images/delete_image_object', $row['file']);
+                    $upd_data['file'] = $data['data']['file_name'];
+                  }
+                }else{
+
+                  //throw new jqGrid_Exception('Изображение НЕ загружено');
+                }
+
+            #Save book name to books table
+              return $this->DB->update($this->table,
+                                  $upd_data,
+                                  array('id' => $row['id']
+                                        )
+                              );
+
+            //unset($upd['name']);
+        }else{
+            throw new jqGrid_Exception('Запрос не выполнен, нет id');
+        }
+
     }
 
 
@@ -277,86 +367,28 @@ class grid_menus_images extends jqGrid
     protected function opDel($id) {
 
         if(empty($this->table))
-		{
-			throw new jqGrid_Exception('Table is not defined');
-		}
+    		{
+    			throw new jqGrid_Exception('Table is not defined');
+    		}
 
-		#Delete single value
-		if(is_scalar($id))
-		{
-			Modules::run('menus/menus_images/deleteObject', $id);
-			//$this->DB->delete($this->table, array($this->primary_key => $id));
-		}
-		#Delete multiple value
-		else
-		{
-			$ids = array_map(array($this->DB, 'quote'), explode(',', $id));
-			Modules::run('menus/menus_images/deleteObject', $ids);
+    		#Delete single value
+    		if(is_scalar($id))
+    		{
+    			Modules::run('menus/menus_images/deleteObject', $id);
+    			//$this->DB->delete($this->table, array($this->primary_key => $id));
+    		}
+    		#Delete multiple value
+    		else
+    		{
+    			$ids = array_map(array($this->DB, 'quote'), explode(',', $id));
+    			Modules::run('menus/menus_images/deleteObject', $ids);
 
-			//$this->DB->delete($this->table, $this->primary_key . ' IN (' . implode(',', $ids) . ')');
-		}
-
-    }
-
-     /**
-    * 	редактирование объекта
-    */
-    protected function opEdit($id, $upd) {
-        if(empty($this->table))
-		{
-			throw new jqGrid_Exception('Table is not defined');
-		}
-
-		if(empty($upd['id_group']) || !is_numeric($upd['id_group'])){
-			throw new jqGrid_Exception('Коллектив не выбран');
-		}
-        if(isset($id)){
-            #Get editing row
-            $result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
-            $row = $this->DB->fetch($result);
-
-
-            #Save
-            $upd_data = array(
-            		  'active' => $upd['active'],            		  
-                	  'sorter' => $upd['sorter'],
-                      'name' => $upd['name'],
-                      //'img' => $upd['img'],
-
-                      'date_update' => time(),
-                      'ip_update' => $_SERVER['REMOTE_ADDR'],
-
-            );
-            //if(isset($upd['foto_upload']))
-            // проверяем был ли обновлен файл и если да,
-
-                // загружаем файл и добавляем к массиву с данными
-                if(isset($_FILES[Modules::run('menus/menus_images/formSelector', 'image_upload')])){
-                	//throw new jqGrid_Exception('Было загружено изображение');
-                	$data = Modules::run('menus/menus_images/upload_file', $id);
-                    //var_dump($data);
-                    if(isset($data['data']['file_name']) && $row['img'] != $data['data']['file_name']){
-                		Modules::run('menus/menus_images/delete_image_object', $row['img']);
-                		$upd_data['file'] = $data['data']['file_name'];
-                	}
-                }else{
-
-                	//throw new jqGrid_Exception('Изображение НЕ загружено');
-                }
-
-            #Save book name to books table
-	            return $this->DB->update($this->table,
-	                                $upd_data,
-	                                array('id' => $row['id']
-	                                      )
-	                            );
-
-            //unset($upd['name']);
-        }else{
-            throw new jqGrid_Exception('Запрос не выполнен, нет id');
-        }
+    			//$this->DB->delete($this->table, $this->primary_key . ' IN (' . implode(',', $ids) . ')');
+    		}
 
     }
+
+    
 
 
     /**
@@ -377,12 +409,12 @@ class grid_menus_images extends jqGrid
             $upd_data = array(
             		  'active' => 1,
 
-                      'date_update' => time(),
-                      'ip_update' => $_SERVER['REMOTE_ADDR'],
+                  'date_update' => time(),
+                  'ip_update' => $_SERVER['REMOTE_ADDR'],
             );
 
             $ids = array_map(array($this->DB, 'quote'), $ids);
-			$response = $this->DB->update($this->table, $upd_data, $this->primary_key . ' IN (' . implode(',', $ids) . ')');
+		        $response = $this->DB->update($this->table, $upd_data, $this->primary_key . ' IN (' . implode(',', $ids) . ')');
             /*
             #Save book name to books table
 	            $response = $this->DB->update($this->table,
@@ -409,12 +441,12 @@ class grid_menus_images extends jqGrid
             $upd_data = array(
             		  'active' => 0,
 
-                      'date_update' => time(),
-                      'ip_update' => $_SERVER['REMOTE_ADDR'],
+                  'date_update' => time(),
+                  'ip_update' => $_SERVER['REMOTE_ADDR'],
             );
 
             $ids = array_map(array($this->DB, 'quote'), $ids);
-			$response = $this->DB->update($this->table, $upd_data, $this->primary_key . ' IN (' . implode(',', $ids) . ')');
+		        $response = $this->DB->update($this->table, $upd_data, $this->primary_key . ' IN (' . implode(',', $ids) . ')');
 
 	        return $response;
     }

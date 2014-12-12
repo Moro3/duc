@@ -256,7 +256,7 @@ class grid_menus_trees extends jqGrid
                                                        'maxValue' => 100,
                                    ),
                                    //'editoptions' => array('size' => 60),
-                                   'formoptions' => array('elmsuffix' => Modules::run('menus/menus_images/tplButtonDeleteImage')),
+                                   //'formoptions' => array('elmsuffix' => Modules::run('menus/menus_images/tplButtonDeleteImage')),
             ),
             'image_list'    => array('label' => lang('menus_image_list'),
                                    'db' => 'object.image_id',
@@ -273,8 +273,8 @@ class grid_menus_trees extends jqGrid
                                                        'edithidden' => true,
                                    ),
                                    'editoptions' => array(
-                                                         //'value' => array(0=>'нет') + $this->params['array_files'],
-                                                         'value' => $this->params['images_files'],
+                                                         'value' => array(0=>'нет') + $this->params['images_files'],
+                                                         //'value' => $this->params['images_files'],
 
                                    ),
                                    //'formoptions' => array('elmsuffix' => $this->button_delete_foto()),
@@ -475,16 +475,17 @@ class grid_menus_trees extends jqGrid
           $r['name'] = 'не найдены данные для type_id='.$r['type_id'].'; id='.$r['id'];
         }
 
-        if(isset($r['image_upload'])){
+        if(isset($r['image_upload']) && isset($this->params['images_files'][$r['image_upload']])){
+          $file = $this->params['images_files'][$r['image_upload']];
           $resize_config = Modules::run('menus/menus_settings/get_config_resize', 'trees');
           $resize_param = Modules::run('menus/menus_settings/get_param_resize', 'trees');
-          $path = $resize_config['path'].$resize_param['small']['dir'].'/'.$r['image_upload'];
+          $path = $resize_param['small']['path'].$resize_param['small']['dir'].'/'.$file;
           //echo $path;
           //заключаем картинку в блок с идентификатором над которым
           //будут производится действия с картинкой
           //$r['foto'] = '<div id="foto">';
           if(is_file($this->config['path']['root'].$path)){
-            $r['image'] = '<img src="/'.$path.'" height="60px" />';
+            $r['image'] = '<img src="/'.$path.'"  />';
           }else{
             $r['image'] = '';
           }
@@ -566,11 +567,12 @@ class grid_menus_trees extends jqGrid
         	$data['place_name'] = $_GET['place'];
         }
 
+        //dd($this->params['images_files']);
         if(!empty($data['image_list']) && isset($this->params['images_files'][$data['image_list']])){
-          $data['image_list'] = $this->params['images_files'][$data['image_list']];
+          $data['image_id'] = $data['image_list'];
         }else{
-          $data['image_list'] = '';
-        }        
+          $data['image_id'] = 0;
+        }              
 
         return $data;
     }
@@ -590,6 +592,7 @@ class grid_menus_trees extends jqGrid
 
 
             // загружаем файл и добавляем к массиву с данными
+            /*
                 if(isset($_FILES[Modules::run('menus/menus_images/formSelector', 'image_upload')])){
                   //throw new jqGrid_Exception('Было загружено изображение');
                   $data_upload = Modules::run('menus/menus_images/upload_file', $id, $upd);
@@ -602,7 +605,7 @@ class grid_menus_trees extends jqGrid
 
                   //throw new jqGrid_Exception('Изображение НЕ загружено');
                 }
-
+            */
             #Save
             return $this->DB->update($this->table,
                                 array(
@@ -613,6 +616,7 @@ class grid_menus_trees extends jqGrid
                                     'place_id' => $data['place_name'],
                                     //'date_create' => $data['date_create'],
                                     'type_id' => $data['type_id'],
+                                    'image_id' => $data['image_id'],
 
                                     'date_update' => time(),
                                     'ip_update' => $_SERVER['REMOTE_ADDR'],
@@ -643,6 +647,7 @@ class grid_menus_trees extends jqGrid
                                       'parent_id' => $data['parent'],
                                       'place_id' => $data['place_name'],
                                       'type_id' => $data['type_id'],
+                                      'image_id' => $data['image_id'],
                                       'date' => $data['date'],
                                       'date_create' => time(),
                                       'date_update' => time(),

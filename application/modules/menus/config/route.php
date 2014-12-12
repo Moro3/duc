@@ -89,6 +89,35 @@ $config = array(
                             'method' => 'grid_admin_object',
                             'menu' => true,
                      ),
+                     'menus_images_list' =>  array(
+                            'index_name' => 'object',
+                            'index' =>  array(
+                                   'menu' => 'images',
+                                   'action' => 'all',
+                                   'id' => false,
+                            ),
+                            'start_segment' => 4,
+                            'name' => 'lang: menus_images',
+                            'module' => 'menus',
+                            'controller' => 'menus_images',
+                            'method' => 'grid_admin_object',
+                            'menu' => true,
+                            'parent' => 'menus_images',
+                     ),
+                     'setting_images' =>  array(
+                            'index_name' => 'object',
+                            'index' =>  array(
+                                   'menu' => 'images',
+                                   'action' => 'resize',
+                            ),
+                            'start_segment' => 4,
+                            'name' => 'lang: menus_setting_images',
+                            'module' => 'menus',
+                            'controller' => 'menus_settings',
+                            'method' => 'tpl_images',
+                            'menu' => true,
+                            'parent' => 'menus_images',
+                     ),
                      'setting' =>  array(
                             'index_name' => 'object',
                             'index' =>  array(
@@ -131,6 +160,7 @@ $config = array(
                             'menu' => true,
                             'parent' => 'setting',
                      ),
+                     
 
               ),
               'ajax' =>  array(
@@ -191,6 +221,21 @@ $config = array(
                             'arg' => array('index:menu'),
                             //'parent' => 'teachers_list',
                             //'menu' => true,
+                     ),
+                     'action_image_resize' =>  array(
+                            'index_name' => 'object',
+                            'index' =>  array(
+                                   'menu' => 'images',
+                                   'action' => 'act_resize',
+                                   'id' => false,
+                            ),
+                            'start_segment' => 4,
+                            'name' => 'lang: menus_images_resize',
+                            'module' => 'menus',
+                            'controller' => 'menus_images',
+                            'method' => 'action_resize',
+                            //'menu' => true,
+                            //'parent' => 'photos',
                      ),
                ),
 

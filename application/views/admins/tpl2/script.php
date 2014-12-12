@@ -1,5 +1,6 @@
 <?php
-assets_script_out();
+  //$this->assets->out_config();
+  assets_script_out();
 ?>
 
 <!-- JQGrid script -->

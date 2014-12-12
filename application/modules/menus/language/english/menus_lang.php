@@ -46,8 +46,34 @@ $lang['menus_image_upload']           = 'Загрузка изображения
 $lang['menus_file_upload']           = 'Загрузка файла';
 $lang['menus_file']           = 'Файл';
 $lang['menus_images_list']           = 'Список изображений';
+$lang['menus_image_info']           = 'Свойства изображения';
+$lang['menus_images_info']           = 'Свойства изображений';
+$lang['menus_name_is_file']           = 'Имя из файла';
+$lang['menus_name_is_namefile']           = 'Взять название из имени файла';
+$lang['menus_images_resize']	= 'Перестройка файлов изображений';
 
 
 $lang['menus_setting']           = 'Настройка';
 $lang['menus_setting_admin']           = 'Административные настройки';
 $lang['menus_setting_user']           = 'Пользовательские настройки';
+$lang['menus_setting_images']	= 'Настройка изображений';
+
+$lang['menus_resize']         = 'Ресайз изображений';
+$lang['menus_resize_path']         = 'Путь к ресайзу';
+$lang['menus_images_path']         = 'Путь к оригинальному изображению';
+$lang['menus_allowed_types']         = 'Разрешенные расширения (разделитель "|")';
+$lang['menus_resize_dir']         = 'Папка ресайза';
+$lang['menus_resize_x']         = 'Ширина изображения';
+$lang['menus_resize_y']         = 'Высота изображения';
+$lang['menus_max_img']         = 'Максимальное кол-во изображений';
+$lang['menus_max_width']         = 'Максимальная ширина загружаемого изображения';
+$lang['menus_max_height']         = 'Максимальная высота загружаемого изображения';
+$lang['menus_max_size']         = 'Максимальный размер фотографии';
+$lang['menus_resize_maintain_ratio']         = 'Сохранять-ли оригинальные пропорции при масштабировании (true/false)';
+$lang['menus_resize_name']         = 'Имя ресайза';
+$lang['menus_resize_quality']         = 'Качество ресайза (1-100: 100 максимальное)';
+$lang['menus_resize_master_dim']         = 'Главная ось при масштабировании или создании миниатюры (auto, width, height)';
+$lang['menus_resize_rotation_angle']         = 'Угол вращения изображения против часовой стрелки (90, 180, 270, vrt, hor)';
+$lang['menus_resize_x_axis']         = 'Координата X для обрезки, в пикселях';
+$lang['menus_resize_y_axis']         = 'Координата Y для обрезки, в пикселях';
+$lang['menus_resize_type']         = 'Тип обработки';

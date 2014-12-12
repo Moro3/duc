@@ -57,24 +57,24 @@ class grid_duc_teachers extends jqGrid
                                    ),
             ),
             'active_icon'  => array('label' => lang('duc_active'),
-                                   'manual'=> true,
-                                   'width' => 80,
-                                   'align' => 'center',
-                                   //'editable' => true,
-                                   'encode' => false,
+                                  'manual'=> true,
+                                  'width' => 80,
+                                  'align' => 'center',
+                                  //'editable' => true,
+                                  'encode' => false,
             ),
             'sorter'  => array('label' => lang('duc_sorter'),
-                                   'db' => 'object.sorter',
-                                   'width' => 50,
-                                   //'hidden' => true,
-                                   'editable' => true,
-                                   'encode' => false,
-                                   'editrules' => array(
+                                  'db' => 'object.sorter',
+                                  'width' => 50,
+                                  //'hidden' => true,
+                                  'editable' => true,
+                                  'encode' => false,
+                                  'editrules' => array(
                                                      	'edithidden' => true,
                                                      	'integer' => true,
                                                      	'minValue' => 1,
                                                      	'maxValue' => 1000,
-                                   ),
+                                  ),
             ),
             'foto_upload'    => array('label' => lang('duc_foto_upload'),
                                    'db' => 'object.foto',
@@ -296,15 +296,18 @@ class grid_duc_teachers extends jqGrid
         }else{
             $r['active_icon'] = '<img src="'.assets_img('admin/button_red.gif', false).'">';
         }
-        if(isset($r['foto_upload'])){        	$resize_config = Modules::run('duc/duc_settings/get_config_resize', 'teachers');
+        if(isset($r['foto_upload'])){
+        	$resize_config = Modules::run('duc/duc_settings/get_config_resize', 'teachers');
         	$resize_param = Modules::run('duc/duc_settings/get_param_resize', 'teachers');
         	$path = $resize_config['path'].$resize_param['small']['dir'].'/'.$r['foto_upload'];
         	//echo $path;
         	//заключаем картинку в блок с идентификатором над которым
         	//будут производится действия с картинкой
         	//$r['foto'] = '<div id="foto">';
-        	if(is_file($this->config['path']['root'].$path)){        		$r['foto'] = '<img src="/'.$path.'" height="60px" />';
-        	}else{        		$r['foto'] = '';
+        	if(is_file($this->config['path']['root'].$path)){
+        		$r['foto'] = '<img src="/'.$path.'" height="60px" />';
+        	}else{
+        		$r['foto'] = '';
         	}
         	//$r['foto'] = '</div>';
         }
@@ -334,8 +337,10 @@ class grid_duc_teachers extends jqGrid
 		$data['surname'] = trim($data['surname']);
 		$data['name'] = trim($data['name']);
 		$data['name2'] = trim($data['name2']);
-		if(!empty($data['foto_list']) && isset($this->params['array_files'][$data['foto_list']])){			$data['foto_list'] = $this->params['array_files'][$data['foto_list']];
-		}else{			$data['foto_list'] = '';
+		if(!empty($data['foto_list']) && isset($this->params['array_files'][$data['foto_list']])){
+			$data['foto_list'] = $this->params['array_files'][$data['foto_list']];
+		}else{
+			$data['foto_list'] = '';
 		}
         //throw new jqGrid_Exception('Ошибка в operData');
         return $data;
@@ -384,7 +389,8 @@ class grid_duc_teachers extends jqGrid
                 		Modules::run('duc/duc_teachers/delete_image_object', $row['foto']);
                 		$upd_data['foto'] = $data['foto'];
                 	}
-                }else{
+                }else{
+
                 	//throw new jqGrid_Exception('Изображение НЕ загружено');
                 }
 
@@ -484,8 +490,10 @@ class grid_duc_teachers extends jqGrid
         	$str_error = '';
 	        	//print_r($objs);
 	        	//exit;
-	        	if(isset($objs['groups'])){	        		$str_error .= 'таблица "groups" содержит (';
-	        		foreach($objs['groups'] as $key=>$value){	        			$str_error .= $value->name;
+	        	if(isset($objs['groups'])){
+	        		$str_error .= 'таблица "groups" содержит (';
+	        		foreach($objs['groups'] as $key=>$value){
+	        			$str_error .= $value->name;
 	        		}
 	        		$str_error .= ')';
 	        	}
@@ -499,7 +507,8 @@ class grid_duc_teachers extends jqGrid
 
 	        	throw new jqGrid_Exception('Нельзя удалить строку, т.к. её параметр используется в объектах:<br /> '.$str_error);
         }
-        if($objs === false){        	throw new jqGrid_Exception('Ошибка при поиске зависимых объектов');
+        if($objs === false){
+        	throw new jqGrid_Exception('Ошибка при поиске зависимых объектов');
         }
 
 		#Delete single value
@@ -584,11 +593,13 @@ class grid_duc_teachers extends jqGrid
 	*  Возвращает найденные объекты по заданному id
 	*  если они есть в зависимых таблицах
 	*/
-    protected function search_id_object($id, $dependent){    	if(empty($dependent)) throw new jqGrid_Exception('Не заданы связующие модели');
+    protected function search_id_object($id, $dependent){
+    	if(empty($dependent)) throw new jqGrid_Exception('Не заданы связующие модели');
         if( ! is_array($dependent)) $dependent = array($dependent);
         foreach($dependent as $name=>$fields){
 			$rows = Modules::run('duc/duc_teachers/search_objects_is_field', $id, $name, $fields);
-			if(is_array($rows) && count($rows) > 0){				$res[$name] = $rows;
+			if(is_array($rows) && count($rows) > 0){
+				$res[$name] = $rows;
 			}
 			if($rows === false) return false;
 		}
@@ -597,7 +608,8 @@ class grid_duc_teachers extends jqGrid
     }
 
 
-	protected function button_delete_foto(){    	$str = '<input type="submit" name="'.Modules::run('duc/duc_teachers/formSelector', 'foto_delete').'" value="Удалить с сервера" onclick="'.$this->jjss['function']['foto_delete'].'()" />';
+	protected function button_delete_foto(){
+    	$str = '<input type="submit" name="'.Modules::run('duc/duc_teachers/formSelector', 'foto_delete').'" value="Удалить с сервера" onclick="'.$this->jjss['function']['foto_delete'].'()" />';
     	//$str .= 'для удаления с этой странице с оставлением на сервере, воспользуйтесь списком ниже (выберите нет и сохраните)';
     	return $str;
 	}

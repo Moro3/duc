@@ -17,6 +17,7 @@ class Menus extends MY_Controller {
         $this->lang->load('menus');
         $this->load->helper('language');
         $this->load->helper('text');
+        $this->load->helper('directory');
 
 		    // Load the library "utree"
     	 $this->load->library('utree');
@@ -26,8 +27,8 @@ class Menus extends MY_Controller {
 
         //$this->config->load('menu', TRUE);
         //$this->get = $this->config->item('menu', 'menu');
-        $this->config->load('setting', TRUE);
-        $this->setting = $this->config->item('setting');
+        //$this->config->load('setting', TRUE);
+       // $this->setting = $this->config->item('setting');
 
         //$this->load->library('datetimepicker');
         $this->load_config();
@@ -43,7 +44,7 @@ class Menus extends MY_Controller {
 		  //$this->setting = $this->config->item('setting');
         //print_r($this->setting);
         //exit;
-      Modules::run('menus/menus_settings/getConfig');
+      $this->setting = Modules::run('menus/menus_settings/getConfig');
 	}
 
 	function load_models(){
@@ -273,7 +274,7 @@ class Menus extends MY_Controller {
     $this->setting['method_order'] = "arj";
 
     //дополнительные поля для извлечения
-    $this->setting['select_field'] = array('type_id', 'date');
+    $this->setting['select_field'] = array('type_id', 'date', 'image_id');
 
     // дополнительные условия при извлечении данных
     /*

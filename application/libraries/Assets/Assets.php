@@ -176,7 +176,8 @@ class Assets extends CI_Driver_Library
         */
         function get_assets_path($module = null){
             $path = trim($this->CI->config->item('tpl_path', 'assets'),'\/').'/'.trim($this->CI->config->item('tpl_name', 'assets'),'\/').'/';
-            if($module === false){            	//$path .= trim($this->CI->config->item('dir_target_public', 'assets'),'\/').'/';
+            if($module === false){
+            	//$path .= trim($this->CI->config->item('dir_target_public', 'assets'),'\/').'/';
             	$path .= trim($this->data_collect->get('dir_target_public'),'\/').'/';
             }
             if(is_string($module)){
@@ -191,7 +192,8 @@ class Assets extends CI_Driver_Library
         *	@param $type - тип приложения (папка)
         *
         */
-        function get_assets_path_source($module = false, $type = false){        	return $this->config->get_path_module_source($module, $type);
+        function get_assets_path_source($module = false, $type = false){
+        	return $this->config->get_path_module_source($module, $type);
         }
 
         /*
@@ -766,16 +768,24 @@ class Assets extends CI_Driver_Library
          */
         function _package($dir, $file_out, $module, $type, $config = array()){
             $files = $this->get_dir_files($dir, $module, $type, $config);
-            if(!empty($file_out)){            	if( ! is_array($file_out)){            		$file_out = array($file_out);
+            if(!empty($file_out)){
+            	if( ! is_array($file_out)){
+            		$file_out = array($file_out);
             	}
             }
             //регистрируем сначало файлы указанные для вывода,
             //что бы сохранить очередность
-            if(is_array($file_out) && is_array($files)){            	foreach($file_out as $item){            		if(in_array($item, $files)){            			$config['out_file'] = true;
-                		$this->_load_file($item, $module, $type, $config);
+            if(is_array($file_out) && is_array($files)){
+            	foreach($file_out as $item){                    
+            
+                    if(in_array($item, $files)){
+            			$config['out_file'] = true;
+                		
+                        $this->_load_file($item, $module, $type, $config);
             		}
             	}
             }
+            
             if(is_array($files)){
 
                 foreach($files as $key=>$value){
@@ -783,18 +793,22 @@ class Assets extends CI_Driver_Library
 
                 	//проверяем требуется ли публикация файла
                 	$config['out_file'] = false;
-                	if(is_array($file_out)){                   		if(in_array($value, $file_out)){                   			$config['out_file'] = true;
+                	if(is_array($file_out)){
+                   		if(in_array($value, $file_out)){
+                   			$config['out_file'] = true;
                    		}
                 	}
                 	if($file_out === true) $config['out_file'] = true;
 
                 	if($this->_load_file($value, $module, $type, $config)){
                     	//echo 'Файл "'.$value.'" зарегистрирован';
-                	}else{                		//echo 'Файл "'.$value.'" НЕ зарегистрирован';
+                	}else{
+                		//echo 'Файл "'.$value.'" НЕ зарегистрирован';
                 	}
                 	//return false;
                 }
-            }else{            	//$this->set_log('Не найдены файлы приложений assets в папке "'.$dir.'" для регистрации.');
+            }else{
+            	//$this->set_log('Не найдены файлы приложений assets в папке "'.$dir.'" для регистрации.');
             	$this->set_error(__CLASS__, __METHOD__, 'error', 'Не найдены файлы приложений assets в папке "'.$dir.'" для регистрации.');
             }
             return true;
@@ -806,7 +820,8 @@ class Assets extends CI_Driver_Library
 		*
 		*
 		*/
-        private function get_dir_files($dir, $module, $type, $config){        	//очистка параметров текущих данных
+        private function get_dir_files($dir, $module, $type, $config){
+        	//очистка параметров текущих данных
             $this->data_collect->clear_current();
 
             //установка обязательного параметра - модуля
@@ -839,12 +854,14 @@ class Assets extends CI_Driver_Library
             //echo 'Переданный тип: '.$_type.'<br />';
             //echo 'Директория для типа: '.$dir_type.'<br />';
             //echo 'Путь к папке: '.$path_load.'<br />';
-            if(is_dir($path_load.'/'.$dir)){            	//echo '<pre>';
+            if(is_dir($path_load.'/'.$dir)){
+            	//echo '<pre>';
             	//print_r($this->get_list_files($path_load, $dir));
                 //echo '</pre>';
             	//echo 'такая директоря есть!<br>';
             	return $this->get_list_files($path_load, $dir);
-            }else{            	//echo 'нет такой директории!<br>';
+            }else{
+            	//echo 'нет такой директории!<br>';
             	$this->set_error(__CLASS__, __METHOD__, 'error', 'Не найдена папка приложений assets "'.$path_load.'/'.$dir.'" для регистрации.');
                 //$this->set_log('Не найдена папка приложений assets "'.$path_load.'/'.$dir.'" для регистрации.');
             }
@@ -859,20 +876,24 @@ class Assets extends CI_Driver_Library
         *   @return array - массив со списком файлов
         *					файлы в папка возвращается в виде dir/dir2/dir3/file
         */
-        private function get_list_files($path, $dir){        	$dir_open = $path.'/'.$dir;
+        private function get_list_files($path, $dir){
+        	$dir_open = $path.'/'.$dir;
         	$arr_files = array();
-        	if(is_dir($dir_open)){        		$od = opendir ($dir_open);
+        	if(is_dir($dir_open)){
+        		$od = opendir ($dir_open);
 				while ($file = readdir ($od)){
 					if($file <> "." && $file <> ".."){
 				    	if (is_file($dir_open.'/'.$file)){
                         	$arr_files[] = $dir.'/'.$file;
-				    	}else{                            $arr_files = array_merge($arr_files, $this->get_list_files($path, $dir.'/'.$file));
+				    	}else{
+                            $arr_files = array_merge($arr_files, $this->get_list_files($path, $dir.'/'.$file));
 				    	}
 				   	}
 				}
 				closedir ($od);
         	}
-        	if(isset($arr_files) && is_array($arr_files)){        		return $arr_files;
+        	if(isset($arr_files) && is_array($arr_files)){
+        		return $arr_files;
         	}
         	return false;
         }

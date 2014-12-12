@@ -16,6 +16,13 @@ class Menus_images extends Menus {
         $this->table = 'grid_menus_images';
         $this->MY_table = 'menus_images';
 
+        //library for resize
+        // gd2|imagemagick
+        $this->lib_resize = 'gd2'; 
+        
+        //path for imagemagick library
+        $this->path_imagemagick = 'Z:\usr\local\ImageMagick-6.8.4-Q16';
+
     }
 
     
@@ -59,11 +66,11 @@ class Menus_images extends Menus {
     		case 'file_upload':
     			return 'file_upload';
     		break;
-    		case 'id_group':
-    			return 'group';
+    		case 'id_tree':
+    			return 'tree_id';
     		break;
-    		case 'field_group':
-    			return 'namegroup';
+    		case 'field_tree':
+    			return 'nametree';
     		break;
     		case 'id_nameIsFile':
     			return 'thenameIsFile';
@@ -84,7 +91,7 @@ class Menus_images extends Menus {
         	echo $this->grid->loader->render($this->table);
         echo "</script>\r\n";
 
-		$this->load->view('grid/formatter/asis', array('selector' => 'img'));
+		$this->load->view('grid/formatter/asis', array('selector' => 'image'));
 		//$this->load->view('grid/formatter/asis', array('selector' => 'sorter'));
         $this->load->view('grid/navigator/active');
         $this->load->view('grid/sorter/sortrows',
@@ -134,7 +141,7 @@ class Menus_images extends Menus {
        	$objects = Modules::run(	'menus/menus_images/MY_data_array',
     		 					//select
     		 					array(
-    		 						  'id', 'name', 'img',
+    		 						  'id', 'name', 'file',
 
     		 					),
     		 					//where
@@ -146,10 +153,7 @@ class Menus_images extends Menus {
     		 					''     //order
 
     	);
-    	foreach($objects as $items){
-    		//Modules::run('duc/duc_events/onTeachersImagesDelete', $items['foto']);
-    		$this->delete_image_object($items['img']);
-    	}
+    	
 
         $res = Modules::run('menus/menus_images/MY_delete',
     		 					//where
@@ -157,7 +161,13 @@ class Menus_images extends Menus {
     		 						  'id' => $arr_id,
     		 					)
         );
-
+        
+        if($res){
+           foreach($objects as $items){                
+                $this->delete_image_object($items['file']);
+            } 
+        }
+        
     }
 
     /**
@@ -166,11 +176,17 @@ class Menus_images extends Menus {
     */
     function delete_image_object($file_name){
     	if(!empty($file_name)){
-	    	$resize_config = Modules::run('menus/menus_settings/get_config_resize', 'groups');
+	    	
+            //проверка файла на условия
+            if( ! $this->verifyFile($file_name)) {
+                return false;
+            }
+
+            $resize_config = Modules::run('menus/menus_settings/get_config_resize', 'trees');
 	    	$file_source = $this->setting['path']['root'].$resize_config['path'].$resize_config['dir'].'/'.$file_name;
 	    	if(is_file($file_source)){
 	    		if(unlink($file_source)){
-	    		 	Modules::run('menus/menus_events/onGroupsImagesDelete', $file_name);
+	    		 	Modules::run('menus/menus_events/onTreesImagesDelete', $file_name);
 	    		 	return true;
 	    		}
 	    	}
@@ -179,17 +195,23 @@ class Menus_images extends Menus {
 	  	return false;
     }
 
-    //загрузка изображения
+    /**
+     * upload main file 
+     * @param  numeric $id id for image
+     * @return array     ['errors'] - errors, ['data'] - data load
+     */
     function upload_file($id){
         if(empty($id)) return false;
 		if(!isset($_FILES[Modules::run('menus/menus_images/formSelector', 'image_upload')])) return false;
 		//echo 'массив загрузки из '.__METHOD__;
 		//print_r($_FILES);
 		//return $data;
-		if( ! $this->resizeDirCreate('groups')) return false;
+    
+        //dd(Modules::run('menus/menus_images/formSelector', 'image_upload'));
+		if( ! $this->resizeDirCreate('trees')) return false;
 
-			$resize_config = Modules::run('menus/menus_settings/get_config_resize', 'groups');
-			//print_r($resize_config);
+			$resize_config = Modules::run('menus/menus_settings/get_config_resize', 'trees');
+			//dd($resize_config);
 			$config['upload_path'] = './'.$resize_config['path'].$resize_config['dir'];
 			$config['allowed_types'] = $resize_config['allowed_types'];
 			$config['max_size']	= $resize_config['max_size'];
@@ -208,20 +230,20 @@ class Menus_images extends Menus {
                 $data['errors'] = $this->upload->display_errors();
 			}else{
 				$data['data'] = $this->upload->data();
-				Modules::run('menus/menus_events/onGroupsImagesUpload', $data['data']['file_name']);
+				Modules::run('menus/menus_events/onTreesImagesUpload', $data['data']['file_name']);
 			}
             return $data;
 	}
 
 
 
-	function delete_foto(){
+	function delete_image(){
 
 		if($this->input->post('id')){
 			$id = $this->input->post('id');
 			$row = Modules::run('menus/menus_images/MY_data_row',
 			                    //select
-			                    array('id', 'img'),
+			                    array('id', 'file'),
 			                    //where
 			                    array('id' => $id)
 
@@ -232,28 +254,28 @@ class Menus_images extends Menus {
 					// ищем строки с таким же названием фото кроме текущего id
 					$row_foto = Modules::run('menus/menus_images/MY_data_row',
 			                    //select
-			                    array('id', 'img'),
+			                    array('id', 'file'),
 			                    //where
-			                    array('img' => $row->img,
+			                    array('file' => $row->file,
 			                    		'id !=' => $row->id
 			                    )
 					);
 					//если строк с таким же изображением не найдено, удаляем фото
-				    if(empty($row_foto)) $this->delete_image_object($row->img);
+				    if(empty($row_foto)) $this->delete_image_object($row->file);
 					//удаляем запись фото из базы
 							if(Modules::run('menus/menus_images/MY_update',
 									//set
-									array('img' => ''),
+									array('file' => ''),
 									//where
 									array('id' => $row->id)
 								)){
-								echo 'Фото удалено';
+								echo 'Изображение удалено';
 								//return true;
 							}
 
 
 				}else{
-					echo 'Фото нет';
+					echo 'Изображения нет';
 				}
 			}else{
 				echo 'ID не найден';
@@ -262,72 +284,7 @@ class Menus_images extends Menus {
 		//return false;
 	}
 
-    /**
-    * Шаблон для пакетной обработки фотографий
-    *
-    *
-    */
-    public function tpl_package(){
-    	$this->load->view('admin/photos_package_Uploadify');
-    }
-
-    /**
-    * Пакетная обработка фотографий
-    *
-    *
-    */
-    public function action_package(){
-        $group = $this->input->post(Modules::run('menus/menus_images/formSelector', 'field_group'));
-        if(empty($group) || !is_numeric($group)){
-        	return 'Не выбрана группа';
-        }
-        	$res_sorter = $this->MY_data_array_row(
-        	                 //select
-        	                 array('max(sorter) AS max_sorter'),
-        	                 //where
-        	                 array('id_group' => $group)
-        	);
-        	$max_sorter = (!empty($res_sorter['max_sorter'])) ? $res_sorter['max_sorter'] + 10 : 10;
-        	#Save
-            $upd_data = array(
-            		  'active' => 1,
-            		  'id_group' => $group,
-                	  'sorter' => $max_sorter,
-                      //'name' => $upd['name'],
-                      'date_create' => time(),
-            		'date_update' => time(),
-            		'ip_create' => $_SERVER['REMOTE_ADDR'],
-            		'ip_update' => $_SERVER['REMOTE_ADDR'],
-
-            );
-            $id = $this->MY_insert($upd_data);
-
-			if(is_numeric($id)){
-				$data = Modules::run('menus/menus_images/upload_file', $id);
-                if(isset($data['errors'])){
-                	return $data['errors'];
-                }
-    				if(!empty($data['data']['file_name'])){
-	                	$upd_foto['img'] = $data['data']['file_name'];
-	                	$ckfile = $this->input->post(Modules::run('menus/menus_images/formSelector', 'field_nameIsFile'));
-	                	if($ckfile == '1'){
-
-	                		$upd_foto['name'] = (!empty($data['data']['orig_name'])) ? substr_replace($data['data']['orig_name'], '', -strlen($data['data']['file_ext'])) : '';
-	                	}
-	                	#Save book name to books table
-		            	$this->MY_update(
-		                                $upd_foto,
-	                                	array('id' => $id
-	                                      )
-	                            );
-                	};
-			}
-			echo '<script>';
-			echo 'alert('.$ckfile.')';
-			echo '</script>';
-
-
-    }
+        
 
     /**
     * Производит действия по ресайзу изображений
@@ -423,7 +380,8 @@ class Menus_images extends Menus {
 	function resizeDirCreate($name){
     	$config = Modules::run('menus/menus_settings/get_config_resize', $name);
 
-    	if($config == false){
+    	//dd($config);
+        if($config == false){
     		$this->MY_error(__CLASS__, __METHOD__, 'error', 'Не указаны настройки для папки оригинальных ресайзов');
     		return false;
     	}
@@ -441,7 +399,6 @@ class Menus_images extends Menus {
 		if(is_array($resize)){
 			foreach($resize as $name=>$item){
 
-
 						if(!empty($item['dir'])){
 		                	$dir = $item['path'].$item['dir'];
 							if( ! create_dir($dir)){
@@ -452,13 +409,267 @@ class Menus_images extends Menus {
 							$this->MY_error(__CLASS__, __METHOD__, 'error', 'Не указаны параметры для папки ресайза '.$name);
 							return false;
 						}
-
-
 			}
 		};
         return true;
-
 	}
 
+    /**
+     * возвращает массив конфигурации библиотеки ресайза
+     * @return array 
+     */
+    function getConfigResize(){
+        $config['image_library'] = $this->lib_resize;
+        if($this->lib_resize == 'imagemagick'){
+            $config['library_path'] = $this->path_imagemagick;
+        }
+        return $config;
+    }
+    
 
+    /**
+    * Ресайз основного изображения
+    *   @param string $name_group - имя группы конфига
+    *   @param string $file - имя файла с изображением (если не задано, проверяются все файлы)
+    *
+    */
+    function resizeLoading($name_group, $file = false){
+        $resize_config = Modules::run('menus/menus_settings/get_config_resize', $name_group);
+        //$path_original = $resize_config['path'].$resize_config['dir'];
+        if(!empty($resize_config['dir'])){
+            $dir = $resize_config['path'].$resize_config['dir'];
+        }else{
+            $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не указаны параметры для папки ресайза '.$name);
+            return false;
+        }
+        //print_r($resize);
+        //exit;
+                if(!empty($file)){
+                    if(is_file($dir.'/'.$file)){
+                        if(!empty($resize_config['x']) && !empty($resize_config['y'])){
+                            $size = getimagesize($dir.'/'.$file);
+
+                            if($size[0] > $resize_config['x'] || $size[1] > $resize_config['y']){                                    
+                                
+                                    $config = $this->getConfigResize();
+
+                                    $config['source_image'] = $dir.'/'.$file;
+                                    //$config['new_image'] = $dir.'/'.$file;
+                                    //$config['create_thumb'] = TRUE;
+                                    //$config['maintain_ratio'] = (isset($resize_config['maintain_ratio'])) ? $resize_config['maintain_ratio'] : TRUE;
+                                    $config['width'] = $resize_config['x'];
+                                    $config['height'] = $resize_config['y'];
+                                    //var_dump($config);
+                                    //exit;
+                                    $this->load->library('image_lib');
+                                    $this->image_lib->initialize($config);
+
+                                    if( ! $this->image_lib->resize()){
+                                        $errors = $this->image_lib->display_errors();
+                                        $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не удалось произвести ресайз загруженого изображения '.$file);
+                                        $this->MY_error(__CLASS__, __METHOD__, 'error', $errors);
+                                        //exit($errors);
+                                        return false;
+                                    }
+                                    $this->image_lib->clear();
+                                    //print_r($config);
+                            }
+                        }
+                    }else{
+                        $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не найдено оригинальное изображение в '.$dir.'/'.$file);
+                    }
+                }else{
+                    $map = directory_map($dir, 1);
+                    if(is_array($map) && count($map) > 0){
+                        foreach($map as $num=>$file){
+                            if(is_numeric($num) && !empty($file)){
+                                $this->resizeLoading($name_group, $file);
+                            }
+                        }
+                    }
+                }
+
+
+
+        return true;
+    }
+
+    /**
+    * Ресайз файлов изображений
+    *   @param string $name_group - имя группы ресайза  
+    *   @param string $name_resize - имя ресайза (если не задано, удаляются из всех ресайзов)
+    *   @param string $file - имя файла с изображением (если не задано, удаляются все файлы из ресайза)
+    *
+    */
+    function resize($name_group, $name_resize = false, $file = false){
+        $resize_config = Modules::run('menus/menus_settings/get_config_resize', $name_group);
+        $path_original = $resize_config['path'].$resize_config['dir'];
+        $resize = Modules::run('menus/menus_settings/get_param_resize', $name_group);
+        //print_r($resize);
+        //exit;
+        if(is_array($resize)){
+            if(!empty($name_resize)){
+                if(!isset($resize[$name_resize])) return false;
+                $item = $resize[$name_resize];
+                if(!empty($file)){
+                    if(!empty($item['dir'])){
+                            $dir = $item['path'].$item['dir'];
+
+                            $config = $this->getConfigResize();
+
+                            $config['source_image'] = $path_original.'/'.$file;
+                            $config['new_image'] = $dir.'/'.$file;
+                            //$config['create_thumb'] = TRUE;
+                            $config['maintain_ratio'] = (isset($item['maintain_ratio'])) ? $item['maintain_ratio'] : TRUE;
+                            $config['master_dim'] = (isset($item['master_dim'])) ? $item['master_dim'] : 'auto';
+
+                            $config['width'] = $item['x'];
+                            $config['height'] = $item['y'];
+
+                            $config['x_axis'] = (isset($item['x_axis'])) ? $item['x_axis'] : '';
+                            $config['y_axis'] = (isset($item['y_axis'])) ? $item['y_axis'] : '';
+
+                            $this->load->library('image_lib');
+                            $this->image_lib->initialize($config);
+                            if(isset($item['type']) && $item['type'] !== 'resize'){
+                                if($item['type'] == 'crop' || $item['type'] == 'c'){
+                                    $config['x_axis'] = $item['x'];
+                                    $config['y_axis'] = $item['y'];
+                                    if( ! $this->image_lib->crop()){
+                                        $errors = $this->image_lib->display_errors();
+                                        $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не удалось произвести ресайз для '.$name);
+                                        $this->MY_error(__CLASS__, __METHOD__, 'error', $errors);
+                                        //exit($errors);
+                                        return false;
+                                    }
+                                }else{
+                                    $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не распознан тип ресайза ('.$item['type'].') для '.$name);
+                                }
+                            }else{
+                                if( ! $this->image_lib->resize()){
+                                    $errors = $this->image_lib->display_errors();
+                                    $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не удалось произвести ресайз для '.$name);
+                                    $this->MY_error(__CLASS__, __METHOD__, 'error', $errors);
+                                    //exit($errors);
+                                    return false;
+                                }
+                            }
+                            $this->image_lib->clear();
+                            //print_r($config);
+
+                        }else{
+                            $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не указаны параметры для папки ресайза '.$name);
+                            return false;
+                        }
+                }else{
+                    $map = directory_map($path_original, 1);
+                    if(is_array($map) && count($map) > 0){
+                        foreach($map as $num=>$file){
+                            if(is_numeric($num) && !empty($file)){
+                                $this->resize($name_group, $name_resize, $file);
+                            }
+                        }
+                    }
+                }
+
+            }else{
+                foreach($resize as $name=>$items){
+                    $this->resize($name_group, $name, $file);
+                }
+            }
+        }
+        return true;
+    }
+
+
+    /**
+    *  Удаление файлов изображений из ресайзов
+    *   @param string $name_resize - имя ресайза (если не задано, удаляются из всех ресайзов)
+    *   @param string $file - имя файла с изображением (если не задано, удаляются все файлы из ресайза)
+    *
+    */
+    function resizeDelete($name_group, $name_resize = false, $file = false){
+        $resize_config = Modules::run('menus/menus_settings/get_config_resize', $name_group);
+        $path_original = $resize_config['path'].$resize_config['dir'];
+        $resize = Modules::run('menus/menus_settings/get_param_resize', $name_group);
+        //print_r($resize);
+        //exit;
+        if(is_array($resize)){
+            if(!empty($name_resize)){
+                if(!isset($resize[$name_resize])) return false;
+                $item = $resize[$name_resize];
+                if(!empty($item['dir']) && !empty($item['path'])){
+                    $dir = $item['path'].$item['dir'];
+                    if(!empty($file)){
+                        if(unlink($this->setting['path']['root'].$dir.DIRECTORY_SEPARATOR.$file)){
+                            Modules::run('menus/menus_events/onResizeDelete', $name_group, $name_resize, $file);
+                        }else{
+                            $this->MY_error(__CLASS__, __METHOD__, 'error', 'Не удалось удалить файл "'.$file.'" из ресайза "'.$name_resize.'"');
+                            return false;
+                        }
+                    }else{
+                        $map = directory_map($dir, 1);
+                        if(is_array($map) && count($map) > 0){
+                            foreach($map as $num=>$file){
+                                if(is_numeric($num) && !empty($file)){
+                                    $this->resizeDelete($name_group, $name_resize, $file);
+                                }
+                            }
+                        }
+                    }
+                }
+            }else{
+                foreach($resize as $name=>$items){
+                    $this->resizeDelete($name_group, $name, $file);
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+    *  Удаление папки ресайза изображений
+    *   @param string $name_resize - имя ресайза (если не задано, удаляются все ресайзы)
+    */
+    function resizeDirDelete($name_group, $name_resize = false){
+        $resize_config = Modules::run('menus/menus_settings/get_config_resize', $name_group);
+        $path_original = $resize_config['path'].$resize_config['dir'];
+        $resize = Modules::run('menus/menus_settings/get_param_resize', $name_group);
+        if(!empty($name_resize)){
+            if(isset($resize[$name_resize])){
+                $item = $resize[$name_resize];
+                if(!empty($item['path']) && !empty($item['dir'])){
+                    $dir = $item['path'].$item['dir'];
+                    if($this->resizeDelete($name_group, $name_resize)){
+                        rmdir($this->setting['path']['root'].$dir);
+                    }
+                }
+            }
+        }else{
+            foreach($resize as $name=>$items){
+                $this->resizeDirDelete($name_group, $name);
+            }
+        }
+        return true;
+    }
+
+    
+    /**
+     * проверка файла на определенные условия
+     * @param  string $file - имя файла
+     * @return boolean       true - условия выполнены, false - НЕ выполнены
+     */
+    function verifyFile($file){
+        if(empty($file)) return false;
+        $res = $this->MY_data(
+                //select
+                array('file', 'id'),
+                //where
+                array('file' => $file)
+
+            );
+        if(is_array($res) && count($res) > 0) return false;
+
+        return true;
+    }
 }

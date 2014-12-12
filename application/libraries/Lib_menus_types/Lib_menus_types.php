@@ -104,12 +104,18 @@ class Lib_menus_types extends CI_Driver_Library
          	'*'
          );
          
+         //получаем все изображения
+         $images = Modules::run('menus/menus_images/MY_data',
+            //select
+            '*'
+         );
+
          //разбиваем данные по типу
          foreach($ids as $id=>$items){
          	$ids_type[$items['type']][] = array(
          			'name' => $items['name'],
          			'id' => $id,
-                    'type_id' => $items['type']
+                    'type_id' => $items['type']                    
          	);
          }
 
@@ -126,11 +132,13 @@ class Lib_menus_types extends CI_Driver_Library
         //dd($ids_data);
 		//присоединяем данные к найденным id
 		foreach($ids as $id=>$items){
-			$res[$id] = array(
+			
+            $res[$id] = array(
                     'name' => $items['name'],
                     'id' => $id,
                     'node' => $id,
-                    'type_id' => $items['type']
+                    'type_id' => $items['type'],
+                    //'images' => $img_objects
             );
             if(isset($ids_data[$items['type']][$items['name']])){				
                 $res[$id]['data'] = $ids_data[$items['type']][$items['name']];
