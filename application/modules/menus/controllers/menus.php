@@ -18,6 +18,7 @@ class Menus extends MY_Controller {
         $this->load->helper('language');
         $this->load->helper('text');
         $this->load->helper('directory');
+        $this->load->helper('js');
 
 		    // Load the library "utree"
     	 $this->load->library('utree');
@@ -432,8 +433,15 @@ class Menus extends MY_Controller {
     	if($type !== false){
     		$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
   			$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
-        }
-      	$all_nodes = $this->get_nodes();
+      }      
+      $all_nodes = $this->get_nodes();
+      if(is_array($all_nodes)){
+        foreach($all_nodes as &$item){
+          uasort($item, array($this, '_order_by'));
+        }          
+      }
+
+      //dd($all_nodes);
   		return $all_nodes;
     }
 
