@@ -96,7 +96,7 @@ function dd($str, $print = false) {
 *   - !!! если функция вызвана в функции или методе, то после вывода данные прекращается работа скрипта через exit (чтобы можно было увидеть если функция вызвана ы методе который что-то возвращает)
 *
 */
-function ddv($str, $print = false) {
+function vd($str, $print = false) {
     
     $data = get_caller_info();
     $c = "<b>file:</b> ".$data['file'] . "; ";

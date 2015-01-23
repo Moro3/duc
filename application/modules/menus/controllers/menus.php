@@ -18,6 +18,7 @@ class Menus extends MY_Controller {
         $this->load->helper('language');
         $this->load->helper('text');
         $this->load->helper('directory');
+        $this->load->helper('js');
 
 		    // Load the library "utree"
     	 $this->load->library('utree');
@@ -94,14 +95,14 @@ class Menus extends MY_Controller {
         $data['uri']['point'] = $this->load->module('menus/menus')->uri_point('admin');
         //$data['uri']['point'] = '/';
 
-		if(is_array($data['tree'])){
-			//echo "<pre>";
-			//print_r($data['tree']);
-			//echo "</pre>";
-			echo "<div class=\"menu_module\">";
-			$this->print_tree($data['tree'], 0, 0, array('uri' => $data['uri']));
-			echo "</div>";
-		}
+    		if(is_array($data['tree'])){
+    			//echo "<pre>";
+    			//print_r($data['tree']);
+    			//echo "</pre>";
+    			echo "<div class=\"menu_module\">";
+    			$this->print_tree($data['tree'], 0, 0, array('uri' => $data['uri']));
+    			echo "</div>";
+    		}
 
         //$this->load->view('admin/menu_default_2', $data);
     }
@@ -432,8 +433,15 @@ class Menus extends MY_Controller {
     	if($type !== false){
     		$id_type = Modules::run('menus/menus_types/get_id_is_name', $type);
   			$this->setting['condition_field']['type_id'] = (is_numeric($id_type)) ? $id_type : 1;
-        }
-      	$all_nodes = $this->get_nodes();
+      }      
+      $all_nodes = $this->get_nodes();
+      if(is_array($all_nodes)){
+        foreach($all_nodes as &$item){
+          uasort($item, array($this, '_order_by'));
+        }          
+      }
+
+      //dd($all_nodes);
   		return $all_nodes;
     }
 

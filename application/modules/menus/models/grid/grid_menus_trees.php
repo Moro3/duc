@@ -21,6 +21,7 @@ class grid_menus_trees extends jqGrid
         $this->params['pagesPrefix'] = Modules::run('pages/pages_api/listPagesSelectPrefix');
         $this->params['mods'] = Modules::run('mods/mods_api/listSelectPrefix');
         $this->params['images_files'] = Modules::run('menus/menus_images/listImages');
+        $this->params['images_names'] = Modules::run('menus/menus_images/MY_data_array_one', 'id', array('name','file'));
         $this->params['nodes'] = Modules::run('menus/menus_trees/MY_data',         
           //select
           '*'
@@ -30,7 +31,7 @@ class grid_menus_trees extends jqGrid
         }
         //dd($this->params['nodes']);
         $this->params['nodes_data'] = $this->CI->lib_menus_types->get_data_nodes($this->params['nodesOfTypes']);
-        //dd($this->params['nodes_data']);
+        //vd($this->params['images_names']);        
         
         /*
         $this->params['nodes_trees'] = Modules::run('menus/menus_api/get_trees_place_data', $_GET['place']);
@@ -235,7 +236,7 @@ class grid_menus_trees extends jqGrid
                                    'width' => 150,
                                    'align' => 'left',
                                    'hidden' => true,
-                                   'editable' => true,
+                                   'editable' => false,
                                    'encode' => false,
                                    'edittype' => 'file',
                                    'editrules' => array(
@@ -249,7 +250,7 @@ class grid_menus_trees extends jqGrid
                                    'db' => 'object.image_id',
                                    'width' => 150,
                                    'align' => 'left',
-                                   'editable' => true,
+                                   'editable' => false,
                                    'encode' => false,
                                    //'edittype' => 'file',
                                    'editrules' => array(
@@ -273,8 +274,8 @@ class grid_menus_trees extends jqGrid
                                                        'edithidden' => true,
                                    ),
                                    'editoptions' => array(
-                                                         'value' => array(0=>'нет') + $this->params['images_files'],
-                                                         //'value' => $this->params['images_files'],
+                                                         //'value' => array(0=>'нет') + $this->params['images_names'],
+                                                         'value' => new jqGrid_Data_Value(array(0=>'нет') + $this->params['images_names']),
 
                                    ),
                                    //'formoptions' => array('elmsuffix' => $this->button_delete_foto()),

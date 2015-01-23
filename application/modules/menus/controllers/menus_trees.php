@@ -86,6 +86,44 @@ class Menus_trees extends Menus {
 
         //------ Загрузка скрипта для подгрузки списка данных меню в зависимости от типа
         //------ Подгружаем после прорисовки формы редактирования
+        $images = Modules::run('menus/menus_images/MY_data',
+            //select
+            '*',
+            //where
+            false,
+            //limit
+            false,
+            //order
+            'sorter'
+        );
+        $resize = Modules::run('menus/menus_settings/get_param_resize', 'trees');
+        $path_images = '/'.$resize['middle']['path'].$resize['middle']['dir'];
+        foreach($images as $items){
+            $dataImages[$items->id] = array(  'value' => $items->id,
+                                                'image' => $items->file,
+                                                'name' => $items->name,
+                                                'path' => $path_images
+                                            ); 
+        }
+        
+        //echo "\r\n<script>";        
+            //echo '$grid.bind("jqGridAddEditAfterShowForm", function(event, $form){';
+                $selectImages = $this->load->view('form/selectImages',
+                        array(
+                                'event' => '#image_list',
+                                'selector' => 'selImages',
+                                'data' => $dataImages,
+                                
+                        ),
+                        true
+                );
+                //echo js_escape($selectImages);
+                echo $selectImages;
+            //echo '})';    
+        //echo '</script>';
+
+        //------ Загрузка списка изображений
+        //------ Подгружаем после прорисовки формы редактирования        
         echo "\r\n<script>";        
             echo '$grid.bind("jqGridAddEditAfterShowForm", function(event, $form){';                   
                         

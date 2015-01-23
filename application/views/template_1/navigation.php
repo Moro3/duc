@@ -96,7 +96,10 @@ corner;
 //assets_script($corner);
 
 $data = Modules::run('menus/menus_api/get_trees_group_place_data', 'top');
-        
+$resize_config = Modules::run('menus/menus_settings/get_config_resize', 'trees');
+$path_original = $resize_config['path'].$resize_config['dir'];
+$resize = Modules::run('menus/menus_settings/get_param_resize', 'trees');
+$path_images = $resize['middle']['path'].$resize['middle']['dir'];        
 	//dd($this->bufer->pages);
 	
 	//dd($this->bufer->menus);
@@ -115,35 +118,38 @@ $data = Modules::run('menus/menus_api/get_trees_group_place_data', 'top');
 	}
 	//dd($data_place);
   	
-  	dd($data);
+  	//dd($data);
   	
   	if(is_array($data)){
-		foreach($data as $place_name=>$items){
-			if($place_name == 0){
+		foreach($data as $place_name=>$items){			
+			//if($place_name == 'main'){
 				if(isset($items[0])){					
 					foreach($items[0] as $item){						
-						echo "<div class='button_main'>";
-							echo "<div class='button_border'>";
-				               	echo "<a href='".$item['data']['link']."'>";
-									echo "<div class='button'>";
-										echo "<div class='nav_img'>";
-					                        if(isset($item['data']['img'])){
-					                        	echo "<img src='".assets_img($item['data']['img'])."' />";
-					                        }else{
-					                        	echo "<img src='".assets_img('navigation-8.gif')."' />";
-					                        }
-					                        
-					                    echo "</div>";
-										echo "<div class='nav_text'>";
-											echo $item['data']['name'];
+						if($item['data']['active'] === 1){
+							echo "<div class='button_main'>";
+								echo "<div class='button_border'>";
+					               	echo "<a href='".$item['data']['link']."'>";
+										echo "<div class='button'>";
+											echo "<div class='nav_img'>";
+						                        if(is_object($item['images']) && !empty($item['images']->file)){
+						                        	//echo "<img src='".assets_img($item['data']['img'])."' />";
+						                        	echo "<img src='/".$path_images.'/'.$item['images']->file."' />";
+						                        }else{
+						                        	//echo "<img src='".assets_img('navigation-8.gif')."' />";
+						                        }
+						                        
+						                    echo "</div>";
+											echo "<div class='nav_text'>";
+												echo $item['data']['name'];
+											echo "</div>";
 										echo "</div>";
-									echo "</div>";
-				               	echo "</a>";
+					               	echo "</a>";
+								echo "</div>";
 							echo "</div>";
-						echo "</div>";
+						}
 					}
 				}
-			}
+			//}
 		}
 	}
 
@@ -156,146 +162,7 @@ $data = Modules::run('menus/menus_api/get_trees_group_place_data', 'top');
 
                                      </script>
 
-
-        <div class='button_main'>
-			<div class='button_border'>
-               <a href='/administration/'>
-				<div class='button'>
-
-					<div class='nav_img'>
-
-                                            <img src='<?php echo assets_img('navigation-8.gif');?>' />
-
-                                        </div>
-					<div class='nav_text'>
-
-                                            Администрация
-
-					</div>
-				</div>
-               </a>
-			</div>
-		</div>
-
-
-		  <div class='button_main'>
-			<div class='button_border'>
-				<a href='/duc/groups/'>
-				<div class='button'>
-
-					<div class='nav_img'>
-						<img src='<?php echo assets_img('navigation-2.gif');?>' />
-					</div>
-					<div class='nav_text'>
-					   Виды деятельности
-					</div>
-				</div>
-				</a>
-			</div>
-		  </div>
-
-         <div class='button_main'>
-			<div class='button_border'>
-               <a href='/duc/teachers/'>
-				<div class='button'>
-
-					<div class='nav_img'>
-
-                                            <img src='<?php echo assets_img('navigation-6.gif');?>' />
-
-                                        </div>
-					<div class='nav_text'>
-
-                                            Наши педагоги
-
-					</div>
-				</div>
-               </a>
-			</div>
-		   </div>
-
-		  <!--
-		  <div class='button_main'>
-			<div class='button_border'>
-				<a href='/schedule/'>
-				<div class='button'>
-					<div class='nav_img'>
-						<img src='<?php echo assets_img('navigation-3.gif');?>' />
-					</div>
-					<div class='nav_text'>
-					   Расписание занятий
-					</div>
-				</div>
-				</a>
-			</div>
-		  </div>
-          -->
-
-          <div class='button_main'>
-			<div class='button_border'>
-				<a href='/duc/schedules/'>
-				<div class='button'>
-					<div class='nav_img'>
-						<img src='<?php echo assets_img('navigation-3.gif');?>' />
-					</div>
-					<div class='nav_text'>
-					   Расписание занятий
-					</div>
-				</div>
-				</a>
-			</div>
-		  </div>
-
-
-		  <div class='button_main'>
-			<div class='button_border'>
-               <a href='/activity/'>
-				<div class='button'>
-					<div class='nav_img'>
-
-                                                <img src='<?php echo assets_img('navigation-4.gif');?>' />
-
-                                        </div>
-					<div class='nav_text'>
-
-                                                Мероприятия
-
-					</div>
-				</div>
-               </a>
-			</div>
-		  </div>
-
-         <div class='button_main'>
-			<div class='button_border_t'>
-				<a href='/pay_service/'>
-				<div class='button'>
-
-					<div class='nav_img'>
-						<img src='<?php echo assets_img('navigation-7.gif');?>' />
-					</div>
-					<div class='nav_text'>
-					   Платные услуги
-					</div>
-				</div>
-				</a>
-			</div>
-		  </div>
-
-		  <div class='button_main'>
-			<div class='button_border'>
-				<a href='/contacts/'>
-				<div class='button'>
-					<div class='nav_img'>
-						<img src='<?php echo assets_img('navigation-5.gif');?>' />
-					</div>
-					<div class='nav_text'>
-					   Контакты
-					</div>
-				</div>
-				</a>
-			</div>
-		  </div>
+        
 
 	</div>
 </div>
