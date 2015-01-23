@@ -336,7 +336,10 @@ class grid_mods extends jqGrid
         }
 
         $data['sorter'] = (!empty($data['sorter'])) ? $data['sorter'] : 10;
-        $data['date'] = strtotime($data['date']);
+        if(isset($data['date'])){
+            $data['date'] = strtotime($data['date']);
+        }
+        
         if(empty($data['uri'])){
         	$data['uri'] = Modules::run('mods/mods/generate_uri', $data['name']);
         }else{
@@ -367,27 +370,28 @@ class grid_mods extends jqGrid
             	$result = $this->DB->query('SELECT * FROM '.$this->table.' WHERE id='.intval($id));
             	$row = $this->DB->fetch($result);
 
-            	$arr_header['active'] = $data['active'];
-            	$arr_header['label'] = $data['label'];
+            	$arr_header['active'] = $data['active'];            	
             	$arr_header['sorter'] = $data['sorter'];
-            	if($this->isset_uri($data['uri'], $row['id'])){
-            		$arr_header['uri'] = Modules::run('mods/mods/get_correct_uri', $data['uri']);
-            	}else{
-            		$arr_header['uri'] = $data['uri'];
-            	}
+              $arr_header['name'] = $data['name'];
+              $arr_header['alias'] = $data['alias'];
+              $arr_header['start_controller'] = $data['start_controller'];
+              $arr_header['start_method'] = $data['start_method'];
+              $arr_header['short_description'] = $data['short_description'];
+              $arr_header['description'] = $data['description']; 
+            	
             	if( ! Modules::run('mods/mods/check_uri', $arr_header['uri'])){
             		throw new jqGrid_Exception('Ошибка в написании URI. Адрес должен состоять из латинских букв, цифр и может содержать символы -_');
-        		}
-        		$arr_header['uri_start'] = (!empty($data['uri_start'])) ? $data['uri_start'] : null;
+        		  }
+              $arr_header['uri'] = $data['uri'];
+        		  $arr_header['uri_start'] = (!empty($data['uri_start'])) ? $data['uri_start'] : null;
             	$arr_header['date'] = $data['date'];
             	$arr_header['date_update'] = time();
             	$arr_header['ip_update'] = $_SERVER['REMOTE_ADDR'];
-            	$arr_header['icon'] = $data['foto_list'];
+            	
 
 
-
-                $name_file_load = $this->upload_image();
-                if($name_file_load) $arr_header['icon'] = $name_file_load;
+              $name_file_load = $this->upload_image();
+              if($name_file_load) $arr_header['icon'] = $name_file_load;
             	#Save book name to books table
 	            $this->DB->update($this->table,
 	                                $arr_header,
@@ -414,25 +418,31 @@ class grid_mods extends jqGrid
     protected function opAdd($data) {
         if(!empty($data['name'])){
         	$this->isset_uri($data['uri']);
-        	$data['uri'] = Modules::run('pages/pages_headers/get_correct_uri', $data['uri']);
+        	
         		$arr_header['active'] = $data['active'];
-        		$arr_header['label'] = $data['label'];
+        		
             	$arr_header['sorter'] = $data['sorter'];
-            	$arr_header['uri'] = $data['uri'];
+              $arr_header['name'] = $data['name'];
+              $arr_header['alias'] = $data['alias'];
 
-            	$arr_header['uri_old'] = (!empty($data['uri_old'])) ? $data['uri_old'] : null;
-            	$arr_header['text1'] = $data['text1'];
-            	$arr_header['text2'] = $data['text2'];
-            	$arr_header['date'] = $data['date'];
+            	$arr_header['uri'] = $data['uri'];
+              $arr_header['uri_start'] = $data['uri_start'];
+              $arr_header['start_controller'] = $data['start_controller'];
+              $arr_header['start_method'] = $data['start_method'];
+              $arr_header['short_description'] = $data['short_description'];
+              $arr_header['description'] = $data['description'];            	
+            	
+            	if(isset($data['date'])){
+                $arr_header['date'] = $data['date'];
+              }else{
+                $arr_header['date'] = time();
+              }
+              
             	$arr_header['date_create'] = time();
             	$arr_header['date_update'] = time();
             	$arr_header['ip_create'] = $_SERVER['REMOTE_ADDR'];
             	$arr_header['ip_update'] = $_SERVER['REMOTE_ADDR'];
-            	$arr_header['icon'] = $data['foto_list'];
-            	$arr_header['img_fon'] = $data['img_fon'];
-            	$name_file_load = $this->upload_image();
-                if($name_file_load) $arr_header['icon'] = $name_file_load;
-
+            	
             	#Save book name to books table
 	            $id = $this->DB->insert($this->table,
 	                                $arr_header,
