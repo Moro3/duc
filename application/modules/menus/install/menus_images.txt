@@ -6,7 +6,7 @@ CREATE TABLE `menus_images` (
 	`active` smallint(1) NOT NULL default '0',
 	`sorter` smallint(3) NOT NULL default '0',
 	`name` char(200) NOT NULL,
-	`img` char(50) NOT NULL,		
+	`file` char(50) NOT NULL,		
 	`description` char(250) NOT NULL,		
   	`date_create` int(10) NOT NULL,
   	`date_update` int(10) NOT NULL,
