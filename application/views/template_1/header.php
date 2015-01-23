@@ -1,5 +1,5 @@
 <a href="/" title="ДЕТСКО-ЮНОШЕСКИЙ ЦЕНТР" alt="ДЕТСКО-ЮНОШЕСКИЙ ЦЕНТР">
-<div class='logo'>
+<div class='logo'>	
 </div>
 </a>
 

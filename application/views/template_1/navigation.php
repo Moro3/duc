@@ -121,33 +121,35 @@ $path_images = $resize['middle']['path'].$resize['middle']['dir'];
   	//dd($data);
   	
   	if(is_array($data)){
-		foreach($data as $place_name=>$items){
-			if($place_name == 0){
+		foreach($data as $place_name=>$items){			
+			//if($place_name == 'main'){
 				if(isset($items[0])){					
 					foreach($items[0] as $item){						
-						echo "<div class='button_main'>";
-							echo "<div class='button_border'>";
-				               	echo "<a href='".$item['data']['link']."'>";
-									echo "<div class='button'>";
-										echo "<div class='nav_img'>";
-					                        if(is_object($item['images']) && !empty($item['images']->file)){
-					                        	//echo "<img src='".assets_img($item['data']['img'])."' />";
-					                        	echo "<img src='/".$path_images.'/'.$item['images']->file."' />";
-					                        }else{
-					                        	//echo "<img src='".assets_img('navigation-8.gif')."' />";
-					                        }
-					                        
-					                    echo "</div>";
-										echo "<div class='nav_text'>";
-											echo $item['data']['name'];
+						if($item['data']['active'] === 1){
+							echo "<div class='button_main'>";
+								echo "<div class='button_border'>";
+					               	echo "<a href='".$item['data']['link']."'>";
+										echo "<div class='button'>";
+											echo "<div class='nav_img'>";
+						                        if(is_object($item['images']) && !empty($item['images']->file)){
+						                        	//echo "<img src='".assets_img($item['data']['img'])."' />";
+						                        	echo "<img src='/".$path_images.'/'.$item['images']->file."' />";
+						                        }else{
+						                        	//echo "<img src='".assets_img('navigation-8.gif')."' />";
+						                        }
+						                        
+						                    echo "</div>";
+											echo "<div class='nav_text'>";
+												echo $item['data']['name'];
+											echo "</div>";
 										echo "</div>";
-									echo "</div>";
-				               	echo "</a>";
+					               	echo "</a>";
+								echo "</div>";
 							echo "</div>";
-						echo "</div>";
+						}
 					}
 				}
-			}
+			//}
 		}
 	}
 
