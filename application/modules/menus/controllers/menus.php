@@ -95,14 +95,14 @@ class Menus extends MY_Controller {
         $data['uri']['point'] = $this->load->module('menus/menus')->uri_point('admin');
         //$data['uri']['point'] = '/';
 
-		if(is_array($data['tree'])){
-			//echo "<pre>";
-			//print_r($data['tree']);
-			//echo "</pre>";
-			echo "<div class=\"menu_module\">";
-			$this->print_tree($data['tree'], 0, 0, array('uri' => $data['uri']));
-			echo "</div>";
-		}
+    		if(is_array($data['tree'])){
+    			//echo "<pre>";
+    			//print_r($data['tree']);
+    			//echo "</pre>";
+    			echo "<div class=\"menu_module\">";
+    			$this->print_tree($data['tree'], 0, 0, array('uri' => $data['uri']));
+    			echo "</div>";
+    		}
 
         //$this->load->view('admin/menu_default_2', $data);
     }

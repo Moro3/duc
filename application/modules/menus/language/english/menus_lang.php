@@ -42,6 +42,7 @@ $lang['menus_alias']           = 'Псевдоним';
 
 $lang['menus_images']           = 'Изображения';
 $lang['menus_image']           = 'Изображение';
+$lang['menus_image_list']           = 'Список изображений';
 $lang['menus_image_upload']           = 'Загрузка изображения';
 $lang['menus_file_upload']           = 'Загрузка файла';
 $lang['menus_file']           = 'Файл';

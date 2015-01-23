@@ -34,11 +34,11 @@ class Menus_api extends Menus {
 
     /**
     *   Возвращает дерево меню c информацией о страницах
-    *   Формат array[alias place][parent id][id][data node][data]
+    *   Формат array[parent id][id][data node][data]
     *   @param $alias - псевдоним место положения
     *
     */
-    public function get_trees_place_data($alias, $type = false){
+    public function get_trees_data($alias, $type = false){
         //получаем дерево из узлов данного места
         $nodes = $this->get_trees_place($alias, $type);
         //dd($nodes);
@@ -47,9 +47,7 @@ class Menus_api extends Menus {
          $images = Modules::run('menus/menus_images/MY_data',
             //select
             '*'
-         );
-
-        
+         );        
 
         if(is_array($nodes)){
             foreach($nodes as &$items){                
@@ -64,7 +62,7 @@ class Menus_api extends Menus {
                     }                
             }
             $data_nodes = $this->lib_menus_types->get_data_nodes($ids);
-            
+
             //dd($data_nodes);
             
 
@@ -82,6 +80,18 @@ class Menus_api extends Menus {
     }
 
     /**
+    *   Возвращает дерево меню c информацией о страницах с именем место положения 
+    *   Формат array[alias place][parent id][id][data node][data]
+    *   @param $alias - псевдоним место положения
+    *   @param $type - тип содержимого
+    *
+    */
+    public function get_trees_place_data($alias, $type = false){
+    	$nodes = $this->get_trees_data($alias, $type);
+    	return array($alias => $nodes);
+    }
+
+    /**
     *	Возвращает дерево меню c информацией о страницах
     *	Формат array[alias place][parent id][id][data node][data]
     *   @param $alias - псевдоним место положения
@@ -93,7 +103,7 @@ class Menus_api extends Menus {
     	
     	if(is_array($places)){
     		foreach($places as $items){
-    		  $nodes[$items->places->alias] = $this->get_trees_place_data($items->places->alias);	
+    		  $nodes[$items->places->alias] = $this->get_trees_data($items->places->alias);	
     		}    		
     	}else{
             return false;
@@ -140,7 +150,7 @@ class Menus_api extends Menus {
             }
             $res .= '<option role="option" value="'.$key.'" '.$selected.'>'.$value.'</option>'; 
         }
-        dd($res);
+        //dd($res);
         return $res;
     }
 
