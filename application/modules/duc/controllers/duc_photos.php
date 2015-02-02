@@ -245,7 +245,8 @@ class Duc_photos extends Duc {
     *
     *
     */
-    public function tpl_package(){    	$this->load->view('admin/photos_package_Uploadify');
+    public function tpl_package(){
+    	$this->load->view('admin/photos_package_Uploadify');
     }
 
     /**
@@ -255,8 +256,10 @@ class Duc_photos extends Duc {
     */
     public function action_package(){
         $group = $this->input->post(Modules::run('duc/duc_photos/formSelector', 'field_group'));
-        if(empty($group) || !is_numeric($group)){        	return 'Не выбрана группа';
-        }        	$res_sorter = $this->MY_data_array_row(
+        if(empty($group) || !is_numeric($group)){
+        	return 'Не выбрана группа';
+        }
+        	$res_sorter = $this->MY_data_array_row(
         	                 //select
         	                 array('max(sorter) AS max_sorter'),
         	                 //where
@@ -279,7 +282,8 @@ class Duc_photos extends Duc {
 
 			if(is_numeric($id)){
 				$data = Modules::run('duc/duc_photos/upload_file', $id);
-                if(isset($data['errors'])){                	return $data['errors'];
+                if(isset($data['errors'])){
+                	return $data['errors'];
                 }
     				if(!empty($data['data']['file_name'])){
 	                	$upd_foto['img'] = $data['data']['file_name'];
@@ -314,16 +318,21 @@ class Duc_photos extends Duc {
     		$group = $this->input->post('group');
     		$resize = $this->input->post('resize');
 
-    		switch($action){    			case 'clear':
-    			    if(!empty($group) && !empty($resize)) {    			    	if($this->resizeDelete($group, $resize)){    			    		$this->load->view('admin/resizeDeleteOk', array('group'=>$group, 'resize' => $resize));
-    			    	}else{    			    		$this->load->view('admin/resizeDeleteError', array(
+    		switch($action){
+    			case 'clear':
+    			    if(!empty($group) && !empty($resize)) {
+    			    	if($this->resizeDelete($group, $resize)){
+    			    		$this->load->view('admin/resizeDeleteOk', array('group'=>$group, 'resize' => $resize));
+    			    	}else{
+    			    		$this->load->view('admin/resizeDeleteError', array(
     			    														'group'=>$group,
     			    														'resize' => $resize,
     			    														'error' => 'Не удалось удалить файлы изображений'
     			    													)
     			    		);
     			    	}
-    			    }else{    			    	$this->load->view('admin/resizeDeleteError', array(
+    			    }else{
+    			    	$this->load->view('admin/resizeDeleteError', array(
     			    													'group'=>$group,
     			    													'resize' => $resize,
     			    													'error' => 'Не указаны параметры ресайза'
@@ -376,12 +385,42 @@ class Duc_photos extends Duc {
     			    											)
     			    );
     		}
-    	}else{    		$this->load->view('admin/resizeError', array(
+    	}else{
+    		$this->load->view('admin/resizeError', array(
 	    											'error' => 'Не выбраны действия для обработки'
 	    										)
 		    );
     	}
 
+    }
+
+
+    public function tpl_gallery_group($id_group){
+        if(empty($id_group) || !is_numeric($id_group)) return false;
+
+        $data['objects'] = Modules::run( $this->MY_module.'/'.$this->MY_table.'/MY_data',
+                                //select
+                                array('main.id', 'main.name', 'main.id_group', 'main.active', 'main.img'
+                                     
+                                ),
+                                //where
+                                array('main.active' => 1,
+                                       'main.id_group' => $id_group,                                       
+                                ),                                
+                                false, //limit
+                                'main.sorter'     //order
+
+        );
+
+        $data['uri']['point'] =$this->uri_point('user');
+        $data['uri']['groups_list'] = $this->get_uri_link('user_groups_list');
+        $data['uri']['schedules'] = $this->get_uri_link('user_schedules_list');
+        $data['uri']['schedules_group'] = $this->get_uri_link('user_sсhedules_group');
+        $data['uri']['schedules_groupname'] = $this->get_uri_link('user_sсhedules_groupname');
+
+        $data['config'] = $this->setting;
+        //exit;
+        $this->load->view('user/photos_group_id', $data );
     }
 
 

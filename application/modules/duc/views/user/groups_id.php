@@ -2,7 +2,8 @@
 
 assets_style('user/public.css');
 
-if(isset($groups) && is_array($groups)){	echo '<div class="duc_table">';
+if(isset($groups) && is_array($groups)){
+	echo '<div class="duc_table">';
         echo '<h1>Виды деятельности</h1>';
         echo '<table class="table table-bordered">';
 
@@ -108,8 +109,10 @@ if(isset($groups) && is_array($groups)){	echo '<div class="duc_table">';
 				echo 'Описание:';
 				echo '</td>';
 				echo '<td>';
-				if(!empty($item['description'])){					echo $item['description'];
-				}else{					echo $item['short_description'];
+				if(!empty($item['description'])){
+					echo $item['description'];
+				}else{
+					echo $item['short_description'];
 				}
 
 				echo '</td>';
@@ -137,6 +140,11 @@ if(isset($groups) && is_array($groups)){	echo '<div class="duc_table">';
         echo '</tbody>';
 		echo '</table>';
 
+		if(!empty($id_group)){
+			echo Modules::run('duc/duc_photos/tpl_gallery_group', $id_group);
+		}
+		
+		/*
 		if(!empty($item['photos'])){
 			echo '<table>';
 			echo '<tr>';
@@ -166,6 +174,7 @@ if(isset($groups) && is_array($groups)){	echo '<div class="duc_table">';
 			echo '</tr>';
 			echo '</table>';
 		}
+		*/
 
 	echo '</div>';
 }

@@ -331,8 +331,10 @@ class Duc_groups extends Duc {
         $data['uri']['schedules_groupname'] = $this->get_uri_link('user_sсhedules_groupname');
 
         $data['config'] = $this->setting;
+        $data['id_group'] = $id;
     	//exit;
     	$this->load->view('user/groups_id', $data );
+
     }
 
     /**
