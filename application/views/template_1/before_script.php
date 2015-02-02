@@ -1,6 +1,6 @@
 <?php
 
-assets_script('jquery/jquery-1.8.2.min.js');
+assets_script('jquery/jquery-1.11.2.min.js');
 assets_script('jquery/plugins/jquery.corner.js');
 assets_script('highslide/highslide-full.js');
 //assets_script('jquery/jquery-min.js');
@@ -46,8 +46,8 @@ $this->assets->mixed->package('flashpleer/flowplayer',
 );
 $flowplayer = '
 	flowplayer.conf = {
-   engine: "flash",
-   swf: "/{assets}mixed/flashpleer/flowplayer/flowplayer.swf"
+   	engine: "flash",
+   	swf: "/{assets}mixed/flashpleer/flowplayer/flowplayer.swf"
 };
 ';
 

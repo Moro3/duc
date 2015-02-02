@@ -45,12 +45,36 @@ $this->assets->mixed->load('bootstrap/css/bootstrap-responsive.min.css');
 $this->assets->mixed->load('bootstrap/js/bootstrap.min.js');
 $this->assets->mixed->package('bootstrap/img');
 */
-/*
-$this->assets->mixed->package('bootstrap',
-							 array('bootstrap/css/bootstrap.min.css',
-							       'bootstrap/css/bootstrap-responsive.min.css',
-							       'bootstrap/js/bootstrap.min.js',
+
+$this->assets->mixed->package('bootstrap-3.2.0',
+							 array('bootstrap-3.2.0/css/bootstrap.min.css',
+							       //'bootstrap/css/bootstrap-responsive.min.css',
+							       'bootstrap-3.2.0/js/bootstrap.min.js',
 							 ),
 							 false
 );
-*/
+
+//---- blueimp Gallery --------------------------------
+$this->assets->mixed->package('Gallery-blueimp',
+							 //public file
+							 array(
+							 			//--css--
+							 			'Gallery-blueimp/css/blueimp-gallery.min.css',
+							 			//--js--
+							       		'Gallery-blueimp/js/jquery.blueimp-gallery.min.js',
+
+							 ),
+							 false
+);
+//---- Bootstrap Image Gallery --------------------------------
+$this->assets->mixed->package('Bootstrap-Image-Gallery',
+							 //public file
+							 array(
+							 			//--css--
+							 			'Bootstrap-Image-Gallery/css/bootstrap-image-gallery.min.css',
+							 			//--js--
+							       		'Bootstrap-Image-Gallery/js/bootstrap-image-gallery.min.js',
+
+							 ),
+							 false
+);
